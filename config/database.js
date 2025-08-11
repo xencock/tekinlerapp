@@ -53,9 +53,9 @@ const syncDatabase = async () => {
   try {
     // Önce şemayı kontrol et, eksik sütunları ekle
     await ensureSchema();
-    // GEÇICI: taxRate kaldırıldığı için force sync
-    await sequelize.sync({ force: true });
-    console.log('Veritabanı tabloları senkronize edildi (force sync)');
+    // Normal sync
+    await sequelize.sync();
+    console.log('Veritabanı tabloları senkronize edildi');
   } catch (error) {
     console.error('Veritabanı senkronizasyon hatası:', error);
   }

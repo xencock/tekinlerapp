@@ -9,7 +9,7 @@ const Sale = sequelize.define('Sale', {
   },
   customerId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true, // Nakit satışlar için müşteri seçimi opsiyonel
     references: {
       model: 'customers',
       key: 'id'

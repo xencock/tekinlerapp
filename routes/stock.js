@@ -2,6 +2,7 @@ const express = require('express');
 const { sequelize, Sequelize } = require('../config/database');
 const Product = require('../models/Product');
 const StockMovement = require('../models/StockMovement');
+const User = require('../models/User');
 const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();

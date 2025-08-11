@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Search, X, Plus, Minus, DollarSign, Trash2, TrendingUp, TrendingDown, Camera, Scan } from 'lucide-react';
+import { Search, X, Plus, Minus, Trash2, TrendingUp, TrendingDown, Camera, Scan } from 'lucide-react';
 import { productsAPI } from '../utils/api';
 import { customersAPI } from '../utils/api';
 import { salesAPI } from '../utils/api';
@@ -58,14 +58,14 @@ const POS = () => {
     e.preventDefault();
     
     if (!balanceForm.amount || !balanceForm.description) {
-      toast.error('📋 Tutar ve açıklama alanları zorunludur', { duration: 3500 });
+      toast.error('Tutar ve açıklama alanları zorunludur', { duration: 3500 });
       return;
     }
 
     try {
       const amount = parseFormattedNumber(balanceForm.amount);
       if (amount <= 0) {
-        toast.error('💰 Tutar 0\'dan büyük olmalıdır', { duration: 3500 });
+        toast.error('Tutar 0\'dan büyük olmalıdır', { duration: 3500 });
         return;
       }
 
@@ -79,7 +79,7 @@ const POS = () => {
         notes: ''
       });
 
-      toast.success('✅ Bakiye işlemi başarıyla eklendi', { duration: 3000 });
+      toast.success('Bakiye işlemi başarıyla eklendi', { duration: 3000 });
       setShowBalanceModal(false);
       setBalanceForm({
         type: 'debt',
@@ -127,14 +127,14 @@ const POS = () => {
         addToCart(response.data.products[0]);
         setSearchTerm('');
         setSearchedProducts([]);
-        toast.success(`🛍️ ${response.data.products[0].name} sepete eklendi!`, { duration: 2500 });
+        toast.success(`${response.data.products[0].name} sepete eklendi`, { duration: 2500 });
       }
       
       // If exact barcode match found among multiple results, prioritize it
       if (response.data.products.length > 1) {
         const exactMatch = response.data.products.find(p => p.barcode === term.trim());
         if (exactMatch) {
-          toast.success(`✅ Tam barkod eşleşmesi: ${exactMatch.name}`, { duration: 3000 });
+          toast.success(`Tam barkod eşleşmesi: ${exactMatch.name}`, { duration: 3000 });
         }
       }
       
@@ -191,7 +191,8 @@ const POS = () => {
         setSearchedProducts([]);
       }
     }, 300),
-    [searchProducts]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
   const handleManualSearch = () => {
@@ -262,7 +263,8 @@ const POS = () => {
         setSearchedCustomers([]);
       }
     }, 300),
-    [] // customersAPI stable olduğu için bağımlılık eklemeye gerek yok
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
   useEffect(() => {
@@ -286,7 +288,7 @@ const POS = () => {
     setShowBarcodeScanner(false);
     // Auto search for the scanned barcode
     searchProducts(barcode);
-    toast.success(`📱 Barkod tarandı: ${barcode}`, { duration: 2000 });
+    toast.success(`Barkod tarandı: ${barcode}`, { duration: 2000 });
   };
 
   // Keyboard shortcuts
@@ -325,7 +327,7 @@ const POS = () => {
             item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
           );
         } else {
-          toast.error('📦 Maksimum stok adedine ulaşıldı', { duration: 3500 });
+          toast.error('Maksimum stok adedine ulaşıldı', { duration: 3500 });
           return prevCart;
         }
       }
@@ -351,7 +353,7 @@ const POS = () => {
             return { ...item, quantity: newQuantity };
           }
           if (newQuantity > item.currentStock) {
-            toast.error('📦 Maksimum stok adedine ulaşıldı', { duration: 3500 });
+            toast.error('Maksimum stok adedine ulaşıldı', { duration: 3500 });
           }
         }
         return item;
@@ -378,7 +380,13 @@ const POS = () => {
 
   const handleCompleteSale = async () => {
     if (cart.length === 0) {
-      toast.error('🛍️ Sepetiniz boş. Lütfen ürün ekleyin.', { duration: 3500 });
+      toast.error('Sepetiniz boş. Lütfen ürün ekleyin.', { duration: 3500 });
+      return;
+    }
+
+    // Veresiye satış için müşteri kontrolü
+    if (paymentMethod === 'Veresiye' && !selectedCustomer) {
+      toast.error('Veresiye satış için müşteri seçimi zorunludur.', { duration: 4000 });
       return;
     }
 
@@ -395,7 +403,13 @@ const POS = () => {
       };
 
       await salesAPI.createSale(saleData);
-      toast.success('🎉 Satış başarıyla tamamlandı!', { duration: 3000 });
+      
+      // Veresiye satış için özel mesaj
+      if (paymentMethod === 'Veresiye') {
+        toast.success(`Veresiye satış tamamlandı! ${cartTotal.toFixed(2)} ₺ müşteri hesabına eklendi.`, { duration: 4000 });
+      } else {
+        toast.success('Satış başarıyla tamamlandı!', { duration: 3000 });
+      }
       
       // Reset state
       setCart([]);
@@ -519,7 +533,7 @@ const POS = () => {
                     <div className="flex justify-between items-center">
                       <div>
                         <p className="font-semibold">{item.name}</p>
-                        <p className="text-sm text-gray-500">₺{item.hasDiscount ? item.discountPrice : item.retailPrice}</p>
+                        <p className="text-sm text-gray-500">{item.hasDiscount ? item.discountPrice : item.retailPrice} TL</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <button onClick={() => updateQuantity(item.id, -1)} className="p-1 rounded-full bg-gray-200 hover:bg-gray-300"><Minus size={14} /></button>
@@ -537,7 +551,7 @@ const POS = () => {
             <div className="border-t pt-4 mt-4">
               <div className="flex justify-between font-bold text-lg">
                 <span>Toplam</span>
-                <span>₺{cartTotal.toFixed(2)}</span>
+                <span>{cartTotal.toFixed(2)} TL</span>
               </div>
             </div>
           )}
@@ -546,11 +560,11 @@ const POS = () => {
 
       {/* Right Side - Product Search and Sale Completion */}
       <div className="w-3/5 flex flex-col gap-4">
-        {/* Enhanced Barcode Input Section */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">🔍 Barkod ile Satış</h2>
-            <p className="text-sm text-gray-600">Barkod tarayın veya manuel olarak girin</p>
+        {/* Product Search Section */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Satış</h2>
+            <p className="text-gray-600">Ürün arayın veya barkod taratın</p>
           </div>
           
           {/* Large Barcode Input */}
@@ -560,11 +574,11 @@ const POS = () => {
               <input
                 ref={barcodeInputRef}
                 type="text"
-                placeholder="Barkod numarasını girin veya taratın..."
-                className={`w-full pl-14 pr-4 py-4 text-xl font-mono border-2 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-200 transition-all ${
+                placeholder="Ürün adı veya barkod..."
+                className={`w-full pl-14 pr-4 py-3 text-lg border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
                   /^\d+$/.test(searchTerm) 
-                    ? 'border-blue-500 bg-blue-50 focus:border-blue-600' 
-                    : 'border-gray-300 focus:border-blue-500'
+                    ? 'border-blue-500 bg-blue-50' 
+                    : 'border-gray-300'
                 }`}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -572,47 +586,49 @@ const POS = () => {
                 onFocus={(e) => e.target.select()}
               />
               {/^\d{12}$/.test(searchTerm) && (
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded-full font-medium">
-                  ⏎ Enter'a basın
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded font-medium">
+                  Enter'a basın
                 </div>
               )}
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="grid grid-cols-2 gap-4 mb-6">
             <button
               onClick={() => setShowBarcodeScanner(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 shadow-sm"
             >
-              <Camera size={20} />
-              Kamera ile Tara
+              <Camera size={18} />
+              Kamera Aç
             </button>
             <button
               onClick={handleManualSearch}
               disabled={searchLoading}
-              className="bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              className="bg-gray-600 hover:bg-gray-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
             >
               {searchLoading ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                   Arıyor...
                 </>
               ) : (
                 <>
-                  <Search size={20} />
-                  Manuel Ara
+                  <Search size={18} />
+                  Ara
                 </>
               )}
             </button>
           </div>
 
           {/* Quick Tips */}
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="text-xs text-gray-600 space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="font-medium">💡 İpucu:</span>
-                <span>F5: Kamera açar | Ctrl+F: Odaklanır | 12 haneli barkod otomatik tamamlanır</span>
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div className="text-sm text-gray-700">
+              <div className="font-medium mb-2">Klavye Kısayolları:</div>
+              <div className="space-y-1 text-xs text-gray-600">
+                <div>• F5: Kamera açar</div>
+                <div>• Ctrl+F: Arama alanına odaklanır</div>
+                <div>• Enter: Aramayı başlatır</div>
               </div>
             </div>
           </div>
@@ -620,12 +636,12 @@ const POS = () => {
           {/* Search Results */}
           <div className="mt-4 h-64 overflow-y-auto border rounded-lg bg-gray-50">
             {searchedProducts.length > 0 ? (
-              <div className="p-3">
+              <div className="p-4">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm font-medium text-gray-700">✅ {searchedProducts.length} ürün bulundu</span>
+                  <span className="text-sm font-medium text-gray-700">{searchedProducts.length} ürün bulundu</span>
                   <button
                     onClick={clearSearch}
-                    className="text-sm text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded"
+                    className="text-sm text-red-600 hover:text-red-700 bg-red-50 px-3 py-1 rounded font-medium"
                   >
                     Temizle
                   </button>
@@ -644,19 +660,19 @@ const POS = () => {
                             {product.brand && `${product.brand} - `}{product.size && `${product.size}, `}{product.color}
                           </div>
                           <div className="text-xs text-blue-600 font-mono mt-2 bg-blue-50 px-2 py-1 rounded inline-block">
-                            📊 {product.barcode}
+                            {product.barcode}
                           </div>
                         </div>
                         <div className="text-right ml-4">
                           <div className="font-bold text-xl text-gray-900">
-                            ₺{product.hasDiscount ? product.discountPrice : product.retailPrice}
+                            {product.hasDiscount ? product.discountPrice : product.retailPrice} TL
                           </div>
                           <div className={`text-sm font-medium ${product.currentStock > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            📦 Stok: {product.currentStock}
+                            Stok: {product.currentStock}
                           </div>
                           {product.hasDiscount && (
                             <div className="text-sm text-red-500 line-through">
-                              ₺{product.retailPrice}
+                              {product.retailPrice} TL
                             </div>
                           )}
                         </div>
@@ -667,34 +683,35 @@ const POS = () => {
               </div>
             ) : searchTerm && !searchLoading ? (
               <div className="text-center py-12 text-gray-500">
-                <Search size={64} className="mx-auto mb-4 text-gray-300" />
+                <Search size={48} className="mx-auto mb-4 text-gray-300" />
                 <p className="text-lg font-medium">Ürün bulunamadı</p>
-                <p className="text-sm">Farklı bir arama terimi deneyin</p>
+                <p className="text-sm text-gray-400">Farklı bir arama terimi deneyin</p>
               </div>
             ) : !searchTerm ? (
               <div className="text-center py-12 text-gray-400">
-                <Scan size={64} className="mx-auto mb-4 text-gray-300" />
-                <p className="text-lg font-medium">Barkod tarayın veya girin</p>
-                <p className="text-sm">Ürünler burada görünecek</p>
+                <Scan size={48} className="mx-auto mb-4 text-gray-300" />
+                <p className="text-lg font-medium">Ürün arayın</p>
+                <p className="text-sm">Bulunan ürünler burada görünecek</p>
               </div>
             ) : null}
           </div>
         </div>
 
         {/* Sale Completion */}
-        <div className="bg-white rounded-lg shadow p-4 mt-auto">
-          <h2 className="text-lg font-bold mb-4">Satışı Tamamla</h2>
+        <div className="bg-white rounded-lg shadow-md p-6 mt-auto">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Satışı Tamamla</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Ödeme Yöntemi</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Ödeme Yöntemi</label>
               <select
-                className="input w-full"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
               >
                 <option>Nakit</option>
                 <option>Kredi Kartı</option>
                 <option>Havale/EFT</option>
+                <option>Veresiye</option>
                 <option>Diğer</option>
               </select>
             </div>
@@ -702,10 +719,16 @@ const POS = () => {
               <button
                 onClick={handleCompleteSale}
                 disabled={loading || cart.length === 0}
-                className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 shadow-sm"
               >
-                <DollarSign size={20} />
-                {loading ? 'İşleniyor...' : `Satışı Tamamla (₺${cartTotal.toFixed(2)})`}
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    İşleniyor...
+                  </>
+                ) : (
+                  `Satışı Tamamla (${cartTotal.toFixed(2)} TL)`
+                )}
               </button>
             </div>
           </div>
@@ -743,7 +766,7 @@ const POS = () => {
                     required
                     className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
-                  <DollarSign className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+                  <span className="absolute left-3 top-2.5 text-gray-400 text-sm">TL</span>
                 </div>
               </div>
               <div>

@@ -3,6 +3,8 @@ const Sale = require('../models/Sale');
 const SaleItem = require('../models/SaleItem');
 const Product = require('../models/Product');
 const StockMovement = require('../models/StockMovement');
+const Customer = require('../models/Customer');
+const BalanceTransaction = require('../models/BalanceTransaction');
 const { authenticateToken } = require('../middleware/auth');
 const { Op } = require('sequelize');
 
@@ -17,9 +19,14 @@ router.post('/', authenticateToken, async (req, res) => {
   try {
     const { customerId, paymentMethod, items, notes } = req.body;
     
+    // Veresiye satış için müşteri kontrolü
+    if (paymentMethod === 'Veresiye' && !customerId) {
+      throw new Error('Veresiye satış için müşteri seçimi zorunludur');
+    }
+    
     // Satış oluştur
     const sale = await Sale.create({
-      customerId,
+      customerId: customerId || null,
       paymentMethod,
       notes,
       userId: req.user.id,
@@ -66,11 +73,11 @@ router.post('/', authenticateToken, async (req, res) => {
       // Stok hareketi kaydet
       await StockMovement.create({
         productId: product.id,
-        type: 'SALE',
+        type: 'sale',
         quantity: -item.quantity,
-        previousStock: product.currentStock + item.quantity,
-        newStock: product.currentStock,
-        reference: `Satış #${sale.id}`,
+        stockBefore: product.currentStock + item.quantity,
+        stockAfter: product.currentStock,
+        referenceId: `Satış #${sale.id}`,
         userId: req.user.id
       }, { transaction });
     }
@@ -80,6 +87,29 @@ router.post('/', authenticateToken, async (req, res) => {
       totalAmount,
       taxAmount: 0 // Vergi hesaplaması kaldırıldı
     }, { transaction });
+
+    // Veresiye satış ise müşteri bakiyesini güncelle
+    if (paymentMethod === 'Veresiye' && customerId) {
+      // Müşteri bakiyesini güncelle
+      const customer = await Customer.findByPk(customerId, { transaction });
+      if (customer) {
+        await customer.update({
+          balance: customer.balance + totalAmount
+        }, { transaction });
+
+        // Bakiye işlemi kaydet
+        await BalanceTransaction.create({
+          customerId: customerId,
+          type: 'debt',
+          amount: totalAmount,
+          description: `Satış #${sale.id} - Veresiye`,
+          category: 'Satış',
+          date: new Date(),
+          createdBy: req.user.id,
+          notes: `Satış fatura no: ${sale.id}`
+        }, { transaction });
+      }
+    }
 
     await transaction.commit();
 
@@ -103,16 +133,34 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // @route   GET /api/sales/customer/:customerId
-// @desc    Get sales for a specific customer
+// @desc    Get sales for a specific customer with details
 // @access  Private
 router.get('/customer/:customerId', authenticateToken, async (req, res) => {
   try {
     const sales = await Sale.findAll({
       where: { customerId: req.params.customerId },
+      include: [
+        {
+          model: SaleItem,
+          as: 'items',
+          include: [
+            {
+              model: Product,
+              as: 'product',
+              attributes: ['name', 'barcode']
+            }
+          ]
+        }
+      ],
       order: [['createdAt', 'DESC']],
     });
 
-    res.json(sales);
+    res.json({
+      success: true,
+      sales: sales,
+      totalSales: sales.length,
+      totalAmount: sales.reduce((sum, sale) => sum + parseFloat(sale.totalAmount), 0)
+    });
   } catch (error) {
     console.error('Get sales by customer error:', error);
     res.status(500).json({
