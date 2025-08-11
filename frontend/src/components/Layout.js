@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
     { name: 'Özet', href: '/', icon: Home },
     { name: 'Stok', href: '/inventory', icon: Package },
     { name: 'Müşteriler', href: '/customers', icon: UsersIcon },
-    { name: 'Satış', href: '/sales', icon: ShoppingCart },
+    { name: 'Satış', href: '/pos', icon: ShoppingCart },
     { name: 'Raporlar', href: '/reports', icon: BarChart3 },
     { name: 'Ayarlar', href: '/settings', icon: Settings },
   ];

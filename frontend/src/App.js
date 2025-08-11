@@ -7,7 +7,7 @@ import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
-
+import POS from './pages/POS';
 import Customers from './pages/Customers';
 import CustomerDetail from './pages/CustomerDetail';
 import Settings from './pages/Settings';
@@ -86,6 +86,16 @@ const AppRoutes = () => {
         }
       />
 
+      <Route
+        path="/pos"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <POS />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
       <Route
         path="/customers"

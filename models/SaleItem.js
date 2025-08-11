@@ -46,13 +46,15 @@ SaleItem.init({
   },
   taxRate: {
     type: DataTypes.DECIMAL(5, 2),
-    allowNull: false,
-    comment: 'Ürünün satış anındaki vergi oranı'
+    allowNull: true,
+    defaultValue: 0,
+    comment: 'Ürünün satış anındaki vergi oranı (kullanılmıyor)'
   },
   taxAmount: {
     type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    comment: 'Bu kalem için hesaplanan vergi tutarı'
+    allowNull: true,
+    defaultValue: 0,
+    comment: 'Bu kalem için hesaplanan vergi tutarı (kullanılmıyor)'
   }
 }, {
   sequelize,

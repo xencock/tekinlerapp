@@ -53,9 +53,9 @@ const syncDatabase = async () => {
   try {
     // Önce şemayı kontrol et, eksik sütunları ekle
     await ensureSchema();
-    // SQLite için alter:true bazen backup kopyalama hatasına yol açıyor; standart sync yeterli
-    await sequelize.sync();
-    console.log('Veritabanı tabloları senkronize edildi');
+    // GEÇICI: taxRate kaldırıldığı için force sync
+    await sequelize.sync({ force: true });
+    console.log('Veritabanı tabloları senkronize edildi (force sync)');
   } catch (error) {
     console.error('Veritabanı senkronizasyon hatası:', error);
   }

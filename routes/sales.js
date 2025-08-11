@@ -29,7 +29,6 @@ router.post('/', authenticateToken, async (req, res) => {
     }, { transaction });
 
     let totalAmount = 0;
-    let taxAmount = 0;
 
     // Satış kalemlerini oluştur
     for (const item of items) {
@@ -45,10 +44,8 @@ router.post('/', authenticateToken, async (req, res) => {
 
       const price = product.hasDiscount ? product.discountPrice : product.retailPrice;
       const itemTotal = price * item.quantity;
-      const itemTax = itemTotal * (product.taxRate / 100);
 
       totalAmount += itemTotal;
-      taxAmount += itemTax;
 
       // Satış kalemi oluştur
       await SaleItem.create({
@@ -57,8 +54,8 @@ router.post('/', authenticateToken, async (req, res) => {
         quantity: item.quantity,
         unitPrice: price,
         totalPrice: itemTotal,
-        taxRate: product.taxRate,
-        taxAmount: itemTax
+        taxRate: 0, // Vergi hesaplaması kaldırıldı
+        taxAmount: 0 // Vergi hesaplaması kaldırıldı
       }, { transaction });
 
       // Stok güncelle
@@ -81,7 +78,7 @@ router.post('/', authenticateToken, async (req, res) => {
     // Satış toplamlarını güncelle
     await sale.update({
       totalAmount,
-      taxAmount
+      taxAmount: 0 // Vergi hesaplaması kaldırıldı
     }, { transaction });
 
     await transaction.commit();
@@ -91,7 +88,7 @@ router.post('/', authenticateToken, async (req, res) => {
       sale: {
         id: sale.id,
         totalAmount,
-        taxAmount
+        taxAmount: 0
       }
     });
 
