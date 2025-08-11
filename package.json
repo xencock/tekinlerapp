@@ -1,0 +1,46 @@
+{
+  "name": "tekinler-backend",
+  "version": "1.0.0",
+  "description": "Tekinler İş Yeri Yönetim Sistemi Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "setup": "npm run sync-db && npm run create-admin && npm run seed-categories",
+    "sync-db": "node scripts/sync-database.js",
+    "create-admin": "node scripts/create-admin-user.js",
+    "seed-categories": "node scripts/seed-categories.js",
+    "seed-customers": "node scripts/seed-customers.js",
+    "monitor": "node scripts/project-monitor.js",
+    "monitor:save": "node scripts/project-monitor.js save",
+    "git:status": "git status --porcelain",
+    "git:changes": "git diff --name-only",
+    "git:recent": "git log --oneline -10",
+    "project:stats": "npm run monitor && echo '\\n📁 Dosya sayıları:' && find . -name '*.js' -not -path './node_modules/*' | wc -l && echo 'JavaScript dosyası bulundu'"
+  },
+  "keywords": [
+    "inventory",
+    "management",
+    "barcode",
+    "sales"
+  ],
+  "author": "Tekinler",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "sequelize": "^6.37.7",
+    "socket.io": "^4.7.4",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

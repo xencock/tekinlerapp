@@ -1,0 +1,128 @@
+/* Simple Toast Styles - Clean & Minimal */
+
+/* Root variables for consistent theming */
+:root {
+  --toast-border-radius: 8px;
+  --toast-transition: all 0.2s ease-in-out;
+}
+
+/* Toast container responsive adjustments */
+@media (max-width: 640px) {
+  .go2072408551 {
+    margin: 0 8px !important;
+    max-width: calc(100vw - 16px) !important;
+    min-width: 300px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .go2072408551 {
+    margin: 0 6px !important;
+    max-width: calc(100vw - 12px) !important;
+    min-width: 280px !important;
+  }
+}
+
+/* Glassmorphism toast animations */
+.go2072408551 {
+  animation: slideInBottomRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: var(--toast-transition) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+@keyframes slideInBottomRight {
+  from {
+    transform: translateX(100%) translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Mobile slide up animation */
+@media (max-width: 768px) {
+  .go2072408551 {
+    animation: slideInBottomCenter 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  @keyframes slideInBottomCenter {
+    from {
+      transform: translateY(100%) scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+/* Glass hover effects */
+.go2072408551 {
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+.go2072408551:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  transition: all 0.3s ease-out !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.9), inset 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.go2072408551:active {
+  transform: translateY(-1px) scale(1.01) !important;
+  transition: all 0.15s ease-out !important;
+}
+
+/* Icon improvements */
+.go2072408551 .go3958317564 {
+  flex-shrink: 0 !important;
+  margin-right: 6px !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* Text styling improvements */
+.go2072408551 .go1858758034 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+  font-size: 14px !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .go2072408551 {
+    font-size: 13px !important;
+    padding: 10px 14px !important;
+  }
+  
+  .go2072408551 .go3958317564 {
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 5px !important;
+  }
+  
+  .go2072408551 .go1858758034 {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .go2072408551 {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .go2072408551:hover {
+    transform: none !important;
+  }
+}
