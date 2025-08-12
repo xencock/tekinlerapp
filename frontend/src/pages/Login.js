@@ -79,19 +79,19 @@ const Login = () => {
                 <input
                   id="pin"
                   type="password"
-                  maxLength="4"
+                  maxLength="6"
                   autoComplete="current-password"
                   className={`input pl-10 text-center text-lg tracking-widest ${errors.pin ? 'border-red-300' : ''}`}
-                  placeholder="••••"
+                  placeholder="PIN (6 hane)"
                   {...register('pin', {
                     required: 'PIN gerekli',
                     pattern: {
-                      value: /^[0-9]{4}$/,
-                      message: 'PIN 4 haneli rakam olmalı',
+                      value: /^[0-9]{6}$/,
+                      message: 'PIN 6 haneli rakam olmalı',
                     },
                   })}
                   onInput={(e) => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
                   }}
                 />
               </div>

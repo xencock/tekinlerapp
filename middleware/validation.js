@@ -28,10 +28,8 @@ const validateUserCreation = [
     .withMessage('Kullanıcı adı sadece harf, rakam ve alt çizgi içerebilir'),
   
   body('pin')
-    .isLength({ min: 4, max: 4 })
-    .withMessage('PIN 4 haneli olmalı')
-    .matches(/^[0-9]{4}$/)
-    .withMessage('PIN sadece rakam içermeli'),
+    .matches(/^[0-9]{6}$/)
+    .withMessage('PIN 6 haneli rakam olmalı'),
   
   body('fullName')
     .trim()
@@ -55,10 +53,8 @@ const validateLogin = [
     .withMessage('Kullanıcı adı gerekli'),
   
   body('pin')
-    .isLength({ min: 4, max: 4 })
-    .withMessage('PIN 4 haneli olmalı')
-    .matches(/^[0-9]{4}$/)
-    .withMessage('PIN sadece rakam içermeli'),
+    .matches(/^[0-9]{6}$/)
+    .withMessage('PIN 6 haneli rakam olmalı'),
   
   handleValidationErrors
 ];
@@ -66,16 +62,12 @@ const validateLogin = [
 // PIN change validation
 const validatePinChange = [
   body('currentPin')
-    .isLength({ min: 4, max: 4 })
-    .withMessage('Mevcut PIN 4 haneli olmalı')
-    .matches(/^[0-9]{4}$/)
-    .withMessage('Mevcut PIN sadece rakam içermeli'),
+    .matches(/^[0-9]{6}$/)
+    .withMessage('Mevcut PIN 6 haneli rakam olmalı'),
   
   body('newPin')
-    .isLength({ min: 4, max: 4 })
-    .withMessage('Yeni PIN 4 haneli olmalı')
-    .matches(/^[0-9]{4}$/)
-    .withMessage('Yeni PIN sadece rakam içermeli'),
+    .matches(/^[0-9]{6}$/)
+    .withMessage('Yeni PIN 6 haneli rakam olmalı'),
   
   handleValidationErrors
 ];
@@ -104,10 +96,8 @@ const validateUserUpdate = [
 
   body('pin')
     .optional()
-    .isLength({ min: 4, max: 4 })
-    .withMessage('PIN 4 haneli olmalı')
-    .matches(/^[0-9]{4}$/)
-    .withMessage('PIN sadece rakam içermeli'),
+    .matches(/^[0-9]{6}$/)
+    .withMessage('PIN 6 haneli rakam olmalı'),
   
   handleValidationErrors
 ];

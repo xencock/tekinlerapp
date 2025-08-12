@@ -37,7 +37,6 @@
 - [x] Basit kullanıcı yönetimi (tüm kullanıcılar için eşit yetki)
 - [x] Oturum yönetimi (JWT tabanlı)
 - [ ] Şifre sıfırlama
-- [ ] İki faktörlü doğrulama (Opsiyonel)
 
 ### 2. Stok ve Envanter Yönetimi
 - [x] Ürün ekleme, düzenleme ve silme
@@ -63,7 +62,7 @@
 - [x] İndirim uygulama
 - [x] Ödeme alma (Nakit, Kredi Kartı, Havale)
 - [x] Satış geçmişi ve takibi
-- [ ] Fatura oluşturma ve yazdırma
+- [x] Fatura oluşturma ve yazdırma
 - [ ] Günlük ve aylık satış raporları
 
 ### 5. Müşteri Yönetimi
@@ -73,7 +72,6 @@
 - [x] Müşteri bakiye takibi
 - [x] Müşteriye özel notlar ekleme
 - [x] Müşteri raporları (Temel)
-- [ ] Müşteri kategorileri veya grupları
 
 ### 6. Tedarikçi Yönetimi (Planlanan)
 - [ ] Tedarikçi kayıt ve düzenleme
@@ -104,7 +102,6 @@
 - [ ] Gelişmiş dashboard ve veri görselleştirme
 - [ ] Detaylı raporlama arayüzleri
 - [ ] Toplu işlem yetenekleri (Stok, Müşteri)
-- [ ] Klavye kısayolları ile hızlı kullanım
 
 ### iOS Uygulaması (Planlanan)
 - [ ] Barkod tarama için kamera entegrasyonu

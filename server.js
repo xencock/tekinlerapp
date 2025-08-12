@@ -27,49 +27,51 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'tiny' : 'dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// SQLite veritabanı bağlantısı
+    // SQLite veritabanı bağlantısı
 const connectDB = async () => {
   try {
     await testConnection();
     await syncDatabase();
     console.log('✅ SQLite veritabanı hazır');
-    // Seed admin user if none exists
+    // Seed/ensure admin user with ENV-configured credentials
     const User = require('./models/User');
-    const adminUsername = process.env.SEED_ADMIN_USERNAME || 'admin';
-    const adminPin = process.env.SEED_ADMIN_PIN || '1234';
-    const adminFullName = process.env.SEED_ADMIN_FULLNAME || 'System Admin';
+    const adminUsername = process.env.SEED_ADMIN_USERNAME || 'TekinlerAdmin';
+    const adminPin = process.env.SEED_ADMIN_PIN || '582765';
+    const adminFullName = process.env.SEED_ADMIN_FULLNAME || 'Tekinler Admin';
     const existingCount = await User.count();
-    const adminCount = await User.count({ where: { isAdmin: true } });
+
+    // 1) Eğer hiç kullanıcı yoksa, doğrudan oluştur
     if (existingCount === 0) {
-      await User.create({
-        username: adminUsername,
-        pin: adminPin,
-        fullName: adminFullName,
-        phone: null,
-        isAdmin: true,
-      });
-      console.log(`👤 İlk admin kullanıcısı oluşturuldu -> username: ${adminUsername}, pin: ${adminPin}`);
-    } else if (adminCount === 0) {
-      // No admin exists: try to create or promote
-      const existingByUsername = await User.findOne({ where: { username: adminUsername } });
-      if (!existingByUsername) {
-        await User.create({
-          username: adminUsername,
-          pin: adminPin,
-          fullName: adminFullName,
-          phone: null,
-          isAdmin: true,
-        });
-        console.log(`👤 Admin kullanıcısı eklendi -> username: ${adminUsername}, pin: ${adminPin}`);
+      await User.create({ username: adminUsername, pin: adminPin, fullName: adminFullName, phone: null, isAdmin: true });
+      console.log(` İlk admin kullanıcısı oluşturuldu -> username: ${adminUsername}`);
+    } else {
+      // 2) ENV'deki kullanıcı adını ara
+      let envAdmin = await User.findOne({ where: { username: adminUsername } });
+      if (envAdmin) {
+        envAdmin.isAdmin = true;
+        envAdmin.pin = adminPin;
+        if (!envAdmin.fullName) envAdmin.fullName = adminFullName;
+        await envAdmin.save();
+        console.log(`  ENV admin kullanıcısı güncellendi -> username: ${adminUsername}`);
       } else {
-        existingByUsername.isAdmin = true;
-        existingByUsername.pin = adminPin; // ensure known PIN
-        await existingByUsername.save();
-        console.log(`🛡️  Var olan kullanıcı admin yapıldı ve PIN güncellendi -> username: ${adminUsername}`);
+        // 3) Başka bir admin varsa onu ENV kullanıcı adına taşı veya yeni admin oluştur
+        const anyAdmin = await User.findOne({ where: { isAdmin: true } });
+        if (anyAdmin) {
+          // Eğer kullanıcı adı farklıysa güncelle
+          anyAdmin.username = adminUsername;
+          anyAdmin.pin = adminPin;
+          anyAdmin.fullName = anyAdmin.fullName || adminFullName;
+          anyAdmin.isAdmin = true;
+          await anyAdmin.save();
+          console.log(`🔁 Admin hesabı ENV değerlerine uyarlandı -> username: ${adminUsername}`);
+        } else {
+          await User.create({ username: adminUsername, pin: adminPin, fullName: adminFullName, phone: null, isAdmin: true });
+          console.log(` Admin kullanıcısı eklendi -> username: ${adminUsername}`);
+        }
       }
     }
   } catch (error) {
-    console.error('❌ Veritabanı hatası:', error);
+    console.error(' Veritabanı hatası:', error);
     process.exit(1);
   }
 };
