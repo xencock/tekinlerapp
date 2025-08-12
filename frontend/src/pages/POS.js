@@ -95,7 +95,7 @@ const POS = () => {
       setSelectedCustomer(customerResponse.data.customer);
     } catch (error) {
       console.error('Quick balance error:', error);
-      toast.error('❌ Bakiye işlemi eklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
+      toast.error('Bakiye işlemi eklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
     }
   };
 
@@ -152,7 +152,7 @@ const POS = () => {
             }
             const checkDigit = (10 - (sum % 10)) % 10;
             const suggestedBarcode = term.trim() + checkDigit.toString();
-            toast.error(`🔍 Bu barkod ile ürün bulunamadı. Önerilen: ${suggestedBarcode}`, { duration: 4500 });
+            toast.error(`Bu barkod ile ürün bulunamadı. Önerilen: ${suggestedBarcode}`, { duration: 4500 });
           } else if (term.trim().length === 13) {
             // 13 haneli barkod için check digit kontrolü
             let sum = 0;
@@ -165,20 +165,20 @@ const POS = () => {
             
             if (expectedCheckDigit !== actualCheckDigit) {
               const correctedBarcode = term.trim().substring(0, 12) + expectedCheckDigit.toString();
-              toast.error(`⚠️ Barkod hatası düzeltildi: ${correctedBarcode}`, { duration: 4000 });
+              toast.error(`Barkod hatası düzeltildi: ${correctedBarcode}`, { duration: 4000 });
             } else {
-              toast.error('🚫 Bu barkod ile ürün bulunamadı. Lütfen kontrol edin.', { duration: 4000 });
+              toast.error('Bu barkod ile ürün bulunamadı. Lütfen kontrol edin.', { duration: 4000 });
             }
           } else {
-            toast.error('🚫 Bu barkod ile ürün bulunamadı. Lütfen kontrol edin.', { duration: 4000 });
+            toast.error('Bu barkod ile ürün bulunamadı. Lütfen kontrol edin.', { duration: 4000 });
           }
         } else {
-          toast.error('🔍 Ürün bulunamadı', { duration: 3500 });
+          toast.error('Ürün bulunamadı', { duration: 3500 });
         }
       }
     } catch (error) {
       console.error('Product search error:', error);
-      toast.error('⚠️ Ürün arama hatası. Lütfen tekrar deneyin.', { duration: 4000 });
+      toast.error('Ürün arama hatası. Lütfen tekrar deneyin.', { duration: 4000 });
     } finally {
       setSearchLoading(false);
     }
@@ -212,7 +212,7 @@ const POS = () => {
         const completedBarcode = searchTermToUse + checkDigit.toString();
         
         // Kullanıcıya bilgi ver
-        toast.success(`✨ Barkod otomatik tamamlandı: ${completedBarcode}`, { duration: 3000 });
+        toast.success(`Barkod otomatik tamamlandı: ${completedBarcode}`, { duration: 3000 });
         setSearchTerm(completedBarcode);
         searchTermToUse = completedBarcode;
       } else if (/^\d{13}$/.test(searchTermToUse)) {
@@ -227,7 +227,7 @@ const POS = () => {
         
         if (expectedCheckDigit !== actualCheckDigit) {
           const correctedBarcode = searchTermToUse.substring(0, 12) + expectedCheckDigit.toString();
-          toast.success(`🔧 Barkod düzeltildi: ${correctedBarcode}`, { duration: 3000 });
+          toast.success(`Barkod düzeltildi: ${correctedBarcode}`, { duration: 3000 });
           setSearchTerm(correctedBarcode);
           searchTermToUse = correctedBarcode;
         }
@@ -235,7 +235,7 @@ const POS = () => {
       
       searchProducts(searchTermToUse);
     } else {
-      toast.error('📝 Lütfen bir arama terimi girin', { duration: 3000 });
+      toast.error('Lütfen bir arama terimi girin', { duration: 3000 });
     }
   };
 
@@ -404,85 +404,127 @@ const POS = () => {
 
   // Satış kağıdı yazdırma fonksiyonu
   const printSaleReceipt = (saleData, saleItems) => {
-    const printWindow = window.open('', '_blank');
     const customerName = selectedCustomer ? selectedCustomer.fullName : 'Müşteri Adı Belirtilmemiş';
+    const customerPhone = selectedCustomer && selectedCustomer.phone ? selectedCustomer.phone : '';
     const currentDate = new Date().toLocaleDateString('tr-TR');
     const currentTime = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-    
+
+    const maxRows = 14;
+    const productRows = saleItems.map(item => `
+      <tr>
+        <td class="cell text-center">${item.barcode || ''}</td>
+        <td class="cell">${item.name}</td>
+        <td class="cell text-center">${item.quantity}</td>
+        <td class="cell text-right">${(item.hasDiscount ? item.discountPrice : item.retailPrice).toFixed(2)} ₺</td>
+        <td class="cell text-right">${(item.quantity * (item.hasDiscount ? item.discountPrice : item.retailPrice)).toFixed(2)} ₺</td>
+      </tr>
+    `).join('');
+
+    const emptyRow = `
+      <tr>
+        <td class="cell">&nbsp;</td>
+        <td class="cell">&nbsp;</td>
+        <td class="cell">&nbsp;</td>
+        <td class="cell">&nbsp;</td>
+        <td class="cell">&nbsp;</td>
+      </tr>
+    `;
+    const fillerRows = Array.from({ length: Math.max(0, maxRows - saleItems.length) }).map(() => emptyRow).join('');
+
     const receiptHTML = `
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Satış Fişi</title>
+        <title>Satış Raporu - ${customerName}</title>
         <style>
-          body { font-family: monospace; width: 300px; margin: 0 auto; padding: 20px; }
-          .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
-          .company-name { font-size: 18px; font-weight: bold; }
-          .customer-info { margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-          .items { margin-bottom: 15px; }
-          .item { display: flex; justify-content: space-between; margin-bottom: 5px; }
-          .item-name { max-width: 180px; overflow: hidden; }
-          .item-price { text-align: right; }
-          .total { border-top: 2px solid #000; padding-top: 10px; font-weight: bold; }
-          .footer { text-align: center; margin-top: 20px; font-size: 12px; }
-          @media print {
-            body { width: auto; margin: 0; padding: 10px; }
-          }
+          * { box-sizing: border-box; }
+          body { font-family: Arial, Helvetica, sans-serif; color: #000; background: #fff; margin: 0; padding: 0; }
+          .page { width: 210mm; max-width: 100%; margin: 0 auto; padding: 12mm; }
+          .header { display: flex; align-items: flex-start; justify-content: space-between; border-bottom: 1.5px solid #000; padding-bottom: 10px; margin-bottom: 12px; }
+          .brand { font-weight: 800; font-size: 26px; letter-spacing: 1px; }
+          .company-info { font-size: 11px; line-height: 1.4; margin-top: 4px; }
+          .title { font-weight: 700; font-size: 16px; text-transform: uppercase; }
+          .meta { font-size: 11px; margin-top: 6px; text-align: right; }
+          .section { border: 1px solid #000; padding: 10px; margin-bottom: 12px; }
+          .section-title { font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+          .field { display: flex; gap: 10px; font-size: 12px; margin-bottom: 6px; }
+          .field-label { width: 140px; color: #000; }
+          .field-line { flex: 1; border-bottom: 1px dotted #000; }
+          table { width: 100%; border-collapse: collapse; }
+          .thead th { font-size: 12px; font-weight: 700; border: 1px solid #000; padding: 6px 6px; text-align: left; }
+          .cell { border: 1px solid #000; padding: 6px 6px; font-size: 12px; }
+          .text-right { text-align: right; }
+          .text-center { text-align: center; }
+          .totals { margin-top: 10px; display: flex; justify-content: flex-end; }
+          .total-box { width: 280px; border: 1px solid #000; }
+          .total-row { display: flex; }
+          .total-row div { flex: 1; border-right: 1px solid #000; padding: 6px; font-size: 12px; }
+          .total-row div:last-child { border-right: none; text-align: right; font-weight: 700; }
+          .print-actions { margin-top: 14px; text-align: right; }
+          .btn { border: 1px solid #000; background: #fff; color: #000; padding: 8px 14px; font-size: 12px; cursor: pointer; }
+          @page { size: A4; margin: 12mm; }
+          @media print { .btn, .print-actions { display: none; } .page { box-shadow: none; padding: 0; } }
+          /* A5 uyumu */
+          @media screen and (max-width: 768px) { .page { width: 148mm; padding: 8mm; } }
         </style>
       </head>
       <body>
-        <div class="header">
-          <div class="company-name">TEKİNLER MAĞAZA</div>
-          <div>Satış Fişi</div>
-          <div>${currentDate} ${currentTime}</div>
-        </div>
-        
-        <div class="customer-info">
-          <div><strong>Müşteri:</strong> ${customerName}</div>
-          ${selectedCustomer && selectedCustomer.phone ? `<div><strong>Telefon:</strong> ${selectedCustomer.phone}</div>` : ''}
-        </div>
-        
-        <div class="items">
-          ${saleItems.map(item => `
-            <div class="item">
-              <div class="item-name">${item.name}</div>
-              <div class="item-price">${item.quantity} x ${(item.hasDiscount ? item.discountPrice : item.retailPrice).toFixed(2)} ₺</div>
+        <div class="page">
+          <div class="header">
+            <div>
+              <div class="brand">TEKİNLER</div>
+              <div class="company-info">
+                Mağaza | Adres | Telefon<br/>
+                Web: tekinler.example
+              </div>
             </div>
-            <div class="item">
-              <div></div>
-              <div class="item-price">${(item.quantity * (item.hasDiscount ? item.discountPrice : item.retailPrice)).toFixed(2)} ₺</div>
+            <div style="text-align:right;">
+              <div class="title">SATIŞ RAPORU</div>
+              <div class="meta">Tarih: ${currentDate} ${currentTime}</div>
             </div>
-          `).join('')}
-        </div>
-        
-        <div class="total">
-          <div class="item">
-            <div>TOPLAM:</div>
-            <div>${cartTotal.toFixed(2)} ₺</div>
           </div>
-          <div class="item">
-            <div>Ödeme Şekli:</div>
-            <div>Hesaba Kayıt</div>
+
+          <div class="section">
+            <div class="section-title">Müşteri Bilgileri</div>
+            <div class="field"><div class="field-label">Adı Soyadı / Ünvanı</div><div class="field-line">${customerName}</div></div>
+            <div class="field"><div class="field-label">Telefon</div><div class="field-line">${customerPhone}</div></div>
+          </div>
+
+          <table>
+            <thead class="thead">
+              <tr>
+                <th style="width: 18%">Kod No</th>
+                <th>Malzemenin Adı</th>
+                <th style="width: 12%" class="text-center">Adet</th>
+                <th style="width: 16%" class="text-right">Birim Fiyat</th>
+                <th style="width: 18%" class="text-right">Toplam Fiyat</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${productRows}
+              ${fillerRows}
+            </tbody>
+          </table>
+
+          <div class="totals">
+            <div class="total-box">
+              <div class="total-row"><div>Ödeme Şekli</div><div>Hesaba Kayıt</div></div>
+              <div class="total-row"><div>Genel Toplam</div><div>${cartTotal.toFixed(2)} ₺</div></div>
+            </div>
+          </div>
+
+          <div class="print-actions">
+            <button class="btn" onclick="window.print()">Yazdır</button>
           </div>
         </div>
-        
-        <div class="footer">
-          <div>Teşekkür ederiz!</div>
-          <div>İyi günler dileriz.</div>
-        </div>
-        
-        <script>
-          window.onload = function() {
-            window.print();
-            setTimeout(function() { window.close(); }, 1000);
-          }
-        </script>
       </body>
       </html>
     `;
-    
+
+    const printWindow = window.open('', '_blank', 'width=900,height=700,scrollbars=yes,resizable=yes');
     printWindow.document.write(receiptHTML);
     printWindow.document.close();
+    printWindow.focus();
   };
 
   const handleCompleteSale = async () => {
@@ -531,7 +573,7 @@ const POS = () => {
       }, 100);
 
     } catch (error) {
-      toast.error(error.response?.data?.message || '❌ Satış tamamlanamadı. Lütfen tekrar deneyin.', { duration: 4000 });
+      toast.error(error.response?.data?.message || 'Satış tamamlanamadı. Lütfen tekrar deneyin.', { duration: 4000 });
       console.error('Sale completion error:', error);
     } finally {
       setLoading(false);
@@ -849,7 +891,7 @@ const POS = () => {
               {/* Sale Completion */}
               <div className="mt-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200 p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  🛒 Satışı Tamamla
+                  Satışı Tamamla
                 </h3>
                 <div className="text-center">
                   <div className="mb-4">
@@ -868,13 +910,12 @@ const POS = () => {
                       </>
                     ) : (
                       <>
-                        <span>💰</span>
-                        {!selectedCustomer ? 'Müşteri Seçin' : `Hesaba Kaydet & Yazdır`}
+                        Hesaba Kaydet & Yazdır
                       </>
                     )}
                   </button>
                   {!selectedCustomer && (
-                    <p className="text-xs text-red-500 mt-2">⚠️ Satış için müşteri seçimi zorunludur</p>
+                    <p className="text-xs text-red-500 mt-2">Satış için müşteri seçimi zorunludur</p>
                   )}
                 </div>
               </div>

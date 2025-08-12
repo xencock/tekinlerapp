@@ -151,6 +151,9 @@ export const salesAPI = {
   // Yeni satış oluştur
   createSale: (saleData) => api.post('/sales', saleData),
   
+  // Satış detaylarını getir
+  getSaleDetails: (saleId) => api.get(`/sales/${saleId}`),
+  
   // Satış istatistikleri
   getStats: (params) => api.get('/sales/stats/overview', { params }),
 };

@@ -236,4 +236,9 @@ Customer.belongsTo(User, {
   foreignKey: 'updatedBy'
 });
 
+// Sale ilişkisi - bu import'u en sona koyduk ki circular dependency olmasın
+const Sale = require('./Sale');
+Customer.hasMany(Sale, { foreignKey: 'customerId', as: 'sales' });
+Sale.belongsTo(Customer, { foreignKey: 'customerId', as: 'customer' });
+
 module.exports = Customer;

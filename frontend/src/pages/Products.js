@@ -114,7 +114,7 @@ const Products = () => {
       console.error('Fetch products error:', error);
       console.error('Error response:', error.response?.data);
       console.error('Error status:', error.response?.status);
-      toast.error(error.response?.data?.message || '🔄 Ürünler yüklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
+      toast.error(error.response?.data?.message || 'Ürünler yüklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
     } finally {
       setLoading(false);
     }
@@ -205,10 +205,10 @@ const Products = () => {
     try {
       if (showEditModal && selectedProduct) {
         await productsAPI.updateProduct(selectedProduct.id, formData);
-        toast.success('✅ Ürün bilgileri başarıyla güncellendi!', { duration: 3000 });
+        toast.success('Ürün bilgileri başarıyla güncellendi!', { duration: 3000 });
       } else {
         await productsAPI.createProduct(formData);
-        toast.success('🎉 Yeni ürün başarıyla eklendi!', { duration: 3000 });
+        toast.success('Yeni ürün başarıyla eklendi!', { duration: 3000 });
       }
       
       resetForm();
@@ -227,7 +227,7 @@ const Products = () => {
         message = error.message;
       }
       
-      toast.error(`⚠️ ${message}`, { duration: 4000 });
+      toast.error(`${message}`, { duration: 4000 });
     }
   };
 
@@ -236,10 +236,10 @@ const Products = () => {
     if (window.confirm('Bu ürünü silmek istediğinizden emin misiniz?')) {
       try {
         await productsAPI.deleteProduct(productId);
-        toast.success('🗑️ Ürün başarıyla silindi', { duration: 3000 });
+        toast.success('Ürün başarıyla silindi', { duration: 3000 });
         fetchProducts();
       } catch (error) {
-        toast.error('❌ Ürün silinemedi. Lütfen tekrar deneyin.', { duration: 4000 });
+        toast.error('Ürün silinemedi. Lütfen tekrar deneyin.', { duration: 4000 });
       }
     }
   };
@@ -262,7 +262,7 @@ const Products = () => {
       setShowEditModal(true);
     } catch (error) {
       console.error('Ürün düzenleme hatası:', error);
-      toast.error('⚠️ Ürün düzenleme sırasında bir hata oluştu. Lütfen tekrar deneyin.', { duration: 4000 });
+      toast.error('Ürün düzenleme sırasında bir hata oluştu. Lütfen tekrar deneyin.', { duration: 4000 });
     }
   };
 
@@ -284,7 +284,7 @@ const Products = () => {
   const handleBarcodeScan = (scannedBarcode) => {
     setShowBarcodeScanner(false);
     setSearchTerm(scannedBarcode);
-    toast.success(`📱 Barkod başarıyla tarandı: ${scannedBarcode}`, { duration: 2500 });
+    toast.success(`Barkod başarıyla tarandı: ${scannedBarcode}`, { duration: 2500 });
   };
 
   // Barkod üretme işlemi
@@ -299,22 +299,22 @@ const Products = () => {
     if (currentBarcode) {
       setSearchTerm(currentBarcode);
       setShowBarcodeGenerator(false);
-      toast.success(`🔍 Barkod aranıyor: ${currentBarcode}`, { duration: 2000 });
+      toast.success(`Barkod aranıyor: ${currentBarcode}`, { duration: 2000 });
     }
   };
 
   // Kategori bazlı barkod önerisi
   const handleSuggestBarcode = async () => {
     if (!formData.category) {
-      toast.error('📂 Barkod önerisi için lütfen önce kategori seçiniz', { duration: 3500 });
+      toast.error('Barkod önerisi için lütfen önce kategori seçiniz', { duration: 3500 });
       return;
     }
 
     setBarcodeLoading(true);
     try {
-      console.log('🎯 Barkod önerisi isteniyor, kategori:', formData.category);
+      console.log('Barkod önerisi isteniyor, kategori:', formData.category);
       const response = await productsAPI.suggestBarcode(formData.category);
-      console.log('📋 API yanıtı:', response.data);
+      console.log('API yanıtı:', response.data);
       
       if (response.data.success) {
         const suggestion = response.data.data;
@@ -324,7 +324,7 @@ const Products = () => {
         }));
         
         toast.success(
-          `🏷️ ${suggestion.category} kategorisi için barkod önerisi: ${suggestion.formatted}`,
+          `Kategori için barkod önerisi: ${suggestion.formatted}`,
           { 
             duration: 5000,
             style: {
@@ -334,10 +334,10 @@ const Products = () => {
           }
         );
       } else {
-        toast.error(response.data.message || '❌ Barkod önerisi oluşturulamadı. Lütfen tekrar deneyin.', { duration: 4000 });
+        toast.error(response.data.message || 'Barkod önerisi oluşturulamadı. Lütfen tekrar deneyin.', { duration: 4000 });
       }
     } catch (error) {
-      console.error('❌ Barkod önerisi hatası:', error);
+      console.error('Barkod önerisi hatası:', error);
       
       let message = 'Barkod önerisi alınamadı';
       
@@ -347,7 +347,7 @@ const Products = () => {
         message = error.message;
       }
       
-      toast.error(`⚠️ ${message}`, {
+      toast.error(`${message}`, {
         duration: 5000,
         style: {
           background: '#EF4444',
@@ -708,7 +708,7 @@ const Products = () => {
                   onClick={resetForm}
                   className="text-blue-100 hover:text-white transition-colors"
                 >
-                  ✕
+                  ×
                 </button>
               </div>
             </div>
@@ -719,7 +719,7 @@ const Products = () => {
               {/* Ürün Bilgileri */}
               <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="flex items-center font-medium text-gray-900 mb-4">
-                  📝 Ürün Bilgileri
+                  Ürün Bilgileri
                 </h3>
                 <div className="space-y-4">
                   <div>
@@ -802,7 +802,7 @@ const Products = () => {
                       </div>
                       {!formData.category && (
                         <p className="text-xs text-amber-600 mt-1">
-                          💡 Önce kategori seçin, barkod önerisi alabilirsiniz
+                          Önce kategori seçin, barkod önerisi alabilirsiniz
                         </p>
                       )}
                     </div>
@@ -840,9 +840,9 @@ const Products = () => {
                         className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
                       >
                         <option value="">Sezon Seçin</option>
-                        <option value="Yaz">🌞 Yaz</option>
-                        <option value="Kış">❄️ Kış</option>
-                        <option value="Dört Mevsim">🔄 Dört Mevsim</option>
+                        <option value="Yaz">Yaz</option>
+                        <option value="Kış">Kış</option>
+                        <option value="Dört Mevsim">Dört Mevsim</option>
                       </select>
                     </div>
                   </div>
@@ -852,7 +852,7 @@ const Products = () => {
               {/* Fiyat ve Stok */}
               <div className="bg-green-50 rounded-lg p-4">
                 <h3 className="flex items-center font-medium text-gray-900 mb-4">
-                  💰 Fiyat ve Stok Bilgileri
+                  Fiyat ve Stok Bilgileri
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
@@ -938,7 +938,7 @@ const Products = () => {
                   onClick={() => setShowBarcodeScanner(false)}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  ✕
+                  ×
                 </button>
               </div>
             </div>
@@ -964,7 +964,7 @@ const Products = () => {
                   onClick={() => setShowBarcodeGenerator(false)}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  ✕
+                  ×
                 </button>
               </div>
             </div>

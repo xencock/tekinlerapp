@@ -88,8 +88,8 @@ router.post('/', authenticateToken, async (req, res) => {
       taxAmount: 0 // Vergi hesaplaması kaldırıldı
     }, { transaction });
 
-    // Veresiye satış ise müşteri bakiyesini güncelle
-    if (paymentMethod === 'Veresiye' && customerId) {
+    // Müşterili satışlar için bakiye güncelle (Veresiye ve Hesaba Kayıt)
+    if ((paymentMethod === 'Veresiye' || paymentMethod === 'Hesaba Kayıt') && customerId) {
       // Müşteri bakiyesini güncelle
       const customer = await Customer.findByPk(customerId, { transaction });
       if (customer) {
@@ -102,7 +102,7 @@ router.post('/', authenticateToken, async (req, res) => {
           customerId: customerId,
           type: 'debt',
           amount: totalAmount,
-          description: `Satış #${sale.id} - Veresiye`,
+          description: `Satış #${sale.id} - ${paymentMethod}`,
           category: 'Satış',
           date: new Date(),
           createdBy: req.user.id,
@@ -128,6 +128,53 @@ router.post('/', authenticateToken, async (req, res) => {
     res.status(400).json({
       error: 'Satış oluşturulamadı',
       message: error.message
+    });
+  }
+});
+
+// @route   GET /api/sales/:id
+// @desc    Get sale details by ID
+// @access  Private
+router.get('/:id', authenticateToken, async (req, res) => {
+  try {
+    const sale = await Sale.findByPk(req.params.id, {
+      include: [
+        {
+          model: SaleItem,
+          as: 'items',
+          include: [
+            {
+              model: Product,
+              as: 'product',
+              attributes: ['id', 'name', 'barcode', 'brand', 'category']
+            }
+          ]
+        },
+        {
+          model: Customer,
+          as: 'customer',
+          attributes: ['id', 'firstName', 'lastName', 'phone']
+        }
+      ]
+    });
+
+    if (!sale) {
+      return res.status(404).json({
+        error: 'Satış bulunamadı',
+        message: 'Belirtilen ID ile satış bulunamadı'
+      });
+    }
+
+    res.json({
+      success: true,
+      sale: sale
+    });
+
+  } catch (error) {
+    console.error('Get sale details error:', error);
+    res.status(500).json({
+      error: 'Sunucu hatası',
+      message: 'Satış detayları alınamadı'
     });
   }
 });
