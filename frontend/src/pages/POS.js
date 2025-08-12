@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Search, X, Plus, Minus, Trash2, TrendingUp, TrendingDown, Camera, Scan } from 'lucide-react';
+import { Search, X, Plus, Minus, Trash2, TrendingUp, TrendingDown, Camera, Scan, ShoppingBag } from 'lucide-react';
 import { productsAPI } from '../utils/api';
 import { customersAPI } from '../utils/api';
 import { salesAPI } from '../utils/api';
@@ -15,8 +15,10 @@ const POS = () => {
   const [customerSearch, setCustomerSearch] = useState('');
   const [searchedCustomers, setSearchedCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState('Nakit');
   const [loading, setLoading] = useState(false);
+  const [showQuantityModal, setShowQuantityModal] = useState(false);
+  const [selectedProductForQuantity, setSelectedProductForQuantity] = useState(null);
+  const [quantityInput, setQuantityInput] = useState('1');
   const [searchLoading, setSearchLoading] = useState(false);
   const [showBalanceModal, setShowBalanceModal] = useState(false);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
@@ -124,10 +126,9 @@ const POS = () => {
       // If only one product found and it's an exact barcode match, auto-add to cart
       if (response.data.products.length === 1 && 
           response.data.products[0].barcode === term.trim()) {
-        addToCart(response.data.products[0]);
+        addToCartWithQuantity(response.data.products[0], 1);
         setSearchTerm('');
         setSearchedProducts([]);
-        toast.success(`${response.data.products[0].name} sepete eklendi`, { duration: 2500 });
       }
       
       // If exact barcode match found among multiple results, prioritize it
@@ -319,22 +320,45 @@ const POS = () => {
   }, [showBarcodeScanner]);
 
   const addToCart = (product) => {
+    setSelectedProductForQuantity(product);
+    setQuantityInput('1');
+    setShowQuantityModal(true);
+  };
+
+  const addToCartWithQuantity = (product, quantity) => {
+    const qty = parseInt(quantity);
+    if (qty <= 0) {
+      toast.error('Adet 0\'dan büyük olmalıdır', { duration: 3000 });
+      return;
+    }
+
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
       if (existingItem) {
-        if (existingItem.quantity < product.currentStock) {
+        const newQuantity = existingItem.quantity + qty;
+        if (newQuantity <= product.currentStock) {
           return prevCart.map((item) =>
-            item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+            item.id === product.id ? { ...item, quantity: newQuantity } : item
           );
         } else {
-          toast.error('Maksimum stok adedine ulaşıldı', { duration: 3500 });
+          toast.error(`Maksimum stok: ${product.currentStock} adet`, { duration: 3500 });
+          return prevCart;
+        }
+      } else {
+        if (qty <= product.currentStock) {
+          return [...prevCart, { ...product, quantity: qty }];
+        } else {
+          toast.error(`Maksimum stok: ${product.currentStock} adet`, { duration: 3500 });
           return prevCart;
         }
       }
-      return [...prevCart, { ...product, quantity: 1 }];
     });
+
+    setShowQuantityModal(false);
     setSearchTerm('');
     setSearchedProducts([]);
+    
+    toast.success(`${product.name} - ${qty} adet sepete eklendi`, { duration: 2500 });
     
     // Auto-focus back to barcode input for next scan
     setTimeout(() => {
@@ -378,45 +402,126 @@ const POS = () => {
 
   const cartTotal = cartSubtotal; // Vergi hesaplaması kaldırıldı
 
+  // Satış kağıdı yazdırma fonksiyonu
+  const printSaleReceipt = (saleData, saleItems) => {
+    const printWindow = window.open('', '_blank');
+    const customerName = selectedCustomer ? selectedCustomer.fullName : 'Müşteri Adı Belirtilmemiş';
+    const currentDate = new Date().toLocaleDateString('tr-TR');
+    const currentTime = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+    
+    const receiptHTML = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Satış Fişi</title>
+        <style>
+          body { font-family: monospace; width: 300px; margin: 0 auto; padding: 20px; }
+          .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+          .company-name { font-size: 18px; font-weight: bold; }
+          .customer-info { margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+          .items { margin-bottom: 15px; }
+          .item { display: flex; justify-content: space-between; margin-bottom: 5px; }
+          .item-name { max-width: 180px; overflow: hidden; }
+          .item-price { text-align: right; }
+          .total { border-top: 2px solid #000; padding-top: 10px; font-weight: bold; }
+          .footer { text-align: center; margin-top: 20px; font-size: 12px; }
+          @media print {
+            body { width: auto; margin: 0; padding: 10px; }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="company-name">TEKİNLER MAĞAZA</div>
+          <div>Satış Fişi</div>
+          <div>${currentDate} ${currentTime}</div>
+        </div>
+        
+        <div class="customer-info">
+          <div><strong>Müşteri:</strong> ${customerName}</div>
+          ${selectedCustomer && selectedCustomer.phone ? `<div><strong>Telefon:</strong> ${selectedCustomer.phone}</div>` : ''}
+        </div>
+        
+        <div class="items">
+          ${saleItems.map(item => `
+            <div class="item">
+              <div class="item-name">${item.name}</div>
+              <div class="item-price">${item.quantity} x ${(item.hasDiscount ? item.discountPrice : item.retailPrice).toFixed(2)} ₺</div>
+            </div>
+            <div class="item">
+              <div></div>
+              <div class="item-price">${(item.quantity * (item.hasDiscount ? item.discountPrice : item.retailPrice)).toFixed(2)} ₺</div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <div class="total">
+          <div class="item">
+            <div>TOPLAM:</div>
+            <div>${cartTotal.toFixed(2)} ₺</div>
+          </div>
+          <div class="item">
+            <div>Ödeme Şekli:</div>
+            <div>Hesaba Kayıt</div>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <div>Teşekkür ederiz!</div>
+          <div>İyi günler dileriz.</div>
+        </div>
+        
+        <script>
+          window.onload = function() {
+            window.print();
+            setTimeout(function() { window.close(); }, 1000);
+          }
+        </script>
+      </body>
+      </html>
+    `;
+    
+    printWindow.document.write(receiptHTML);
+    printWindow.document.close();
+  };
+
   const handleCompleteSale = async () => {
     if (cart.length === 0) {
       toast.error('Sepetiniz boş. Lütfen ürün ekleyin.', { duration: 3500 });
       return;
     }
 
-    // Veresiye satış için müşteri kontrolü
-    if (paymentMethod === 'Veresiye' && !selectedCustomer) {
-      toast.error('Veresiye satış için müşteri seçimi zorunludur.', { duration: 4000 });
+    // Müşteri seçimi zorunlu
+    if (!selectedCustomer) {
+      toast.error('Satış için müşteri seçimi zorunludur.', { duration: 4000 });
       return;
     }
 
     setLoading(true);
     try {
       const saleData = {
-        customerId: selectedCustomer ? selectedCustomer.id : null,
-        paymentMethod,
+        customerId: selectedCustomer.id,
+        paymentMethod: 'Hesaba Kayıt', // Otomatik hesaba kayıt
         items: cart.map(item => ({
           productId: item.id,
           quantity: item.quantity,
         })),
-        notes: ''
+        notes: 'Otomatik hesaba kaydedilen satış'
       };
 
-      await salesAPI.createSale(saleData);
+      const response = await salesAPI.createSale(saleData);
       
-      // Veresiye satış için özel mesaj
-      if (paymentMethod === 'Veresiye') {
-        toast.success(`Veresiye satış tamamlandı! ${cartTotal.toFixed(2)} ₺ müşteri hesabına eklendi.`, { duration: 4000 });
-      } else {
-        toast.success('Satış başarıyla tamamlandı!', { duration: 3000 });
-      }
+      toast.success(`Satış tamamlandı! ${cartTotal.toFixed(2)} ₺ müşteri hesabına eklendi.`, { duration: 4000 });
+      
+      // Satış kağıdını yazdır
+      printSaleReceipt(response.data, cart);
       
       // Reset state
+      const cartItems = [...cart]; // Yazdırmak için kopyala
       setCart([]);
       setSelectedCustomer(null);
       setSearchTerm('');
       setCustomerSearch('');
-      setPaymentMethod('Nakit');
       
       // Auto-focus back to barcode input for next sale
       setTimeout(() => {
@@ -434,302 +539,345 @@ const POS = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 p-4 gap-4">
-      {/* Left Side - Cart and Customer */}
-      <div className="w-2/5 flex flex-col gap-4">
-        {/* Customer Section */}
-        <div className="bg-white rounded-lg shadow p-4 flex-shrink-0">
-          <h2 className="text-lg font-bold mb-2">Müşteri</h2>
-          {selectedCustomer ? (
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero header */}
+      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gradient-to-r from-indigo-50 via-white to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-6 sm:py-8">
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <p className="font-semibold">{selectedCustomer.fullName}</p>
-                  <p className="text-sm text-gray-500">{selectedCustomer.phone}</p>
-                </div>
-                <button onClick={() => setSelectedCustomer(null)} className="text-red-500 hover:text-red-700">
-                  <X size={20} />
-                </button>
-              </div>
-              
-              {/* Balance Display */}
-              <div className={`p-3 rounded-lg border ${getBalanceStatus(selectedCustomer.balance).bgColor} mb-3`}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Bakiye</p>
-                    <p className={`text-xl font-bold ${getBalanceStatus(selectedCustomer.balance).color}`}>
-                      {formatNumberForDisplay(selectedCustomer.balance)} ₺
-                    </p>
-                    <p className={`text-xs ${getBalanceStatus(selectedCustomer.balance).color}`}>
-                      {getBalanceStatus(selectedCustomer.balance).status}
-                    </p>
-                  </div>
-                  <div className="flex gap-1">
-                    <button
-                      onClick={() => {
-                        setBalanceForm({ type: 'debt', amount: '', description: '', category: 'Satış' });
-                        setShowBalanceModal(true);
-                      }}
-                      className="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                      title="Borç Ekle"
-                    >
-                      <TrendingUp size={16} />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setBalanceForm({ type: 'payment', amount: '', description: '', category: 'Satış' });
-                        setShowBalanceModal(true);
-                      }}
-                      className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                      title="Ödeme Ekle"
-                    >
-                      <TrendingDown size={16} />
-                    </button>
-                  </div>
-                </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Satış Noktası</h1>
+              <p className="mt-1 text-sm text-gray-600">Hızlı ve kolay satış işlemleri</p>
+            </div>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={() => setShowBarcodeScanner(true)}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+              >
+                <Camera className="w-4 h-4 mr-2" />
+                Kamera
+              </button>
+              <div className={`px-3 py-2 rounded-lg text-sm font-medium ${cart.length > 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+                {cart.length} ürün
               </div>
             </div>
-          ) : (
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Müşteri ara (isim, telefon...)"
-                className="input pl-10 w-full"
-                value={customerSearch}
-                onChange={(e) => setCustomerSearch(e.target.value)}
-              />
-              {searchedCustomers.length > 0 && (
-                <ul className="absolute z-10 w-full bg-white border mt-1 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                  {searchedCustomers.map(customer => (
-                    <li key={customer.id} onClick={() => selectCustomer(customer)} className="p-2 hover:bg-gray-100 cursor-pointer">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="font-medium">{customer.fullName}</p>
-                          <p className="text-sm text-gray-500">{customer.phone}</p>
-                        </div>
-                        <div className={`text-xs px-2 py-1 rounded ${getBalanceStatus(customer.balance).bgColor} ${getBalanceStatus(customer.balance).color}`}>
-                          {formatNumberForDisplay(customer.balance)} ₺
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Cart Section */}
-        <div className="bg-white rounded-lg shadow p-4 flex-grow flex flex-col">
-          <h2 className="text-lg font-bold mb-2">Sepet</h2>
-          <div className="flex-grow overflow-y-auto">
-            {cart.length === 0 ? (
-              <p className="text-gray-500 text-center mt-8">Sepetiniz boş.</p>
-            ) : (
-              <ul className="divide-y divide-gray-200">
-                {cart.map(item => (
-                  <li key={item.id} className="py-3">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <p className="font-semibold">{item.name}</p>
-                        <p className="text-sm text-gray-500">{item.hasDiscount ? item.discountPrice : item.retailPrice} TL</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button onClick={() => updateQuantity(item.id, -1)} className="p-1 rounded-full bg-gray-200 hover:bg-gray-300"><Minus size={14} /></button>
-                        <span>{item.quantity}</span>
-                        <button onClick={() => updateQuantity(item.id, 1)} className="p-1 rounded-full bg-gray-200 hover:bg-gray-300"><Plus size={14} /></button>
-                        <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 ml-2"><Trash2 size={16} /></button>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
-          {cart.length > 0 && (
-            <div className="border-t pt-4 mt-4">
-              <div className="flex justify-between font-bold text-lg">
-                <span>Toplam</span>
-                <span>{cartTotal.toFixed(2)} TL</span>
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
-      {/* Right Side - Product Search and Sale Completion */}
-      <div className="w-3/5 flex flex-col gap-4">
-        {/* Product Search Section */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Satış</h2>
-            <p className="text-gray-600">Ürün arayın veya barkod taratın</p>
-          </div>
-          
-          {/* Large Barcode Input */}
-          <div className="mb-6">
-            <div className="relative">
-              <Scan className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={24} />
-              <input
-                ref={barcodeInputRef}
-                type="text"
-                placeholder="Ürün adı veya barkod..."
-                className={`w-full pl-14 pr-4 py-3 text-lg border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                  /^\d+$/.test(searchTerm) 
-                    ? 'border-blue-500 bg-blue-50' 
-                    : 'border-gray-300'
-                }`}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyPress={handleKeyPress}
-                onFocus={(e) => e.target.select()}
-              />
-              {/^\d{12}$/.test(searchTerm) && (
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded font-medium">
-                  Enter'a basın
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <button
-              onClick={() => setShowBarcodeScanner(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 shadow-sm"
-            >
-              <Camera size={18} />
-              Kamera Aç
-            </button>
-            <button
-              onClick={handleManualSearch}
-              disabled={searchLoading}
-              className="bg-gray-600 hover:bg-gray-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
-            >
-              {searchLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  Arıyor...
-                </>
-              ) : (
-                <>
-                  <Search size={18} />
-                  Ara
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Quick Tips */}
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="text-sm text-gray-700">
-              <div className="font-medium mb-2">Klavye Kısayolları:</div>
-              <div className="space-y-1 text-xs text-gray-600">
-                <div>• F5: Kamera açar</div>
-                <div>• Ctrl+F: Arama alanına odaklanır</div>
-                <div>• Enter: Aramayı başlatır</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Search Results */}
-          <div className="mt-4 h-64 overflow-y-auto border rounded-lg bg-gray-50">
-            {searchedProducts.length > 0 ? (
-              <div className="p-4">
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm font-medium text-gray-700">{searchedProducts.length} ürün bulundu</span>
-                  <button
-                    onClick={clearSearch}
-                    className="text-sm text-red-600 hover:text-red-700 bg-red-50 px-3 py-1 rounded font-medium"
-                  >
-                    Temizle
-                  </button>
-                </div>
-                <ul className="space-y-2">
-                  {searchedProducts.map(product => (
-                    <li 
-                      key={product.id} 
-                      onClick={() => addToCart(product)} 
-                      className="bg-white p-3 rounded-lg hover:bg-blue-50 cursor-pointer border hover:border-blue-200 transition-all"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column - Customer & Cart */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Customer Section */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Müşteri</h2>
+              {selectedCustomer ? (
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <p className="font-semibold text-gray-900">{selectedCustomer.fullName}</p>
+                      <p className="text-sm text-gray-500">{selectedCustomer.phone}</p>
+                    </div>
+                    <button 
+                      onClick={() => setSelectedCustomer(null)} 
+                      className="p-1 text-gray-400 hover:text-red-500 transition-colors"
                     >
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <div className="font-semibold text-gray-900 text-lg">{product.name}</div>
-                          <div className="text-sm text-gray-600 mt-1">
-                            {product.brand && `${product.brand} - `}{product.size && `${product.size}, `}{product.color}
-                          </div>
-                          <div className="text-xs text-blue-600 font-mono mt-2 bg-blue-50 px-2 py-1 rounded inline-block">
-                            {product.barcode}
+                      <X size={18} />
+                    </button>
+                  </div>
+                  
+                  {/* Balance Display */}
+                  <div className={`p-4 rounded-lg border ${getBalanceStatus(selectedCustomer.balance).bgColor}`}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Bakiye Durumu</p>
+                        <p className={`text-lg font-bold ${getBalanceStatus(selectedCustomer.balance).color}`}>
+                          {formatNumberForDisplay(selectedCustomer.balance)} ₺
+                        </p>
+                        <p className={`text-xs ${getBalanceStatus(selectedCustomer.balance).color}`}>
+                          {getBalanceStatus(selectedCustomer.balance).status}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            setBalanceForm({ type: 'debt', amount: '', description: '', category: 'Satış' });
+                            setShowBalanceModal(true);
+                          }}
+                          className="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                          title="Borç Ekle"
+                        >
+                          <TrendingUp size={14} />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setBalanceForm({ type: 'payment', amount: '', description: '', category: 'Satış' });
+                            setShowBalanceModal(true);
+                          }}
+                          className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                          title="Ödeme Ekle"
+                        >
+                          <TrendingDown size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                  <input
+                    type="text"
+                    placeholder="Müşteri ara..."
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={customerSearch}
+                    onChange={(e) => setCustomerSearch(e.target.value)}
+                  />
+                  {searchedCustomers.length > 0 && (
+                    <div className="absolute z-10 w-full bg-white border border-gray-200 mt-1 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                      {searchedCustomers.map(customer => (
+                        <div 
+                          key={customer.id} 
+                          onClick={() => selectCustomer(customer)} 
+                          className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        >
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <p className="font-medium text-gray-900">{customer.fullName}</p>
+                              <p className="text-sm text-gray-500">{customer.phone}</p>
+                            </div>
+                            <div className={`text-xs px-2 py-1 rounded ${getBalanceStatus(customer.balance).bgColor} ${getBalanceStatus(customer.balance).color}`}>
+                              {formatNumberForDisplay(customer.balance)} ₺
+                            </div>
                           </div>
                         </div>
-                        <div className="text-right ml-4">
-                          <div className="font-bold text-xl text-gray-900">
-                            {product.hasDiscount ? product.discountPrice : product.retailPrice} TL
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Cart Section */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-100">
+              <div className="p-6 border-b border-gray-100">
+                <h2 className="text-lg font-semibold text-gray-900">Sepet</h2>
+              </div>
+              <div className="p-6 pt-0">
+                {cart.length === 0 ? (
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                      <ShoppingBag className="w-8 h-8 text-gray-400" />
+                    </div>
+                    <p className="text-gray-500">Sepetiniz boş</p>
+                    <p className="text-sm text-gray-400">Ürün aramaya başlayın</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {cart.map(item => (
+                      <div key={item.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900">{item.name}</p>
+                          <p className="text-sm text-gray-500">{item.hasDiscount ? item.discountPrice : item.retailPrice} ₺</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2">
+                            <button 
+                              onClick={() => updateQuantity(item.id, -1)} 
+                              className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                            >
+                              <Minus size={14} />
+                            </button>
+                            <span className="w-8 text-center font-medium">{item.quantity}</span>
+                            <button 
+                              onClick={() => updateQuantity(item.id, 1)} 
+                              className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                            >
+                              <Plus size={14} />
+                            </button>
                           </div>
-                          <div className={`text-sm font-medium ${product.currentStock > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            Stok: {product.currentStock}
-                          </div>
-                          {product.hasDiscount && (
-                            <div className="text-sm text-red-500 line-through">
-                              {product.retailPrice} TL
-                            </div>
-                          )}
+                          <button 
+                            onClick={() => removeFromCart(item.id)} 
+                            className="p-1 text-red-500 hover:text-red-700 transition-colors"
+                          >
+                            <Trash2 size={16} />
+                          </button>
                         </div>
                       </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : searchTerm && !searchLoading ? (
-              <div className="text-center py-12 text-gray-500">
-                <Search size={48} className="mx-auto mb-4 text-gray-300" />
-                <p className="text-lg font-medium">Ürün bulunamadı</p>
-                <p className="text-sm text-gray-400">Farklı bir arama terimi deneyin</p>
-              </div>
-            ) : !searchTerm ? (
-              <div className="text-center py-12 text-gray-400">
-                <Scan size={48} className="mx-auto mb-4 text-gray-300" />
-                <p className="text-lg font-medium">Ürün arayın</p>
-                <p className="text-sm">Bulunan ürünler burada görünecek</p>
-              </div>
-            ) : null}
-          </div>
-        </div>
-
-        {/* Sale Completion */}
-        <div className="bg-white rounded-lg shadow-md p-6 mt-auto">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Satışı Tamamla</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Ödeme Yöntemi</label>
-              <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                value={paymentMethod}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              >
-                <option>Nakit</option>
-                <option>Kredi Kartı</option>
-                <option>Havale/EFT</option>
-                <option>Veresiye</option>
-                <option>Diğer</option>
-              </select>
-            </div>
-            <div className="flex items-end">
-              <button
-                onClick={handleCompleteSale}
-                disabled={loading || cart.length === 0}
-                className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 shadow-sm"
-              >
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    İşleniyor...
-                  </>
-                ) : (
-                  `Satışı Tamamla (${cartTotal.toFixed(2)} TL)`
+                    ))}
+                  </div>
                 )}
-              </button>
+                
+                {cart.length > 0 && (
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-semibold text-gray-900">Toplam</span>
+                      <span className="text-xl font-bold text-gray-900">{cartTotal.toFixed(2)} ₺</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Product Search & Completion */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Product Search Section */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Ürün Arama</h2>
+                <p className="text-gray-600">Ürün adı, barkod ile arayın veya kamera kullanın</p>
+              </div>
+              
+              {/* Search Input */}
+              <div className="mb-4">
+                <div className="relative">
+                  <Scan className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                  <input
+                    ref={barcodeInputRef}
+                    type="text"
+                    placeholder="Ürün adı veya barkod..."
+                    className={`w-full pl-12 pr-4 py-3 text-lg border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                      /^\d+$/.test(searchTerm) 
+                        ? 'border-blue-500 bg-blue-50' 
+                        : 'border-gray-200'
+                    }`}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    onFocus={(e) => e.target.select()}
+                  />
+                  {/^\d{12}$/.test(searchTerm) && (
+                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded font-medium">
+                      Enter'a basın
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <button
+                  onClick={() => setShowBarcodeScanner(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                >
+                  <Camera size={18} />
+                  Kamera Aç
+                </button>
+                <button
+                  onClick={handleManualSearch}
+                  disabled={searchLoading}
+                  className="bg-gray-600 hover:bg-gray-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {searchLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      Arıyor...
+                    </>
+                  ) : (
+                    <>
+                      <Search size={18} />
+                      Ara
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Search Results */}
+              <div className="border border-gray-200 rounded-lg bg-gray-50 min-h-[300px] max-h-[400px] overflow-y-auto">
+                {searchedProducts.length > 0 ? (
+                  <div className="p-4">
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-sm font-medium text-gray-700">{searchedProducts.length} ürün bulundu</span>
+                      <button
+                        onClick={clearSearch}
+                        className="text-sm text-red-600 hover:text-red-700 bg-red-50 px-3 py-1 rounded font-medium"
+                      >
+                        Temizle
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      {searchedProducts.map(product => (
+                        <div 
+                          key={product.id} 
+                          onClick={() => addToCart(product)} 
+                          className="bg-white p-4 rounded-lg hover:bg-blue-50 cursor-pointer border hover:border-blue-200 transition-all"
+                        >
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <div className="font-semibold text-gray-900">{product.name}</div>
+                              <div className="text-sm text-gray-600 mt-1">
+                                {product.brand && `${product.brand} - `}{product.size && `${product.size}, `}{product.color}
+                              </div>
+                              <div className="text-xs text-blue-600 font-mono mt-2 bg-blue-50 px-2 py-1 rounded inline-block">
+                                {product.barcode}
+                              </div>
+                            </div>
+                            <div className="text-right ml-4">
+                              <div className="font-bold text-lg text-gray-900">
+                                {product.hasDiscount ? product.discountPrice : product.retailPrice} ₺
+                              </div>
+                              <div className={`text-sm font-medium ${product.currentStock > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                Stok: {product.currentStock}
+                              </div>
+                              {product.hasDiscount && (
+                                <div className="text-sm text-red-500 line-through">
+                                  {product.retailPrice} ₺
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : searchTerm && !searchLoading ? (
+                  <div className="text-center py-16 text-gray-500">
+                    <Search size={48} className="mx-auto mb-4 text-gray-300" />
+                    <p className="text-lg font-medium">Ürün bulunamadı</p>
+                    <p className="text-sm text-gray-400">Farklı bir arama terimi deneyin</p>
+                  </div>
+                ) : !searchTerm ? (
+                  <div className="text-center py-16 text-gray-400">
+                    <Scan size={48} className="mx-auto mb-4 text-gray-300" />
+                    <p className="text-lg font-medium">Ürün arayın</p>
+                    <p className="text-sm">Bulunan ürünler burada görünecek</p>
+                  </div>
+                ) : null}
+              </div>
+
+              {/* Sale Completion */}
+              <div className="mt-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  🛒 Satışı Tamamla
+                </h3>
+                <div className="text-center">
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-600 mb-2">Satış tutarı müşteri hesabına eklenecek</p>
+                    <p className="text-2xl font-bold text-green-700">{cartTotal.toFixed(2)} ₺</p>
+                  </div>
+                  <button
+                    onClick={handleCompleteSale}
+                    disabled={loading || cart.length === 0 || !selectedCustomer}
+                    className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-4 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-lg shadow-lg"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        İşleniyor...
+                      </>
+                    ) : (
+                      <>
+                        <span>💰</span>
+                        {!selectedCustomer ? 'Müşteri Seçin' : `Hesaba Kaydet & Yazdır`}
+                      </>
+                    )}
+                  </button>
+                  {!selectedCustomer && (
+                    <p className="text-xs text-red-500 mt-2">⚠️ Satış için müşteri seçimi zorunludur</p>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -815,6 +963,83 @@ const POS = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Quantity Selection Modal */}
+      {showQuantityModal && selectedProductForQuantity && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold text-gray-900">Adet Seçimi</h2>
+                <button
+                  onClick={() => setShowQuantityModal(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="mb-4">
+                <h3 className="font-semibold text-gray-900 mb-2">{selectedProductForQuantity.name}</h3>
+                <p className="text-sm text-gray-600 mb-1">
+                  Fiyat: {selectedProductForQuantity.hasDiscount ? selectedProductForQuantity.discountPrice : selectedProductForQuantity.retailPrice} ₺
+                </p>
+                <p className="text-sm text-gray-600">
+                  Mevcut Stok: {selectedProductForQuantity.currentStock} adet
+                </p>
+              </div>
+              
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Adet</label>
+                <input
+                  type="number"
+                  min="1"
+                  max={selectedProductForQuantity.currentStock}
+                  value={quantityInput}
+                  onChange={(e) => setQuantityInput(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg text-center"
+                  placeholder="1"
+                  autoFocus
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      addToCartWithQuantity(selectedProductForQuantity, quantityInput);
+                    }
+                  }}
+                />
+              </div>
+              
+              <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-gray-700">Toplam Tutar:</span>
+                  <span className="text-lg font-bold text-blue-700">
+                    {(
+                      (quantityInput || 0) * 
+                      (selectedProductForQuantity.hasDiscount ? selectedProductForQuantity.discountPrice : selectedProductForQuantity.retailPrice)
+                    ).toFixed(2)} ₺
+                  </span>
+                </div>
+              </div>
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowQuantityModal(false)}
+                  className="flex-1 px-4 py-3 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 font-medium transition-colors"
+                >
+                  İptal
+                </button>
+                <button
+                  onClick={() => addToCartWithQuantity(selectedProductForQuantity, quantityInput)}
+                  disabled={!quantityInput || quantityInput <= 0 || quantityInput > selectedProductForQuantity.currentStock}
+                  className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
+                >
+                  Sepete Ekle
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
