@@ -122,3 +122,7 @@ Detaylı endpoint bilgileri için `routes/` klasöründeki dosyaları inceleyebi
 - React Native ile mobil uygulama geliştirme.
 - Gerçek zamanlı bildirimler için Socket.io entegrasyonu.
 - Kapsamlı testlerin (integration, UI) yazılması.
+
+## Bakım Notu
+
+Bu depo düzenli olarak güncellenmektedir. Son değişiklikler, POS sepetinin sayfa yenilemelerinde korunması ve yazdırma penceresi açılışlarında pop-up engelleyici uyumluluğu üzerine iyileştirmeleri içerir.
