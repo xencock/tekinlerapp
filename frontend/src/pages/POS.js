@@ -11,10 +11,34 @@ import BarcodeScanner from '../components/BarcodeScanner';
 const POS = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchedProducts, setSearchedProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  // Persist cart and selected customer until sale completes
+  const POS_CART_STORAGE_KEY = 'pos_cart';
+  const POS_SELECTED_CUSTOMER_STORAGE_KEY = 'pos_selected_customer';
+
+  const [cart, setCart] = useState(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem(POS_CART_STORAGE_KEY);
+        return saved ? JSON.parse(saved) : [];
+      }
+    } catch (error) {
+      console.error('Persisted cart load error:', error);
+    }
+    return [];
+  });
   const [customerSearch, setCustomerSearch] = useState('');
   const [searchedCustomers, setSearchedCustomers] = useState([]);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedCustomer, setSelectedCustomer] = useState(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem(POS_SELECTED_CUSTOMER_STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+      }
+    } catch (error) {
+      console.error('Persisted customer load error:', error);
+    }
+    return null;
+  });
   const [loading, setLoading] = useState(false);
   const [showQuantityModal, setShowQuantityModal] = useState(false);
   const [selectedProductForQuantity, setSelectedProductForQuantity] = useState(null);
@@ -28,6 +52,9 @@ const POS = () => {
     description: '',
     category: 'Satış'
   });
+
+  // Direct quantity input values per cart item (temporary while typing)
+  const [quantityInputs, setQuantityInputs] = useState({});
 
   // Refs for auto-focus
   const barcodeInputRef = useRef(null);
@@ -276,6 +303,27 @@ const POS = () => {
     debouncedCustomerSearch(customerSearch);
   }, [customerSearch, debouncedCustomerSearch]);
 
+  // Persist cart and selected customer to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem(POS_CART_STORAGE_KEY, JSON.stringify(cart));
+    } catch (error) {
+      console.error('Persisted cart save error:', error);
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    try {
+      if (selectedCustomer) {
+        localStorage.setItem(POS_SELECTED_CUSTOMER_STORAGE_KEY, JSON.stringify(selectedCustomer));
+      } else {
+        localStorage.removeItem(POS_SELECTED_CUSTOMER_STORAGE_KEY);
+      }
+    } catch (error) {
+      console.error('Persisted customer save error:', error);
+    }
+  }, [selectedCustomer]);
+
   // Auto-focus on barcode input when component mounts
   useEffect(() => {
     if (barcodeInputRef.current) {
@@ -385,6 +433,33 @@ const POS = () => {
     );
   };
 
+  // Handle typing in the quantity input box without immediately mutating the cart
+  const handleQuantityInputChange = (productId, rawValue) => {
+    setQuantityInputs((prev) => ({ ...prev, [productId]: rawValue }));
+  };
+
+  // Commit typed quantity to the cart on blur/enter, clamping to [1, currentStock]
+  const commitQuantityInput = (productId, rawValue, currentStock) => {
+    let parsed = parseInt(rawValue, 10);
+    if (isNaN(parsed) || parsed <= 0) parsed = 1;
+    if (parsed > currentStock) {
+      toast.error(`Maksimum stok: ${currentStock} adet`, { duration: 3000 });
+      parsed = currentStock;
+    }
+
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === productId ? { ...item, quantity: parsed } : item
+      )
+    );
+
+    // Clear temporary input to fall back to cart's quantity display
+    setQuantityInputs((prev) => {
+      const { [productId]: _removed, ...rest } = prev;
+      return rest;
+    });
+  };
+
   const removeFromCart = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
@@ -403,7 +478,7 @@ const POS = () => {
   const cartTotal = cartSubtotal; // Vergi hesaplaması kaldırıldı
 
   // Satış kağıdı yazdırma fonksiyonu
-  const printSaleReceipt = (saleData, saleItems) => {
+  const printSaleReceipt = (saleData, saleItems, targetWindow) => {
     const customerName = selectedCustomer ? selectedCustomer.fullName : 'Müşteri Adı Belirtilmemiş';
     const customerPhone = selectedCustomer && selectedCustomer.phone ? selectedCustomer.phone : '';
     const currentDate = new Date().toLocaleDateString('tr-TR');
@@ -521,7 +596,13 @@ const POS = () => {
       </html>
     `;
 
-    const printWindow = window.open('', '_blank', 'width=900,height=700,scrollbars=yes,resizable=yes');
+    // Hedef pencere verilmişse onu kullan, yoksa son çare yeni pencere açmayı dene
+    const printWindow = targetWindow || window.open('', '_blank', 'width=900,height=700,scrollbars=yes,resizable=yes');
+    if (!printWindow) {
+      toast.error('Yazdırma penceresi tarayıcı tarafından engellendi. Lütfen pop-up izni verin.');
+      return;
+    }
+    printWindow.document.open();
     printWindow.document.write(receiptHTML);
     printWindow.document.close();
     printWindow.focus();
@@ -551,12 +632,23 @@ const POS = () => {
         notes: 'Otomatik hesaba kaydedilen satış'
       };
 
+      // Pop-up engelleyicilere takılmamak için pencereyi kullanıcı tıklaması sırasında hemen aç
+      const preOpenedWindow = window.open('', '_blank', 'width=900,height=700,scrollbars=yes,resizable=yes');
+      if (!preOpenedWindow) {
+        toast.error('Yazdırma penceresi engellendi. Lütfen tarayıcıda pop-up izni verin.');
+      } else {
+        // Minimal geçici içerik, sayfa hazırlanırken boş görünmesin
+        preOpenedWindow.document.open();
+        preOpenedWindow.document.write('<!DOCTYPE html><html><head><title>Fiş hazırlanıyor...</title></head><body><p style="font-family:Arial;padding:16px;">Fiş hazırlanıyor...</p></body></html>');
+        preOpenedWindow.document.close();
+      }
+
       const response = await salesAPI.createSale(saleData);
       
       toast.success(`Satış tamamlandı! ${cartTotal.toFixed(2)} ₺ müşteri hesabına eklendi.`, { duration: 4000 });
       
       // Satış kağıdını yazdır
-      printSaleReceipt(response.data, cart);
+      printSaleReceipt(response.data, cart, preOpenedWindow);
       
       // Reset state
       const cartItems = [...cart]; // Yazdırmak için kopyala
@@ -564,6 +656,12 @@ const POS = () => {
       setSelectedCustomer(null);
       setSearchTerm('');
       setCustomerSearch('');
+      try {
+        localStorage.removeItem(POS_CART_STORAGE_KEY);
+        localStorage.removeItem(POS_SELECTED_CUSTOMER_STORAGE_KEY);
+      } catch (error) {
+        console.error('Persisted data clear error:', error);
+      }
       
       // Auto-focus back to barcode input for next sale
       setTimeout(() => {
@@ -724,15 +822,33 @@ const POS = () => {
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="flex items-center gap-2">
-                            <button 
-                              onClick={() => updateQuantity(item.id, -1)} 
+                            <button
+                              onClick={() => updateQuantity(item.id, -1)}
                               className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
                             >
                               <Minus size={14} />
                             </button>
-                            <span className="w-8 text-center font-medium">{item.quantity}</span>
-                            <button 
-                              onClick={() => updateQuantity(item.id, 1)} 
+                            <input
+                              type="number"
+                              inputMode="numeric"
+                              min={1}
+                              max={item.currentStock}
+                              value={
+                                quantityInputs[item.id] !== undefined
+                                  ? quantityInputs[item.id]
+                                  : item.quantity
+                              }
+                              onChange={(e) => handleQuantityInputChange(item.id, e.target.value)}
+                              onBlur={(e) => commitQuantityInput(item.id, e.target.value, item.currentStock)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  e.currentTarget.blur();
+                                }
+                              }}
+                              className="w-16 text-center font-medium px-2 py-1 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            />
+                            <button
+                              onClick={() => updateQuantity(item.id, 1)}
                               className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
                             >
                               <Plus size={14} />

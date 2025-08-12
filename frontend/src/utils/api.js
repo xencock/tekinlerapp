@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // API base URL
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Varsayılan olarak relative '/api' kullanılır; dev'de CRA proxy, prod'da aynı origin.
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 // Axios instance oluştur
 const api = axios.create({

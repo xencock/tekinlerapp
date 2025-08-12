@@ -56,7 +56,7 @@ const CustomerDetail = () => {
   };
 
   // Satış kağıdı yazdırma fonksiyonu
-  const printSaleReceipt = async (saleId, customerData = customer) => {
+  const printSaleReceipt = async (saleId, customerData = customer, targetWindow) => {
     try {
       console.log('Satış detayları getiriliyor, ID:', saleId);
       
@@ -184,8 +184,13 @@ const CustomerDetail = () => {
         </html>
       `;
       
-      // Yeni sekmede aç
-      const printWindow = window.open('', '_blank', 'width=400,height=600,scrollbars=yes,resizable=yes');
+      // Yeni sekmede aç (mümkünse daha önce kullanıcı tıklamasıyla açılmış pencereyi kullan)
+      const printWindow = targetWindow || window.open('', '_blank', 'width=400,height=600,scrollbars=yes,resizable=yes');
+      if (!printWindow) {
+        toast.error('Yazdırma penceresi engellendi. Lütfen tarayıcıda pop-up izni verin.');
+        return;
+      }
+      printWindow.document.open();
       printWindow.document.write(receiptHTML);
       printWindow.document.close();
       printWindow.focus();
@@ -220,7 +225,16 @@ const CustomerDetail = () => {
     console.log('Çıkarılan sale ID:', saleId, 'Description:', transaction.description);
     
     if (saleId) {
-      await printSaleReceipt(saleId);
+      // Pop-up engelleyiciye yakalanmamak için tıklama sırasında aç
+      const preOpenedWindow = window.open('', '_blank', 'width=400,height=600,scrollbars=yes,resizable=yes');
+      if (preOpenedWindow) {
+        preOpenedWindow.document.open();
+        preOpenedWindow.document.write('<!DOCTYPE html><html><head><title>Fiş hazırlanıyor...</title></head><body><p style="font-family:Arial;padding:16px;">Fiş hazırlanıyor...</p></body></html>');
+        preOpenedWindow.document.close();
+      } else {
+        toast.error('Yazdırma penceresi engellendi. Lütfen tarayıcıda pop-up izni verin.');
+      }
+      await printSaleReceipt(saleId, undefined, preOpenedWindow);
     } else {
       console.error('Sale ID çıkarılamadı:', transaction.description);
       toast.error('Satış ID\'si bulunamadı');

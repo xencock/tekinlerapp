@@ -25,7 +25,13 @@ const BarcodeGenerator = ({ barcode, productName, onClose }) => {
   }, [barcode]);
 
   const handlePrint = () => {
+    // Kullanıcı tıklaması sırasında aç, pop-up engelleyici riskini azalt
     const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Yazdırma penceresi engellendi. Lütfen tarayıcıda pop-up izni verin.');
+      return;
+    }
+    printWindow.document.open();
     printWindow.document.write(`
       <html>
         <head>

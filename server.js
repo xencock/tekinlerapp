@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const { testConnection, syncDatabase } = require('./config/database');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -102,8 +103,20 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler
-app.use('*', (req, res) => {
+// Production: serve frontend build statically and SPA fallback
+if (process.env.NODE_ENV === 'production') {
+  const clientBuildPath = path.join(__dirname, 'frontend', 'build');
+  app.use(express.static(clientBuildPath));
+
+  // SPA fallback for non-API routes
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) return next();
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
+
+// 404 handler for unknown API routes only
+app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'Endpoint bulunamadı' });
 });
 
