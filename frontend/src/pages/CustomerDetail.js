@@ -48,13 +48,26 @@ const CustomerDetail = () => {
 
   // Satış işlemi kontrolü
   const isSaleTransaction = (transaction) => {
-    return transaction.description && transaction.description.includes('Satış #') && transaction.type === 'debt';
+    if (!transaction || transaction.type !== 'debt') return false;
+    // Yeni: description 'Satış - ...' ya da notes içinde 'Satış fatura no' bilgisi
+    const descMatch = transaction.description && transaction.description.startsWith('Satış');
+    const noteMatch = transaction.notes && transaction.notes.includes('Satış fatura no');
+    return Boolean(descMatch || noteMatch);
   };
 
   // Satış ID'sini description'dan çıkart
-  const extractSaleId = (description) => {
-    const match = description.match(/Satış #(\d+)/);
-    return match ? parseInt(match[1]) : null;
+  const extractSaleId = (transaction) => {
+    // Eski format: description 'Satış #123'
+    if (transaction.description) {
+      const oldMatch = transaction.description.match(/Satış #(\d+)/);
+      if (oldMatch) return parseInt(oldMatch[1]);
+    }
+    // Yeni format: notes 'Satış fatura no: 123'
+    if (transaction.notes) {
+      const notesMatch = transaction.notes.match(/Satış fatura no:\s*(\d+)/);
+      if (notesMatch) return parseInt(notesMatch[1]);
+    }
+    return null;
   };
 
   // Satış kağıdı yazdırma fonksiyonu
@@ -223,7 +236,7 @@ const CustomerDetail = () => {
       return;
     }
     
-    const saleId = extractSaleId(transaction.description);
+    const saleId = extractSaleId(transaction);
     console.log('Çıkarılan sale ID:', saleId, 'Description:', transaction.description);
     
     if (saleId) {

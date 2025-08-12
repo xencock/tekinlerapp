@@ -77,7 +77,7 @@ router.post('/', authenticateToken, async (req, res) => {
         quantity: -item.quantity,
         stockBefore: product.currentStock + item.quantity,
         stockAfter: product.currentStock,
-        referenceId: `Satış #${sale.id}`,
+        referenceId: `Satış`,
         userId: req.user.id
       }, { transaction });
     }
@@ -102,7 +102,7 @@ router.post('/', authenticateToken, async (req, res) => {
           customerId: customerId,
           type: 'debt',
           amount: totalAmount,
-          description: `Satış #${sale.id} - ${paymentMethod}`,
+          description: `Satış - ${paymentMethod}`,
           category: 'Satış',
           date: new Date(),
           createdBy: req.user.id,

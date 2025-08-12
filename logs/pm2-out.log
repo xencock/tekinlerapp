@@ -642,3 +642,48 @@ Veritabanı tabloları senkronize edildi
 ::1 - - [12/Aug/2025:13:21:20 +0000] "GET /api/customers/stats/overview HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
 ::1 - - [12/Aug/2025:13:21:21 +0000] "GET /api/customers/3 HTTP/1.1" 200 464 "http://localhost:3000/customers/3" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
 ::1 - - [12/Aug/2025:13:21:21 +0000] "GET /api/balance/customer/3?limit=50 HTTP/1.1" 200 464 "http://localhost:3000/customers/3" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:16 +0000] "GET /api/customers/3 HTTP/1.1" 304 - "http://localhost:3000/customers/3" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:16 +0000] "GET /api/balance/customer/3?limit=50 HTTP/1.1" 304 - "http://localhost:3000/customers/3" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:25 +0000] "GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:25 +0000] "GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:25 +0000] "GET /api/customers/stats/overview HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:25 +0000] "GET /api/customers/stats/overview HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:27 +0000] "GET /api/customers/3 HTTP/1.1" 304 - "http://localhost:3000/customers/3" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:27 +0000] "GET /api/customers/3 HTTP/1.1" 304 - "http://localhost:3000/customers/3" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:27 +0000] "GET /api/balance/customer/3?limit=50 HTTP/1.1" 304 - "http://localhost:3000/customers/3" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:27 +0000] "GET /api/balance/customer/3?limit=50 HTTP/1.1" 304 - "http://localhost:3000/customers/3" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:27 +0000] "GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:27 +0000] "GET /api/customers/stats/overview HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:27 +0000] "GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:27 +0000] "GET /api/customers/stats/overview HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:28 +0000] "GET /api/customers/2 HTTP/1.1" 304 - "http://localhost:3000/customers/2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:28 +0000] "GET /api/balance/customer/2?limit=50 HTTP/1.1" 304 - "http://localhost:3000/customers/2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:30 +0000] "GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:30 +0000] "GET /api/customers/stats/overview HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:30 +0000] "GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:30 +0000] "GET /api/customers/stats/overview HTTP/1.1" 304 - "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:32 +0000] "GET /api/customers?search=can&limit=5 HTTP/1.1" 200 703 "http://localhost:3000/pos" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:36 +0000] "GET /api/products/search/pos?search=don&limit=50 HTTP/1.1" 200 328 "http://localhost:3000/pos" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:41 +0000] "POST /api/sales HTTP/1.1" 201 96 "http://localhost:3000/pos" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:45 +0000] "GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 1822 "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:45 +0000] "GET /api/customers/stats/overview HTTP/1.1" 200 59 "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:45 +0000] "GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 1822 "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:45 +0000] "GET /api/customers/stats/overview HTTP/1.1" 200 59 "http://localhost:3000/customers" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:46 +0000] "GET /api/customers/2 HTTP/1.1" 200 494 "http://localhost:3000/customers/2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:46 +0000] "GET /api/customers/2 HTTP/1.1" 200 494 "http://localhost:3000/customers/2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:46 +0000] "GET /api/balance/customer/2?limit=50 HTTP/1.1" 200 4109 "http://localhost:3000/customers/2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:46 +0000] "GET /api/balance/customer/2?limit=50 HTTP/1.1" 200 4109 "http://localhost:3000/customers/2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+::1 - - [12/Aug/2025:13:24:49 +0000] "GET /api/sales/12 HTTP/1.1" 200 510 "http://localhost:3000/customers/2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+SQLite veritabanına başarıyla bağlanıldı
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+::1 - - [12/Aug/2025:13:25:51 +0000] "GET /api/sales/12 HTTP/1.1" 304 - "http://localhost:3000/customers/2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+SQLite veritabanına başarıyla bağlanıldı
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Search, X, Plus, Minus, Trash2, TrendingUp, TrendingDown, Camera, Scan, ShoppingBag } from 'lucide-react';
+import { Search, X, Plus, Minus, Trash2, Camera, Scan, ShoppingBag } from 'lucide-react';
 import { productsAPI } from '../utils/api';
 import { customersAPI } from '../utils/api';
 import { salesAPI } from '../utils/api';
-import { balanceAPI } from '../utils/api';
 import toast from 'react-hot-toast';
 import { debounce } from 'lodash';
 import BarcodeScanner from '../components/BarcodeScanner';
@@ -44,17 +43,7 @@ const POS = () => {
   const [selectedProductForQuantity, setSelectedProductForQuantity] = useState(null);
   const [quantityInput, setQuantityInput] = useState('1');
   const [searchLoading, setSearchLoading] = useState(false);
-  const [showBalanceModal, setShowBalanceModal] = useState(false);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
-  // Helper for date input default (YYYY-MM-DD)
-  const getTodayDateOnly = () => new Date().toISOString().split('T')[0];
-  const [balanceForm, setBalanceForm] = useState({
-    type: 'debt',
-    amount: '',
-    description: '',
-    category: 'Satış',
-    date: getTodayDateOnly()
-  });
 
   // Direct quantity input values per cart item (temporary while typing)
   const [quantityInputs, setQuantityInputs] = useState({});
@@ -71,12 +60,7 @@ const POS = () => {
     }).format(value);
   };
 
-  const parseFormattedNumber = (formattedValue) => {
-    if (!formattedValue) return 0;
-    const cleanValue = formattedValue.replace(/\./g, '').replace(',', '.');
-    const parsed = parseFloat(cleanValue);
-    return isNaN(parsed) ? 0 : parsed;
-  };
+  // Quick balance helpers removed
 
   // Get balance status and color
   const getBalanceStatus = (balance) => {
@@ -85,59 +69,7 @@ const POS = () => {
     return { status: 'Sıfır', color: 'text-gray-600', bgColor: 'bg-gray-100' };
   };
 
-  // Handle quick balance transaction
-  const handleQuickBalanceSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!balanceForm.amount || !balanceForm.description) {
-      toast.error('Tutar ve açıklama alanları zorunludur', { duration: 3500 });
-      return;
-    }
-
-    try {
-      const amount = parseFormattedNumber(balanceForm.amount);
-      if (amount <= 0) {
-        toast.error('Tutar 0\'dan büyük olmalıdır', { duration: 3500 });
-        return;
-      }
-
-      await balanceAPI.createTransaction({
-        customerId: selectedCustomer.id,
-        type: balanceForm.type,
-        amount: amount,
-        description: balanceForm.description,
-        category: balanceForm.category,
-        date: balanceForm.date || new Date().toISOString(),
-        notes: ''
-      });
-
-      toast.success('Bakiye işlemi başarıyla eklendi', { duration: 3000 });
-      setShowBalanceModal(false);
-      setBalanceForm({
-        type: 'debt',
-        amount: '',
-        description: '',
-        category: 'Satış',
-        date: getTodayDateOnly()
-      });
-      
-      // Refresh customer data to update balance
-      const customerResponse = await customersAPI.getCustomer(selectedCustomer.id);
-      setSelectedCustomer(customerResponse.data.customer);
-    } catch (error) {
-      console.error('Quick balance error:', error);
-      toast.error('Bakiye işlemi eklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
-    }
-  };
-
-  // Handle balance form input change
-  const handleBalanceChange = (e) => {
-    const { name, value } = e.target;
-    setBalanceForm(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  // Quick balance actions removed
 
   const searchProducts = async (term) => {
     if (!term.trim()) {
@@ -347,6 +279,14 @@ const POS = () => {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e) => {
+      // F2 to focus search input
+      if (e.key === 'F2') {
+        e.preventDefault();
+        if (barcodeInputRef.current) {
+          barcodeInputRef.current.focus();
+          barcodeInputRef.current.select();
+        }
+      }
       if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
         e.preventDefault();
         if (barcodeInputRef.current) {
@@ -355,8 +295,8 @@ const POS = () => {
         }
       }
       
-      // F5 to open barcode scanner
-      if (e.key === 'F5') {
+      // F3 to open barcode scanner
+      if (e.key === 'F3') {
         e.preventDefault();
         setShowBarcodeScanner(true);
       }
@@ -365,11 +305,29 @@ const POS = () => {
       if (e.key === 'Escape' && showBarcodeScanner) {
         setShowBarcodeScanner(false);
       }
+
+      // F9 to complete sale
+      if (e.key === 'F9') {
+        e.preventDefault();
+        if (!loading && cart.length > 0 && selectedCustomer) {
+          handleCompleteSale();
+        }
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [showBarcodeScanner]);
+
+  const clearCart = () => {
+    setCart([]);
+    setQuantityInputs({});
+    try {
+      localStorage.removeItem(POS_CART_STORAGE_KEY);
+    } catch (error) {
+      console.error('Persisted cart clear error:', error);
+    }
+  };
 
   const addToCart = (product) => {
     setSelectedProductForQuantity(product);
@@ -685,24 +643,76 @@ const POS = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero header */}
-      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gradient-to-r from-indigo-50 via-white to-blue-50">
+      <div className="relative rounded-xl border border-gray-200 bg-gradient-to-r from-indigo-50 via-white to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-6 sm:py-8">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Satış Noktası</h1>
-              <p className="mt-1 text-sm text-gray-600">Hızlı ve kolay satış işlemleri</p>
+          <div className="flex items-center justify-between py-6 sm:py-8 gap-4">
+            <div className="min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 truncate">{selectedCustomer ? selectedCustomer.fullName : 'Satış'}</h1>
+              {!selectedCustomer && (
+                <p className="mt-1 text-sm text-gray-600">Ürünleri arayın, sepete ekleyin ve satış fişi yazdırın</p>
+              )}
+              {selectedCustomer && (
+                <div className="mt-1 flex items-center gap-2">
+                  <span className="text-sm text-gray-600">Bakiye:</span>
+                  <span className={`text-base font-semibold ${getBalanceStatus(selectedCustomer.balance).color}`}>
+                    {formatNumberForDisplay(selectedCustomer.balance)} ₺
+                  </span>
+                  <span className={`text-xs px-2 py-0.5 rounded ${getBalanceStatus(selectedCustomer.balance).bgColor} ${getBalanceStatus(selectedCustomer.balance).color}`}>
+                    {getBalanceStatus(selectedCustomer.balance).status}
+                  </span>
+                </div>
+              )}
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
+              {/* Customer search inside hero header */}
+              {!selectedCustomer && (
+              <div className="relative block">
+                <input
+                  type="text"
+                  placeholder="Müşteri ara..."
+                  className="w-56 sm:w-64 md:w-72 pl-3 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                  value={customerSearch}
+                  onChange={(e) => setCustomerSearch(e.target.value)}
+                />
+                {searchedCustomers.length > 0 && (
+                  <div className="absolute z-10 w-full bg-white border border-gray-200 mt-1 rounded-lg shadow-lg max-h-56 overflow-y-auto">
+                    {searchedCustomers.map((customer) => (
+                      <div
+                        key={customer.id}
+                        onClick={() => selectCustomer(customer)}
+                        className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                      >
+                        <div className="flex justify-between items-center">
+                          <div className="min-w-0">
+                            <p className="font-medium text-gray-900 truncate">{customer.fullName}</p>
+                            <p className="text-sm text-gray-500 truncate">{customer.phone}</p>
+                          </div>
+                          <div className={`text-xs px-2 py-1 rounded ${getBalanceStatus(customer.balance).bgColor} ${getBalanceStatus(customer.balance).color}`}>
+                            {formatNumberForDisplay(customer.balance)} ₺
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              )}
+              {selectedCustomer && (
+                <button
+                  onClick={() => setSelectedCustomer(null)}
+                  className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50"
+                  title="Seçimi kaldır"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
               <button
                 onClick={() => setShowBarcodeScanner(true)}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50"
+                title="Kamera (F3)"
               >
-                <Camera className="w-4 h-4 mr-2" />
-                Kamera
+                <Camera className="w-4 h-4 mr-2" /> Kamera
               </button>
-              <div className={`px-3 py-2 rounded-lg text-sm font-medium ${cart.length > 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
-                {cart.length} ürün
-              </div>
             </div>
           </div>
         </div>
@@ -710,104 +720,19 @@ const POS = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Customer & Cart */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Customer Section */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Müşteri</h2>
-              {selectedCustomer ? (
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <p className="font-semibold text-gray-900">{selectedCustomer.fullName}</p>
-                      <p className="text-sm text-gray-500">{selectedCustomer.phone}</p>
-                    </div>
-                    <button 
-                      onClick={() => setSelectedCustomer(null)} 
-                      className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                    >
-                      <X size={18} />
-                    </button>
-                  </div>
-                  
-                  {/* Balance Display */}
-                  <div className={`p-4 rounded-lg border ${getBalanceStatus(selectedCustomer.balance).bgColor}`}>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">Bakiye Durumu</p>
-                        <p className={`text-lg font-bold ${getBalanceStatus(selectedCustomer.balance).color}`}>
-                          {formatNumberForDisplay(selectedCustomer.balance)} ₺
-                        </p>
-                        <p className={`text-xs ${getBalanceStatus(selectedCustomer.balance).color}`}>
-                          {getBalanceStatus(selectedCustomer.balance).status}
-                        </p>
-                      </div>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => {
-                            setBalanceForm({ type: 'debt', amount: '', description: '', category: 'Satış', date: getTodayDateOnly() });
-                            setShowBalanceModal(true);
-                          }}
-                          className="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                          title="Borç Ekle"
-                        >
-                          <TrendingUp size={14} />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setBalanceForm({ type: 'payment', amount: '', description: '', category: 'Satış', date: getTodayDateOnly() });
-                            setShowBalanceModal(true);
-                          }}
-                          className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                          title="Ödeme Ekle"
-                        >
-                          <TrendingDown size={14} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                  <input
-                    type="text"
-                    placeholder="Müşteri ara..."
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    value={customerSearch}
-                    onChange={(e) => setCustomerSearch(e.target.value)}
-                  />
-                  {searchedCustomers.length > 0 && (
-                    <div className="absolute z-10 w-full bg-white border border-gray-200 mt-1 rounded-lg shadow-lg max-h-48 overflow-y-auto">
-                      {searchedCustomers.map(customer => (
-                        <div 
-                          key={customer.id} 
-                          onClick={() => selectCustomer(customer)} 
-                          className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
-                        >
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <p className="font-medium text-gray-900">{customer.fullName}</p>
-                              <p className="text-sm text-gray-500">{customer.phone}</p>
-                            </div>
-                            <div className={`text-xs px-2 py-1 rounded ${getBalanceStatus(customer.balance).bgColor} ${getBalanceStatus(customer.balance).color}`}>
-                              {formatNumberForDisplay(customer.balance)} ₺
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+          {/* Right Column (Cart) - will appear on the right at lg via order */}
+          <div className="lg:col-span-2 lg:order-2 flex flex-col gap-6 max-h-[calc(100vh-240px)] lg:sticky lg:top-24">
+            {/* Customer Section removed (now handled in hero header) */}
 
             {/* Cart Section */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-100">
-              <div className="p-6 border-b border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-900">Sepet</h2>
+            <div className="order-1 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+                <h2 className="text-xl font-bold text-gray-900">Sepet</h2>
+                {cart.length > 0 && (
+                  <button onClick={clearCart} className="text-sm text-red-600 hover:text-red-700 bg-red-50 px-3 py-1 rounded">Sepeti Temizle</button>
+                )}
               </div>
-              <div className="p-6 pt-0">
+              <div className="p-4 pt-0 overflow-y-auto">
                 {cart.length === 0 ? (
                   <div className="text-center py-8">
                     <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
@@ -817,53 +742,62 @@ const POS = () => {
                     <p className="text-sm text-gray-400">Ürün aramaya başlayın</p>
                   </div>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     {cart.map(item => (
-                      <div key={item.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
-                        <div className="flex-1">
-                          <p className="font-medium text-gray-900">{item.name}</p>
-                          <p className="text-sm text-gray-500">{item.hasDiscount ? item.discountPrice : item.retailPrice} ₺</p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => updateQuantity(item.id, -1)}
-                              className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-                            >
-                              <Minus size={14} />
-                            </button>
-                            <input
-                              type="number"
-                              inputMode="numeric"
-                              min={1}
-                              max={item.currentStock}
-                              value={
-                                quantityInputs[item.id] !== undefined
-                                  ? quantityInputs[item.id]
-                                  : item.quantity
-                              }
-                              onChange={(e) => handleQuantityInputChange(item.id, e.target.value)}
-                              onBlur={(e) => commitQuantityInput(item.id, e.target.value, item.currentStock)}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                  e.currentTarget.blur();
-                                }
-                              }}
-                              className="w-16 text-center font-medium px-2 py-1 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            />
-                            <button
-                              onClick={() => updateQuantity(item.id, 1)}
-                              className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-                            >
-                              <Plus size={14} />
-                            </button>
+                      <div
+                        key={item.id}
+                        className="grid grid-cols-[1fr,auto,auto] items-center gap-3 py-3 border-b border-gray-100 last:border-b-0"
+                      >
+                        {/* Info */}
+                        <div className="min-w-0">
+                          <p className="font-semibold text-gray-900 leading-tight break-words">
+                            {item.name}
+                          </p>
+                          <div className="mt-0.5 text-xs text-gray-500">
+                            Birim: {Number(item.hasDiscount ? item.discountPrice : item.retailPrice).toFixed(2)} ₺ • Stok: {item.currentStock}
                           </div>
-                          <button 
-                            onClick={() => removeFromCart(item.id)} 
-                            className="p-1 text-red-500 hover:text-red-700 transition-colors"
-                          >
+                        </div>
+
+                        {/* Qty controls */}
+                        <div className="flex items-center justify-end gap-2">
+                          <button onClick={() => updateQuantity(item.id, -1)} className="h-8 w-8 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200">
+                            <Minus size={14} />
+                          </button>
+                          <input
+                            type="number"
+                            inputMode="numeric"
+                            min={1}
+                            max={item.currentStock}
+                            value={
+                              quantityInputs[item.id] !== undefined
+                                ? quantityInputs[item.id]
+                                : item.quantity
+                            }
+                            onChange={(e) => handleQuantityInputChange(item.id, e.target.value)}
+                            onBlur={(e) => commitQuantityInput(item.id, e.target.value, item.currentStock)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                e.currentTarget.blur();
+                              }
+                            }}
+                            className="w-14 text-center font-medium px-2 py-1 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                          <button onClick={() => updateQuantity(item.id, 1)} className="h-8 w-8 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200">
+                            <Plus size={14} />
+                          </button>
+                          <button onClick={() => removeFromCart(item.id)} className="h-8 w-8 flex items-center justify-center text-red-600 hover:text-red-700">
                             <Trash2 size={16} />
                           </button>
+                        </div>
+
+                        {/* Prices */}
+                        <div className="text-right">
+                          <div className="font-semibold text-gray-900">
+                            {(item.quantity * Number(item.hasDiscount ? item.discountPrice : item.retailPrice)).toFixed(2)} ₺
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {item.quantity} × {Number(item.hasDiscount ? item.discountPrice : item.retailPrice).toFixed(2)} ₺
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -871,10 +805,10 @@ const POS = () => {
                 )}
                 
                 {cart.length > 0 && (
-                  <div className="mt-6 pt-4 border-t border-gray-200">
+                  <div className="mt-4 pt-3 border-t border-gray-200">
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-semibold text-gray-900">Toplam</span>
-                      <span className="text-xl font-bold text-gray-900">{cartTotal.toFixed(2)} ₺</span>
+                      <span className="text-2xl font-extrabold text-gray-900">{cartTotal.toFixed(2)} ₺</span>
                     </div>
                   </div>
                 )}
@@ -882,13 +816,13 @@ const POS = () => {
             </div>
           </div>
 
-          {/* Right Column - Product Search & Completion */}
-          <div className="lg:col-span-2 space-y-6">
+          {/* Left Column - Product Search */}
+          <div className="lg:col-span-1 lg:order-1 space-y-6">
             {/* Product Search Section */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">Ürün Arama</h2>
-                <p className="text-gray-600">Ürün adı, barkod ile arayın veya kamera kullanın</p>
+              <div className="mb-4">
+                <h2 className="text-lg font-semibold text-gray-900 mb-1">Ürün Arama</h2>
+                <p className="text-sm text-gray-600">Ürün adı, barkod ile arayın veya kamera kullanın</p>
               </div>
               
               {/* Search Input */}
@@ -899,7 +833,7 @@ const POS = () => {
                     ref={barcodeInputRef}
                     type="text"
                     placeholder="Ürün adı veya barkod..."
-                    className={`w-full pl-12 pr-4 py-3 text-lg border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                    className={`w-full pl-12 pr-3 py-2.5 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
                       /^\d+$/.test(searchTerm) 
                         ? 'border-blue-500 bg-blue-50' 
                         : 'border-gray-200'
@@ -917,33 +851,7 @@ const POS = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <button
-                  onClick={() => setShowBarcodeScanner(true)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
-                >
-                  <Camera size={18} />
-                  Kamera Aç
-                </button>
-                <button
-                  onClick={handleManualSearch}
-                  disabled={searchLoading}
-                  className="bg-gray-600 hover:bg-gray-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  {searchLoading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      Arıyor...
-                    </>
-                  ) : (
-                    <>
-                      <Search size={18} />
-                      Ara
-                    </>
-                  )}
-                </button>
-              </div>
+              {/* Action buttons removed - moved to top bar */}
 
               {/* Search Results */}
               <div className="border border-gray-200 rounded-lg bg-gray-50 min-h-[300px] max-h-[400px] overflow-y-auto">
@@ -1008,137 +916,48 @@ const POS = () => {
                 ) : null}
               </div>
 
-              {/* Sale Completion */}
-              <div className="mt-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  Satışı Tamamla
-                </h3>
-                <div className="text-center">
-                  <div className="mb-4">
-                    <p className="text-sm text-gray-600 mb-2">Satış tutarı müşteri hesabına eklenecek</p>
-                    <p className="text-2xl font-bold text-green-700">{cartTotal.toFixed(2)} ₺</p>
-                  </div>
-                  <button
-                    onClick={handleCompleteSale}
-                    disabled={loading || cart.length === 0 || !selectedCustomer}
-                    className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-4 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-lg shadow-lg"
-                  >
-                    {loading ? (
-                      <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        İşleniyor...
-                      </>
-                    ) : (
-                      <>
-                        Hesaba Kaydet & Yazdır
-                      </>
-                    )}
-                  </button>
-                  {!selectedCustomer && (
-                    <p className="text-xs text-red-500 mt-2">Satış için müşteri seçimi zorunludur</p>
-                  )}
-                </div>
-              </div>
+              {/* Sale completion moved to bottom bar */}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Quick Balance Modal */}
-      {showBalanceModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold text-gray-900">
-                  {balanceForm.type === 'debt' ? 'Borç Ekle' : 'Ödeme Ekle'}
-                </h2>
+      {/* Bottom sticky action bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-4">
+          <div className="rounded-xl border border-gray-200 bg-white/90 backdrop-blur shadow-lg">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3">
+              <div className="flex items-center gap-3">
+                <div className="text-sm text-gray-600">Toplam</div>
+                <div className="text-2xl font-bold text-gray-900">{cartTotal.toFixed(2)} ₺</div>
+                <div className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-600">{cart.length} ürün</div>
+                {selectedCustomer ? (
+                  <div className="text-sm text-gray-700">Müşteri: <span className="font-medium">{selectedCustomer.fullName}</span></div>
+                ) : (
+                  <div className="text-sm text-red-600">Müşteri seçin</div>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setShowBalanceModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  onClick={handleCompleteSale}
+                  disabled={loading || cart.length === 0 || !selectedCustomer}
+                  className="w-full sm:w-auto bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 px-5 rounded-lg font-semibold flex items-center justify-center gap-2"
+                  title="Satışı tamamla (F9)"
                 >
-                  <X className="w-6 h-6" />
+                  {loading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      İşleniyor...
+                    </>
+                  ) : (
+                    <>Hesaba Kaydet & Yazdır</>
+                  )}
                 </button>
               </div>
             </div>
-            <form onSubmit={handleQuickBalanceSubmit} className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tutar</label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    name="amount"
-                    value={balanceForm.amount}
-                    onChange={handleBalanceChange}
-                    placeholder="0,00"
-                    pattern="[0-9.,]+"
-                    required
-                    className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <span className="absolute left-3 top-2.5 text-gray-400 text-sm">TL</span>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tarih</label>
-                <input
-                  type="date"
-                  name="date"
-                  value={balanceForm.date}
-                  max={getTodayDateOnly()}
-                  onChange={handleBalanceChange}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Açıklama</label>
-                <input
-                  type="text"
-                  name="description"
-                  value={balanceForm.description}
-                  onChange={handleBalanceChange}
-                  placeholder={balanceForm.type === 'debt' ? 'Borç açıklaması...' : 'Ödeme açıklaması...'}
-                  required
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                <select
-                  name="category"
-                  value={balanceForm.category}
-                  onChange={handleBalanceChange}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="Satış">Satış</option>
-                  <option value="Genel">Genel</option>
-                  <option value="Hizmet">Hizmet</option>
-                  <option value="Diğer">Diğer</option>
-                </select>
-              </div>
-              <div className="flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowBalanceModal(false)}
-                  className="px-6 py-2.5 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 font-medium transition-colors"
-                >
-                  İptal
-                </button>
-                <button
-                  type="submit"
-                  className={`px-6 py-2.5 text-white rounded-lg font-medium transition-colors ${
-                    balanceForm.type === 'debt' 
-                      ? 'bg-red-600 hover:bg-red-700' 
-                      : 'bg-green-600 hover:bg-green-700'
-                  }`}
-                >
-                  {balanceForm.type === 'debt' ? 'Borç Ekle' : 'Ödeme Ekle'}
-                </button>
-              </div>
-            </form>
           </div>
         </div>
-      )}
-
+      </div>
       {/* Quantity Selection Modal */}
       {showQuantityModal && selectedProductForQuantity && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
