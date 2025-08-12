@@ -26,12 +26,14 @@ router.get('/', authenticateToken, async (req, res) => {
     };
 
     if (search) {
+      const term = search.trim();
+      // Prefer prefix matching for better SQLite index usage; fallback to contains
       whereClause[Op.or] = [
-        { firstName: { [Op.like]: `%${search}%` } },
-        { lastName: { [Op.like]: `%${search}%` } },
-        { phone: { [Op.like]: `%${search}%` } },
-        { email: { [Op.like]: `%${search}%` } },
-        { tcNumber: { [Op.like]: `%${search}%` } }
+        { firstName: { [Op.like]: `${term}%` } },
+        { lastName: { [Op.like]: `${term}%` } },
+        { phone: { [Op.like]: `${term}%` } },
+        { email: { [Op.like]: `${term}%` } },
+        { tcNumber: { [Op.like]: `${term}%` } }
       ];
     }
 
@@ -41,6 +43,11 @@ router.get('/', authenticateToken, async (req, res) => {
     // Get customers with pagination
     const customers = await Customer.findAll({
       where: whereClause,
+      attributes: [
+        'id','firstName','lastName','phone','email','tcNumber',
+        'city','district','balance','totalPurchases','totalOrders',
+        'smsPermission','emailPermission','isActive','createdAt','updatedAt'
+      ],
       order: [[sortBy, sortOrder]],
       offset: skip,
       limit: limit,

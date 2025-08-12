@@ -142,6 +142,19 @@ const Customer = sequelize.define('Customer', {
     },
     {
       fields: ['isActive']
+    },
+    {
+      fields: ['firstName']
+    },
+    {
+      fields: ['lastName']
+    },
+    {
+      fields: ['createdAt']
+    },
+    {
+      // Composite index to speed up listing active customers by recency
+      fields: ['isActive', 'createdAt']
     }
   ]
 });
