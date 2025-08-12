@@ -46,11 +46,17 @@ const CustomerDetail = () => {
   });
   const { id } = useParams();
 
-  // Satış işlemi kontrolü
+  // Satış işlemi kontrolü: yalnızca satıştan kaynaklanan borçları satış olarak işaretle
   const isSaleTransaction = (transaction) => {
     if (!transaction || transaction.type !== 'debt') return false;
-    // Her türlü borç işlemi satış olarak kabul edilsin; açıklama metnini normalize edeceğiz
-    return true;
+    const desc = (transaction.description || '').toLowerCase();
+    const category = (transaction.category || '').toLowerCase();
+    const notes = (transaction.notes || '').toLowerCase();
+    return (
+      category === 'satış' ||
+      desc.includes('satış') ||
+      notes.includes('satış fatura no')
+    );
   };
 
   // Satış ID'sini description'dan çıkart
@@ -308,6 +314,7 @@ const CustomerDetail = () => {
         type: quickBalanceForm.type,
         amount: amount,
         description: quickBalanceForm.description,
+        category: quickBalanceForm.type === 'debt' ? 'Manuel' : 'Ödeme',
         date: quickBalanceForm.date || new Date().toISOString(),
         notes: ''
       });
