@@ -39,6 +39,39 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [recentTransactions, setRecentTransactions] = useState([]);
   const [debugMode, setDebugMode] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; // YYYY-MM
+  });
+
+  const getTurkishMonthName = (monthIndex) => {
+    const monthsTR = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+    return monthsTR[monthIndex] || '';
+  };
+
+  const formatSelectedMonthTR = (value) => {
+    try {
+      const [yearStr, monthStr] = value.split('-');
+      const year = Number(yearStr);
+      const month = Number(monthStr);
+      if (!year || !month) return '';
+      return `${getTurkishMonthName(month - 1)} ${year}`;
+    } catch {
+      return '';
+    }
+  };
+
+  const generateMonthOptions = (monthsBack = 24) => {
+    const options = [];
+    const now = new Date();
+    for (let i = 0; i < monthsBack; i += 1) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      const label = `${getTurkishMonthName(d.getMonth())} ${d.getFullYear()}`;
+      options.push({ value, label });
+    }
+    return options;
+  };
 
   const fetchDashboardData = useCallback(async () => {
     try {
@@ -58,13 +91,19 @@ const Dashboard = () => {
       }
       
       try {
-        balanceStats = await balanceAPI.getStats({ _t: Date.now() });
+        const [year, month] = selectedMonth.split('-').map(Number);
+        const startDate = new Date(year, month - 1, 1).toISOString();
+        const endDate = new Date(year, month, 0, 23, 59, 59, 999).toISOString();
+        balanceStats = await balanceAPI.getStats({ startDate, endDate, _t: Date.now() });
       } catch (error) {
         console.error('Balance stats error:', error);
       }
       
       try {
-        salesStats = await salesAPI.getStats({ _t: Date.now() });
+        const [year, month] = selectedMonth.split('-').map(Number);
+        const startDate = new Date(year, month - 1, 1).toISOString();
+        const endDate = new Date(year, month, 0, 23, 59, 59, 999).toISOString();
+        salesStats = await salesAPI.getStats({ startDate, endDate, _t: Date.now() });
       } catch (error) {
         console.error('Sales stats error:', error);
       }
@@ -122,7 +161,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [debugMode]);
+  }, [debugMode, selectedMonth]);
 
   useEffect(() => {
     fetchDashboardData();
@@ -165,24 +204,30 @@ const Dashboard = () => {
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Kontrol Paneli</h1>
             <div className="mt-1 flex items-center gap-2">
               <Calendar className="w-4 h-4 text-gray-500" />
-              <p className="text-sm text-gray-600">
-                {new Date().toLocaleDateString('tr-TR', { 
-                  year: 'numeric', 
-                  month: 'long' 
-                })} - Aylık Özet
-              </p>
+              <p className="text-sm text-gray-600">{formatSelectedMonthTR(selectedMonth)} - Aylık Özet</p>
             </div>
           </div>
-          <button
-            onClick={() => setDebugMode(!debugMode)}
-            className={`px-3 py-1 text-xs rounded-full border ${
-              debugMode 
-                ? 'bg-blue-600 text-white border-blue-600' 
-                : 'bg-white text-gray-700 border-gray-300'
-            }`}
-          >
-            {debugMode ? 'Debug Açık' : 'Debug Kapalı'}
-          </button>
+          <div className="flex items-center gap-3">
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              {generateMonthOptions(12).map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+            <button
+              onClick={() => setDebugMode(!debugMode)}
+              className={`px-3 py-1 text-xs rounded-full border ${
+                debugMode 
+                  ? 'bg-blue-600 text-white border-blue-600' 
+                  : 'bg-white text-gray-700 border-gray-300'
+              }`}
+            >
+              {debugMode ? 'Debug Açık' : 'Debug Kapalı'}
+            </button>
+          </div>
         </div>
       </div>
 

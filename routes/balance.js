@@ -276,7 +276,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     const whereClause = {};
     
     // Eğer tarih aralığı belirtilmemişse, bu ayın verilerini getir
-    if (startDate && endDate) {
+    if (startDate && endDate && !isNaN(new Date(startDate)) && !isNaN(new Date(endDate))) {
       whereClause.date = {
         [Op.between]: [new Date(startDate), new Date(endDate)]
       };

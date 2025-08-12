@@ -227,6 +227,15 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
     const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const startOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
 
+    // Optional custom range
+    const { startDate, endDate } = req.query;
+    let rangeWhere;
+    if (startDate && endDate && !isNaN(new Date(startDate)) && !isNaN(new Date(endDate))) {
+      rangeWhere = { [Op.between]: [new Date(startDate), new Date(endDate)] };
+    } else {
+      rangeWhere = { [Op.gte]: startOfMonth };
+    }
+
     // Yalnızca aktif müşterilere ait borç (satış) işlemlerini baz al
     const activeCustomers = await Customer.findAll({ attributes: ['id'], where: { isActive: true }, raw: true });
     const activeCustomerIds = activeCustomers.map(c => c.id);
@@ -247,7 +256,7 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
       where: {
         type: 'debt',
         category: 'Satış',
-        date: { [Op.gte]: startOfMonth },
+        date: rangeWhere,
         ...customerFilter
       }
     });
@@ -262,7 +271,7 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
       where: {
         type: 'debt',
         category: 'Satış',
-        date: { [Op.gte]: startOfMonth },
+        date: rangeWhere,
         ...customerFilter
       }
     });
