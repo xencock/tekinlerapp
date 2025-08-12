@@ -49,10 +49,8 @@ const CustomerDetail = () => {
   // Satış işlemi kontrolü
   const isSaleTransaction = (transaction) => {
     if (!transaction || transaction.type !== 'debt') return false;
-    // Yeni: description 'Satış - ...' ya da notes içinde 'Satış fatura no' bilgisi
-    const descMatch = transaction.description && transaction.description.startsWith('Satış');
-    const noteMatch = transaction.notes && transaction.notes.includes('Satış fatura no');
-    return Boolean(descMatch || noteMatch);
+    // Her türlü borç işlemi satış olarak kabul edilsin; açıklama metnini normalize edeceğiz
+    return true;
   };
 
   // Satış ID'sini description'dan çıkart
@@ -94,17 +92,25 @@ const CustomerDetail = () => {
       const currentDate = saleDate.toLocaleDateString('tr-TR');
       const currentTime = saleDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
       
+      // Eski bakiye: bu satış öncesi bakiye olmalı.
+      // Eğer BalanceTransaction listesi varsa, bu satışın borcu eklenmeden önceki değeri tahmin etmek için çıkarabiliriz.
+      // Güvenli yaklaşım: mevcut müşteri bakiyesinden satış tutarını düş.
+      const totalAmount = parseFloat(sale.totalAmount || 0);
+      const currentBalance = customerData ? Number(customerData.balance || 0) : 0;
+      const previousBalance = (currentBalance - totalAmount);
+      const grandTotal = (previousBalance + totalAmount).toFixed(2);
+
       const receiptHTML = `
         <!DOCTYPE html>
         <html>
         <head>
-          <title>Satış Raporu - ${customerName}</title>
+          <title>Satış Fişi - ${customerName}</title>
           <style>
             * { box-sizing: border-box; }
             body { font-family: Arial, Helvetica, sans-serif; color: #000; background: #fff; margin: 0; padding: 0; }
             .page { width: 210mm; max-width: 100%; margin: 0 auto; padding: 12mm; }
             .header { display: flex; align-items: flex-start; justify-content: space-between; border-bottom: 1.5px solid #000; padding-bottom: 10px; margin-bottom: 12px; }
-            .brand { font-weight: 800; font-size: 26px; letter-spacing: 1px; }
+            .brand { font-weight: 800; font-size: 20px; letter-spacing: 1px; }
             .company-info { font-size: 11px; line-height: 1.4; margin-top: 4px; }
             .title { font-weight: 700; font-size: 16px; text-transform: uppercase; }
             .meta { font-size: 11px; margin-top: 6px; text-align: right; }
@@ -134,14 +140,14 @@ const CustomerDetail = () => {
           <div class="page">
             <div class="header">
               <div>
-                <div class="brand">TEKİNLER</div>
+                <div class="brand"></div>
                 <div class="company-info">
                   Mağaza | Adres | Telefon<br/>
                   Web: tekinler.example
                 </div>
               </div>
               <div style="text-align:right;">
-                <div class="title">SATIŞ RAPORU</div>
+                <div class="title">SATIŞ FİŞİ</div>
                 <div class="meta">Tarih: ${currentDate} ${currentTime}</div>
               </div>
             </div>
@@ -156,7 +162,7 @@ const CustomerDetail = () => {
               <thead class="thead">
                 <tr>
                   <th style="width: 18%">Kod No</th>
-                  <th>Malzemenin Adı</th>
+                  <th>Ürün Adı</th>
                   <th style="width: 12%" class="text-center">Adet</th>
                   <th style="width: 16%" class="text-right">Birim Fiyat</th>
                   <th style="width: 18%" class="text-right">Toplam Fiyat</th>
@@ -186,8 +192,9 @@ const CustomerDetail = () => {
 
             <div class="totals">
               <div class="total-box">
-                <div class="total-row"><div>Ödeme Şekli</div><div>${sale.paymentMethod}</div></div>
-                <div class="total-row"><div>Genel Toplam</div><div>${parseFloat(sale.totalAmount).toFixed(2)} ₺</div></div>
+                <div class="total-row"><div>Satış Tutarı</div><div>${parseFloat(sale.totalAmount).toFixed(2)} ₺</div></div>
+                <div class="total-row"><div>Eski Bakiye</div><div>${previousBalance.toFixed(2)} ₺</div></div>
+                <div class="total-row"><div>Genel Toplam</div><div>${grandTotal} ₺</div></div>
               </div>
             </div>
 
@@ -652,7 +659,7 @@ const CustomerDetail = () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className={`text-sm font-medium ${isSale ? 'text-blue-700' : 'text-gray-900'} flex items-center gap-2`}>
                             {isSale && <Receipt className="w-4 h-4 text-blue-600" />}
-                            {transaction.description}
+                             {isSale ? 'Satış' : transaction.description}
                           </div>
                           <div className="text-xs text-gray-500">
                             {transaction.createdByUser ? (transaction.createdByUser.fullName || transaction.createdByUser.username) : 'Sistem'}

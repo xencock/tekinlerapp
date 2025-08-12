@@ -440,11 +440,16 @@ const POS = () => {
   const cartTotal = cartSubtotal; // Vergi hesaplaması kaldırıldı
 
   // Satış kağıdı yazdırma fonksiyonu
-  const printSaleReceipt = (saleData, saleItems, targetWindow) => {
-    const customerName = selectedCustomer ? selectedCustomer.fullName : 'Müşteri Adı Belirtilmemiş';
+  const printSaleReceipt = (saleData, saleItems, targetWindow, providedPreviousBalance, providedSaleAmount) => {
+    const customerName = selectedCustomer ? selectedCustomer.fullName : 'Müşteri';
     const customerPhone = selectedCustomer && selectedCustomer.phone ? selectedCustomer.phone : '';
     const currentDate = new Date().toLocaleDateString('tr-TR');
     const currentTime = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+    const saleAmount = typeof providedSaleAmount === 'number' ? providedSaleAmount : Number(cartTotal);
+    const previousBalance = typeof providedPreviousBalance === 'number'
+      ? providedPreviousBalance
+      : (selectedCustomer ? Number(selectedCustomer.balance || 0) : 0);
+    const grandTotal = Number(previousBalance) + Number(saleAmount);
 
     const maxRows = 14;
     const productRows = saleItems.map(item => `
@@ -478,7 +483,7 @@ const POS = () => {
           body { font-family: Arial, Helvetica, sans-serif; color: #000; background: #fff; margin: 0; padding: 0; }
           .page { width: 210mm; max-width: 100%; margin: 0 auto; padding: 12mm; }
           .header { display: flex; align-items: flex-start; justify-content: space-between; border-bottom: 1.5px solid #000; padding-bottom: 10px; margin-bottom: 12px; }
-          .brand { font-weight: 800; font-size: 26px; letter-spacing: 1px; }
+          .brand { font-weight: 800; font-size: 20px; letter-spacing: 1px; }
           .company-info { font-size: 11px; line-height: 1.4; margin-top: 4px; }
           .title { font-weight: 700; font-size: 16px; text-transform: uppercase; }
           .meta { font-size: 11px; margin-top: 6px; text-align: right; }
@@ -509,14 +514,14 @@ const POS = () => {
         <div class="page">
           <div class="header">
             <div>
-              <div class="brand">TEKİNLER</div>
+                <div class="brand"></div>
               <div class="company-info">
                 Mağaza | Adres | Telefon<br/>
                 Web: tekinler.example
               </div>
             </div>
             <div style="text-align:right;">
-              <div class="title">SATIŞ RAPORU</div>
+                <div class="title">SATIŞ FİŞİ</div>
               <div class="meta">Tarih: ${currentDate} ${currentTime}</div>
             </div>
           </div>
@@ -531,7 +536,7 @@ const POS = () => {
             <thead class="thead">
               <tr>
                 <th style="width: 18%">Kod No</th>
-                <th>Malzemenin Adı</th>
+                <th>Ürün Adı</th>
                 <th style="width: 12%" class="text-center">Adet</th>
                 <th style="width: 16%" class="text-right">Birim Fiyat</th>
                 <th style="width: 18%" class="text-right">Toplam Fiyat</th>
@@ -544,10 +549,11 @@ const POS = () => {
           </table>
 
           <div class="totals">
-            <div class="total-box">
-              <div class="total-row"><div>Ödeme Şekli</div><div>Hesaba Kayıt</div></div>
-              <div class="total-row"><div>Genel Toplam</div><div>${cartTotal.toFixed(2)} ₺</div></div>
-            </div>
+              <div class="total-box">
+                <div class="total-row"><div>Satış Tutarı</div><div>${saleAmount.toFixed(2)} ₺</div></div>
+                <div class="total-row"><div>Eski Bakiye</div><div>${previousBalance.toFixed(2)} ₺</div></div>
+                <div class="total-row"><div>Genel Toplam</div><div>${grandTotal.toFixed(2)} ₺</div></div>
+              </div>
           </div>
 
           <div class="print-actions">
@@ -586,7 +592,7 @@ const POS = () => {
     try {
       const saleData = {
         customerId: selectedCustomer.id,
-        paymentMethod: 'Hesaba Kayıt', // Otomatik hesaba kayıt
+        paymentMethod: 'Veresiye',
         items: cart.map(item => ({
           productId: item.id,
           quantity: item.quantity,
@@ -605,12 +611,13 @@ const POS = () => {
         preOpenedWindow.document.close();
       }
 
+      const preBalance = selectedCustomer ? Number(selectedCustomer.balance || 0) : 0;
       const response = await salesAPI.createSale(saleData);
       
       toast.success(`Satış tamamlandı! ${cartTotal.toFixed(2)} ₺ müşteri hesabına eklendi.`, { duration: 4000 });
       
       // Satış kağıdını yazdır
-      printSaleReceipt(response.data, cart, preOpenedWindow);
+      printSaleReceipt(response.data, cart, preOpenedWindow, preBalance, Number(cartTotal));
       
       // Reset state
       const cartItems = [...cart]; // Yazdırmak için kopyala
@@ -950,7 +957,7 @@ const POS = () => {
                       İşleniyor...
                     </>
                   ) : (
-                    <>Hesaba Kaydet & Yazdır</>
+                    <>Satışı Tamamla & Yazdır</>
                   )}
                 </button>
               </div>
