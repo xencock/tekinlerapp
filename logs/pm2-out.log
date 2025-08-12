@@ -260,3 +260,10 @@ Kategori kodları yüklendi: { 'tişört': '01', don: '02', ceket: '03' }
 ::1 - - [12/Aug/2025:11:43:18 +0000] "GET /api/categories HTTP/1.1" 304 - "http://localhost:3000/inventory" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
 ::1 - - [12/Aug/2025:11:43:18 +0000] "GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false HTTP/1.1" 304 - "http://localhost:3000/inventory" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
 ::1 - - [12/Aug/2025:11:43:18 +0000] "GET /api/products/filters/options HTTP/1.1" 304 - "http://localhost:3000/inventory" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15"
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+SQLite veritabanına başarıyla bağlanıldı
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+::1 - - [12/Aug/2025:12:29:29 +0000] "GET /api/health HTTP/1.1" 200 93 "-" "curl/8.7.1"
