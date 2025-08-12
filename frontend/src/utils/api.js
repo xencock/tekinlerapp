@@ -138,7 +138,7 @@ export const customersAPI = {
   getFilterOptions: () => api.get('/customers/filters/options'),
   
   // Müşteri istatistiklerini getir
-  getStats: () => api.get('/customers/stats/overview'),
+  getStats: (params) => api.get('/customers/stats/overview', { params }),
   
   // Bakiye işlemi ekle
   addBalanceTransaction: (customerId, transactionData) => api.post('/balance', { customerId, ...transactionData }),

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
-  Users, 
   TrendingUp, 
   TrendingDown, 
   Eye,
@@ -53,19 +52,19 @@ const Dashboard = () => {
       let salesStats = { data: {} };
       
       try {
-        customerStats = await customersAPI.getStats();
+        customerStats = await customersAPI.getStats({ _t: Date.now() });
       } catch (error) {
         console.error('Customer stats error:', error);
       }
       
       try {
-        balanceStats = await balanceAPI.getStats();
+        balanceStats = await balanceAPI.getStats({ _t: Date.now() });
       } catch (error) {
         console.error('Balance stats error:', error);
       }
       
       try {
-        salesStats = await salesAPI.getStats();
+        salesStats = await salesAPI.getStats({ _t: Date.now() });
       } catch (error) {
         console.error('Sales stats error:', error);
       }
@@ -210,41 +209,21 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Bu Ayın Satışları */}
+        {/* Bu Ay Alınan Ödemeler */}
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
           <div className="flex items-center">
-            <div className="p-2 bg-red-100 rounded-lg">
-              <TrendingUp className="w-6 h-6 text-red-600" />
+            <div className="p-2 bg-green-100 rounded-lg">
+              <TrendingDown className="w-6 h-6 text-green-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm text-gray-500">Bu Ay Satış</p>
-              <p className="text-2xl font-semibold text-red-600">
-                {formatNumber(stats.balance.monthlyDebt)} ₺
+              <p className="text-sm text-gray-500">Bu Ay Alınan Ödeme</p>
+              <p className="text-2xl font-semibold text-green-600">
+                {formatNumber(stats.balance.monthlyCredit)} ₺
               </p>
             </div>
           </div>
           <div className="mt-4">
-            <p className="text-xs text-gray-500">Toplam: {formatNumber(stats.balance.totalDebt)} ₺</p>
-          </div>
-        </div>
-
-
-        {/* Yeni Müşteriler */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <div className="flex items-center">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Users className="w-6 h-6 text-purple-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm text-gray-500">Yeni Müşteri</p>
-              <p className="text-2xl font-semibold text-purple-600">{stats.customers.newThisMonth}</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <p className="text-xs text-gray-500">Toplam: {stats.customers.total} müşteri</p>
-            {debugMode && (
-              <p className="text-xs text-purple-500">Debug: {stats.customers.total} toplam müşteri</p>
-            )}
+            <p className="text-xs text-gray-500">Toplam: {formatNumber(stats.balance.totalCredit)} ₺</p>
           </div>
         </div>
       </div>

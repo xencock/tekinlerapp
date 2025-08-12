@@ -268,8 +268,9 @@ router.delete('/:id', authenticateToken, async (req, res) => {
 });
 
 // Bakiye istatistikleri
-router.get('/stats/overview', authenticateToken, async (req, res) => {
+  router.get('/stats/overview', authenticateToken, async (req, res) => {
   try {
+    res.set('Cache-Control', 'no-store');
     const { startDate, endDate } = req.query;
     
     const whereClause = {};
@@ -288,7 +289,12 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
       };
     }
     
-    // Tüm zamanların verilerini de hesapla
+    // Yalnızca aktif müşterilere ait işlemleri dikkate al
+    const activeCustomers = await Customer.findAll({ attributes: ['id'], where: { isActive: true }, raw: true });
+    const activeCustomerIds = activeCustomers.map(c => c.id);
+    const customerFilter = activeCustomerIds.length > 0 ? { customerId: { [Op.in]: activeCustomerIds } } : { customerId: -1 };
+
+    // Tüm zamanların verilerini de hesapla (aktif müşterilerle sınırlı)
     const [
       totalPayments, 
       totalDebts, 
@@ -297,12 +303,12 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
       allTimeDebts,
       allTimeTransactions
     ] = await Promise.all([
-      BalanceTransaction.sum('amount', { where: { ...whereClause, type: 'payment' } }),
-      BalanceTransaction.sum('amount', { where: { ...whereClause, type: 'debt' } }),
-      BalanceTransaction.count({ where: whereClause }),
-      BalanceTransaction.sum('amount', { where: { type: 'payment' } }),
-      BalanceTransaction.sum('amount', { where: { type: 'debt' } }),
-      BalanceTransaction.count()
+      BalanceTransaction.sum('amount', { where: { ...whereClause, type: 'payment', ...customerFilter } }),
+      BalanceTransaction.sum('amount', { where: { ...whereClause, type: 'debt', category: 'Satış', ...customerFilter } }),
+      BalanceTransaction.count({ where: { ...whereClause, ...customerFilter } }),
+      BalanceTransaction.sum('amount', { where: { type: 'payment', ...customerFilter } }),
+      BalanceTransaction.sum('amount', { where: { type: 'debt', category: 'Satış', ...customerFilter } }),
+      BalanceTransaction.count({ where: customerFilter })
     ]);
     
     const netBalance = (totalDebts || 0) - (totalPayments || 0);
@@ -326,24 +332,30 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
   }
 });
 
-// Dashboard için son işlemleri getir
+  // Dashboard için son işlemleri getir
 router.get('/recent', authenticateToken, async (req, res) => {
   try {
+    res.set('Cache-Control', 'no-store');
     const { limit = 5 } = req.query;
     
-    const transactions = await BalanceTransaction.findAll({
-      include: [{
-        model: Customer,
-        as: 'customer',
-        attributes: ['id', 'firstName', 'lastName', 'phone']
-      }, {
-        model: User,
-        as: 'createdByUser',
-        attributes: ['id', 'fullName', 'username']
-      }],
-      order: [['createdAt', 'DESC']], // En yeni işlemler ilk
-      limit: parseInt(limit)
-    });
+      const transactions = await BalanceTransaction.findAll({
+        include: [
+          {
+            model: Customer,
+            as: 'customer',
+            attributes: ['id', 'firstName', 'lastName', 'phone'],
+            where: { isActive: true },
+            required: true // Sadece aktif müşterilere ait işlemleri göster
+          },
+          {
+            model: User,
+            as: 'createdByUser',
+            attributes: ['id', 'fullName', 'username']
+          }
+        ],
+        order: [['createdAt', 'DESC']], // En yeni işlemler ilk
+        limit: parseInt(limit)
+      });
     
     res.json({
       transactions

@@ -521,6 +521,8 @@ router.get('/filters/options', authenticateToken, async (req, res) => {
 // @access  Private
 router.get('/stats/overview', authenticateToken, async (req, res) => {
   try {
+    res.set('Cache-Control', 'no-store');
+
     const totalCustomers = await Customer.count({ where: { isActive: true } });
     const newCustomers = await Customer.count({ 
       where: { 
@@ -531,25 +533,35 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
       } 
     });
 
-    // Bu ayın başlangıcını hesapla
+    // Toplam borç (aktif müşterilerde pozitif bakiye toplamı)
+    const totalOutstandingDebt = await Customer.sum('balance', { where: { isActive: true, balance: { [Op.gt]: 0 } } });
+
+    // Aktif müşteri filtre listesi
+    const activeCustomers = await Customer.findAll({ attributes: ['id'], where: { isActive: true }, raw: true });
+    const activeCustomerIds = activeCustomers.map(c => c.id);
+    const customerFilter = activeCustomerIds.length > 0 ? { customerId: { [Op.in]: activeCustomerIds } } : { customerId: -1 };
+
+    // Bu ayın başlangıcı
     const currentDate = new Date();
     const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     
-    // Bu ayki toplam borçları hesapla
+    // Satış (borç) toplamları - aktif müşterilerle sınırlı
     const BalanceTransaction = require('../models/BalanceTransaction');
-    const thisMonthDebtTotal = await BalanceTransaction.sum('amount', {
-      where: {
-        type: 'debt',
-        date: {
-          [Op.gte]: startOfMonth
-        }
-      }
-    });
+    const [thisMonthDebtTotal, allTimeDebtTotal] = await Promise.all([
+      BalanceTransaction.sum('amount', {
+        where: { type: 'debt', category: 'Satış', date: { [Op.gte]: startOfMonth }, ...customerFilter }
+      }),
+      BalanceTransaction.sum('amount', {
+        where: { type: 'debt', category: 'Satış', ...customerFilter }
+      })
+    ]);
 
     res.json({
       totalCustomers,
       newCustomers,
-      totalRevenue: thisMonthDebtTotal || 0
+      totalOutstandingDebt: parseFloat(totalOutstandingDebt || 0),
+      thisMonthSales: thisMonthDebtTotal || 0,
+      totalRevenue: allTimeDebtTotal || 0
     });
 
   } catch (error) {

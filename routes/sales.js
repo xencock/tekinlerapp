@@ -222,40 +222,51 @@ router.get('/customer/:customerId', authenticateToken, async (req, res) => {
 // @access  Private
 router.get('/stats/overview', authenticateToken, async (req, res) => {
   try {
+    res.set('Cache-Control', 'no-store');
     const currentDate = new Date();
     const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const startOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-    
-    // Bu günün satışları
-    const todaySales = await Sale.sum('totalAmount', {
+
+    // Yalnızca aktif müşterilere ait borç (satış) işlemlerini baz al
+    const activeCustomers = await Customer.findAll({ attributes: ['id'], where: { isActive: true }, raw: true });
+    const activeCustomerIds = activeCustomers.map(c => c.id);
+    const customerFilter = activeCustomerIds.length > 0 ? { customerId: { [Op.in]: activeCustomerIds } } : { customerId: -1 };
+
+    // Bugünün satışları (BalanceTransaction üzerinden)
+    const todaySales = await BalanceTransaction.sum('amount', {
       where: {
-        createdAt: {
-          [Op.gte]: startOfToday
-        }
+        type: 'debt',
+        category: 'Satış',
+        date: { [Op.gte]: startOfToday },
+        ...customerFilter
       }
     });
-    
+
     // Bu ayın satışları
-    const thisMonthSales = await Sale.sum('totalAmount', {
+    const thisMonthSales = await BalanceTransaction.sum('amount', {
       where: {
-        createdAt: {
-          [Op.gte]: startOfMonth
-        }
+        type: 'debt',
+        category: 'Satış',
+        date: { [Op.gte]: startOfMonth },
+        ...customerFilter
       }
     });
-    
+
     // Toplam satışlar
-    const totalSales = await Sale.sum('totalAmount');
-    
+    const totalSales = await BalanceTransaction.sum('amount', {
+      where: { type: 'debt', category: 'Satış', ...customerFilter }
+    });
+
     // Bu ayın satış sayısı
-    const thisMonthSalesCount = await Sale.count({
+    const thisMonthSalesCount = await BalanceTransaction.count({
       where: {
-        createdAt: {
-          [Op.gte]: startOfMonth
-        }
+        type: 'debt',
+        category: 'Satış',
+        date: { [Op.gte]: startOfMonth },
+        ...customerFilter
       }
     });
-    
+
     res.json({
       todaySales: todaySales || 0,
       thisMonthSales: thisMonthSales || 0,

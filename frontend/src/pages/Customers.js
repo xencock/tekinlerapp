@@ -49,7 +49,7 @@ const Customers = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [stats, setStats] = useState({
     totalCustomers: 0,
-    newCustomers: 0,
+    totalOutstandingDebt: 0,
     totalRevenue: 0,
     avgOrderValue: 0
   });
@@ -107,7 +107,7 @@ const Customers = () => {
   // Fetch stats
   const fetchStats = React.useCallback(async () => {
     try {
-      const response = await customersAPI.getStats();
+      const response = await customersAPI.getStats({ _t: Date.now() });
       setStats(response.data);
     } catch (error) {
       console.error('Fetch stats error:', error);
@@ -433,15 +433,15 @@ const Customers = () => {
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <TrendingUp className="h-8 w-8 text-green-600" />
+                  <TrendingUp className="h-8 w-8 text-red-600" />
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Bu Ay Yeni</dt>
-                    <dd className="text-lg font-medium text-gray-900">
-                      {stats.newCustomers && typeof stats.newCustomers === 'number' 
-                        ? stats.newCustomers 
-                        : 0}
+                    <dt className="text-sm font-medium text-gray-500 truncate">Toplam Borç</dt>
+                    <dd className="text-lg font-medium text-gray-900 text-red-600">
+                      {typeof stats.totalOutstandingDebt === 'number' 
+                        ? formatNumberForDisplay(stats.totalOutstandingDebt)
+                        : '0,00'} ₺
                     </dd>
                   </dl>
                 </div>
