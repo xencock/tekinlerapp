@@ -26,7 +26,7 @@ const UserModal = ({ isOpen, onClose, onSave, user, setUser, error }) => {
             <input type="text" name="username" value={user?.username || ''} onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="pin">PIN (4 Haneli)</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="pin">PIN (6 Haneli)</label>
             <input 
               type="password" 
               name="pin" 
@@ -34,9 +34,9 @@ const UserModal = ({ isOpen, onClose, onSave, user, setUser, error }) => {
               onChange={handleChange} 
               placeholder={user?.id ? 'Değiştirmek için yeni PIN girin' : 'PIN girin'} 
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-              minLength="4" 
-              maxLength="4"
-              pattern="[0-9]{4}"
+              minLength="6" 
+              maxLength="6"
+              pattern="[0-9]{6}"
               required={!user?.id}
             />
           </div>
@@ -128,12 +128,12 @@ const Users = () => {
         return;
       }
       
-      if (currentUser.pin.length !== 4) {
-        setModalError('PIN 4 haneli olmalı');
+      if (currentUser.pin.length !== 6) {
+        setModalError('PIN 6 haneli olmalı');
         return;
       }
       
-      if (!/^[0-9]{4}$/.test(currentUser.pin)) {
+      if (!/^[0-9]{6}$/.test(currentUser.pin)) {
         setModalError('PIN sadece rakam içerebilir');
         return;
       }
