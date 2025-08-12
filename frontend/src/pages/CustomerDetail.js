@@ -37,10 +37,12 @@ const CustomerDetail = () => {
     date: '',
     notes: ''
   });
+  const getTodayDateOnly = () => new Date().toISOString().split('T')[0];
   const [quickBalanceForm, setQuickBalanceForm] = useState({
     type: 'debt',
     amount: '',
-    description: ''
+    description: '',
+    date: getTodayDateOnly()
   });
   const { id } = useParams();
 
@@ -286,7 +288,7 @@ const CustomerDetail = () => {
         type: quickBalanceForm.type,
         amount: amount,
         description: quickBalanceForm.description,
-        date: new Date().toISOString(),
+        date: quickBalanceForm.date || new Date().toISOString(),
         notes: ''
       });
 
@@ -295,7 +297,8 @@ const CustomerDetail = () => {
       setQuickBalanceForm({
         type: 'debt',
         amount: '',
-        description: ''
+        description: '',
+        date: getTodayDateOnly()
       });
       
       // Refresh data
@@ -513,7 +516,7 @@ const CustomerDetail = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => {
-                  setQuickBalanceForm({ type: 'payment', amount: '', description: 'Ödeme alındı' });
+                  setQuickBalanceForm({ type: 'payment', amount: '', description: 'Ödeme alındı', date: getTodayDateOnly() });
                   setShowQuickBalanceModal(true);
                 }}
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
@@ -522,7 +525,7 @@ const CustomerDetail = () => {
               </button>
               <button
                 onClick={() => {
-                  setQuickBalanceForm({ type: 'debt', amount: '', description: 'Borç eklendi' });
+                  setQuickBalanceForm({ type: 'debt', amount: '', description: 'Borç eklendi', date: getTodayDateOnly() });
                   setShowQuickBalanceModal(true);
                 }}
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
@@ -723,6 +726,17 @@ const CustomerDetail = () => {
                   />
                   <span className="absolute left-3 top-2.5 text-gray-400">₺</span>
                 </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tarih</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={quickBalanceForm.date}
+                  onChange={handleQuickBalanceChange}
+                  max={getTodayDateOnly()}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Açıklama</label>

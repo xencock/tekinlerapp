@@ -70,11 +70,12 @@ const Customers = () => {
     emailPermission: true,
     notes: ''
   });
+  const getTodayDateOnly = () => new Date().toISOString().split('T')[0];
   const [balanceFormData, setBalanceFormData] = useState({
     type: 'payment',
     amount: '',
     description: '',
-    date: new Date().toISOString(),
+    date: getTodayDateOnly(),
     notes: ''
   });
   const [amountInput, setAmountInput] = useState('');
@@ -266,7 +267,7 @@ const Customers = () => {
         type: 'payment',
         amount: '',
         description: '',
-        date: new Date().toISOString(),
+        date: getTodayDateOnly(),
         notes: ''
       });
       setAmountInput('');
@@ -361,7 +362,7 @@ const Customers = () => {
       type: 'payment',
       amount: '',
       description: '',
-      date: new Date().toISOString(),
+      date: getTodayDateOnly(),
       notes: ''
     });
     setSelectedCustomer(null);
@@ -798,6 +799,7 @@ const Customers = () => {
                   name="date"
                   value={balanceFormData.date}
                   onChange={handleBalanceInputChange}
+                  max={getTodayDateOnly()}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -855,7 +857,7 @@ const Customers = () => {
                       type: 'payment',
                       amount: '',
                       description: '',
-                      date: new Date().toISOString(),
+                      date: getTodayDateOnly(),
                       notes: ''
                     });
                   }}

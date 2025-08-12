@@ -46,11 +46,14 @@ const POS = () => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [showBalanceModal, setShowBalanceModal] = useState(false);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
+  // Helper for date input default (YYYY-MM-DD)
+  const getTodayDateOnly = () => new Date().toISOString().split('T')[0];
   const [balanceForm, setBalanceForm] = useState({
     type: 'debt',
     amount: '',
     description: '',
-    category: 'Satış'
+    category: 'Satış',
+    date: getTodayDateOnly()
   });
 
   // Direct quantity input values per cart item (temporary while typing)
@@ -104,7 +107,7 @@ const POS = () => {
         amount: amount,
         description: balanceForm.description,
         category: balanceForm.category,
-        date: new Date().toISOString(),
+        date: balanceForm.date || new Date().toISOString(),
         notes: ''
       });
 
@@ -114,7 +117,8 @@ const POS = () => {
         type: 'debt',
         amount: '',
         description: '',
-        category: 'Satış'
+        category: 'Satış',
+        date: getTodayDateOnly()
       });
       
       // Refresh customer data to update balance
@@ -741,7 +745,7 @@ const POS = () => {
                       <div className="flex gap-2">
                         <button
                           onClick={() => {
-                            setBalanceForm({ type: 'debt', amount: '', description: '', category: 'Satış' });
+                            setBalanceForm({ type: 'debt', amount: '', description: '', category: 'Satış', date: getTodayDateOnly() });
                             setShowBalanceModal(true);
                           }}
                           className="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
@@ -751,7 +755,7 @@ const POS = () => {
                         </button>
                         <button
                           onClick={() => {
-                            setBalanceForm({ type: 'payment', amount: '', description: '', category: 'Satış' });
+                            setBalanceForm({ type: 'payment', amount: '', description: '', category: 'Satış', date: getTodayDateOnly() });
                             setShowBalanceModal(true);
                           }}
                           className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
@@ -1073,6 +1077,17 @@ const POS = () => {
                   />
                   <span className="absolute left-3 top-2.5 text-gray-400 text-sm">TL</span>
                 </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tarih</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={balanceForm.date}
+                  max={getTodayDateOnly()}
+                  onChange={handleBalanceChange}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Açıklama</label>

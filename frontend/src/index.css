@@ -45,3 +45,15 @@
     @apply px-4 py-5 sm:p-6;
   }
 } 
+
+/* Hide number input spinners (up/down arrows) across browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield;      /* Standard */
+}
