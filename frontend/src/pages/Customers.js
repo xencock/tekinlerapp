@@ -636,7 +636,7 @@ const Customers = () => {
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Toplam Borç</dt>
+                    <dt className="text-sm font-medium text-gray-500 truncate">Toplam Alacak</dt>
                     <dd className="text-lg font-medium text-gray-900 text-red-600">
                       {typeof stats.totalOutstandingDebt === 'number' 
                         ? formatNumberForDisplay(stats.totalOutstandingDebt)

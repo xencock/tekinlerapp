@@ -706,13 +706,15 @@ const CustomerDetail = () => {
                     </div>
                   )}
                   
-                  {/* Ödeme Yöntemleri */}
+                  {/* Satış Yöntemi */}
                   <div className="text-center">
-                    <p className="text-sm font-medium text-gray-500">Ödeme Yöntemleri</p>
+                    <p className="text-sm font-medium text-gray-500">Satış Yöntemi</p>
                     <div className="mt-2 space-y-1">
                       {Object.entries(salesSummary.summary.paymentMethods).map(([method, count]) => (
                         <div key={method} className="text-sm">
-                          <span className="font-medium text-gray-700">{method}:</span>
+                          <span className="font-medium text-gray-700">
+                            {method === 'cash' ? 'Peşin' : method === 'credit' ? 'Vadeli' : method}:
+                          </span>
                           <span className="ml-1 text-gray-600">{count}</span>
                         </div>
                       ))}
@@ -737,7 +739,7 @@ const CustomerDetail = () => {
                               Tutar
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Ödeme Yöntemi
+                              Satış Yöntemi
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               Notlar
@@ -754,7 +756,7 @@ const CustomerDetail = () => {
                                 {formatNumberForDisplay(sale.totalAmount)} ₺
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {sale.paymentMethod}
+                                {sale.paymentMethod === 'cash' ? 'Peşin' : sale.paymentMethod === 'credit' ? 'Vadeli' : sale.paymentMethod}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {sale.notes || '-'}

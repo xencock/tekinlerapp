@@ -703,7 +703,7 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
       where: { isActive: true }
     });
 
-    // Toplam bakiye (tüm müşterilerin bakiyelerinin toplamı)
+    // Toplam alacak (tüm müşterilerin bakiyelerinin toplamı)
     const totalOutstandingDebt = await Customer.sum('balance', {
       where: { isActive: true }
     });
@@ -854,7 +854,15 @@ router.get('/:id/sales-summary', authenticateToken, async (req, res) => {
 
     // Ödeme yöntemlerine göre dağılım
     const paymentMethodStats = sales.reduce((acc, sale) => {
-      const method = sale.paymentMethod;
+      let method = sale.paymentMethod;
+      
+      // Payment method değerlerini Türkçe olarak çevir
+      if (method === 'cash') {
+        method = 'Peşin';
+      } else if (method === 'credit') {
+        method = 'Vadeli';
+      }
+      
       acc[method] = (acc[method] || 0) + 1;
       return acc;
     }, {});
@@ -873,13 +881,24 @@ router.get('/:id/sales-summary', authenticateToken, async (req, res) => {
         monthlyAverage: monthlyAverage,
         paymentMethods: paymentMethodStats
       },
-      sales: sales.map(sale => ({
-        id: sale.id,
-        totalAmount: sale.totalAmount,
-        paymentMethod: sale.paymentMethod,
-        date: sale.createdAt,
-        notes: sale.notes
-      }))
+      sales: sales.map(sale => {
+        let paymentMethod = sale.paymentMethod;
+        
+        // Payment method değerlerini Türkçe olarak çevir
+        if (paymentMethod === 'cash') {
+          paymentMethod = 'Peşin';
+        } else if (paymentMethod === 'credit') {
+          paymentMethod = 'Vadeli';
+        }
+        
+        return {
+          id: sale.id,
+          totalAmount: sale.totalAmount,
+          paymentMethod: paymentMethod,
+          date: sale.createdAt,
+          notes: sale.notes
+        };
+      })
     };
 
     res.json(responseData);

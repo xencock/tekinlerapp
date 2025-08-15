@@ -959,38 +959,36 @@ const POS = () => {
         </div>
       </div>
 
-      {/* Bottom sticky action bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-4">
-          <div className="rounded-xl border border-gray-200 bg-white/90 backdrop-blur shadow-lg">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3">
-              <div className="flex items-center gap-3">
-                <div className="text-sm text-gray-600">Toplam</div>
-                <div className="text-2xl font-bold text-gray-900">{cartTotal.toFixed(2)} ₺</div>
-                <div className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-600">{cart.length} ürün</div>
-                {selectedCustomer ? (
-                  <div className="text-sm text-gray-700">Müşteri: <span className="font-medium">{selectedCustomer.fullName}</span></div>
+      {/* Bottom sticky action bar - Grid içinde hizalanmış */}
+      <div className="mt-8">
+        <div className="rounded-xl border border-gray-200 bg-white/90 backdrop-blur shadow-lg">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3">
+            <div className="flex items-center gap-3">
+              <div className="text-sm text-gray-600">Toplam</div>
+              <div className="text-2xl font-bold text-gray-900">{cartTotal.toFixed(2)} ₺</div>
+              <div className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-600">{cart.length} ürün</div>
+              {selectedCustomer ? (
+                <div className="text-sm text-gray-700">Müşteri: <span className="font-medium">{selectedCustomer.fullName}</span></div>
+              ) : (
+                <div className="text-sm text-red-600">Müşteri seçin</div>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleCompleteSale}
+                disabled={loading || cart.length === 0 || !selectedCustomer}
+                className="w-full sm:w-auto bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 px-5 rounded-lg font-semibold flex items-center justify-center gap-2"
+                title="Satışı tamamla (F9)"
+              >
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    İşleniyor...
+                  </>
                 ) : (
-                  <div className="text-sm text-red-600">Müşteri seçin</div>
+                  <>Satışı Tamamla & Yazdır</>
                 )}
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleCompleteSale}
-                  disabled={loading || cart.length === 0 || !selectedCustomer}
-                  className="w-full sm:w-auto bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 px-5 rounded-lg font-semibold flex items-center justify-center gap-2"
-                  title="Satışı tamamla (F9)"
-                >
-                  {loading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      İşleniyor...
-                    </>
-                  ) : (
-                    <>Satışı Tamamla & Yazdır</>
-                  )}
-                </button>
-              </div>
+              </button>
             </div>
           </div>
         </div>
