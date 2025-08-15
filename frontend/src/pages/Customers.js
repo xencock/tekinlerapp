@@ -11,7 +11,9 @@ import {
   TrendingUp,
   TrendingDown,
   ChevronUp,
-  ChevronDown
+  ChevronDown,
+  RotateCcw,
+  UsersIcon
 } from 'lucide-react';
 import { customersAPI } from '../utils/api';
 import toast from 'react-hot-toast';
@@ -47,6 +49,10 @@ const Customers = () => {
   const [showBalanceModal, setShowBalanceModal] = useState(false);
   const [showCustomersListModal, setShowCustomersListModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [showDeletedCustomers, setShowDeletedCustomers] = useState(false);
+  const [deletedCustomers, setDeletedCustomers] = useState([]);
+  const [deletedCustomersLoading, setDeletedCustomersLoading] = useState(false);
+
   const [stats, setStats] = useState({
     totalCustomers: 0,
     totalOutstandingDebt: 0,
@@ -113,6 +119,68 @@ const Customers = () => {
       console.error('Fetch stats error:', error);
     }
   }, []);
+
+  // Fetch deleted customers
+  const fetchDeletedCustomers = React.useCallback(async () => {
+    try {
+      console.log('🔍 fetchDeletedCustomers çağrıldı');
+      setDeletedCustomersLoading(true);
+      const params = {
+        page: 1,
+        limit: 50,
+        search: searchTerm
+      };
+
+      console.log('📡 API çağrısı yapılıyor:', params);
+      const response = await customersAPI.getDeletedCustomers(params);
+      console.log('✅ API yanıtı:', response.data);
+      setDeletedCustomers(response.data.customers);
+    } catch (error) {
+      console.error('❌ Fetch deleted customers error:', error);
+      toast.error('🔄 Silinen müşteriler yüklenemedi', { duration: 3000 });
+    } finally {
+      console.log('🏁 Loading state false yapılıyor');
+      setDeletedCustomersLoading(false);
+    }
+  }, [searchTerm]);
+
+  // Handle restore customer
+  const handleRestoreCustomer = async (customerId) => {
+    try {
+      await customersAPI.restoreCustomer(customerId);
+      toast.success('✅ Müşteri başarıyla geri yüklendi', { duration: 3000 });
+      fetchDeletedCustomers();
+      fetchCustomers();
+      fetchStats();
+    } catch (error) {
+      console.error('Restore customer error:', error);
+      if (error.response?.data?.conflicts) {
+        const conflicts = error.response.data.conflicts.join(', ');
+        toast.error(`❌ Müşteri geri yüklenemedi: ${conflicts}`, { duration: 5000 });
+      } else {
+        toast.error('❌ Müşteri geri yüklenemedi', { duration: 3000 });
+      }
+    }
+  };
+
+  // Handle permanent delete customer
+  const handlePermanentDeleteCustomer = async (customerId, customerName) => {
+    if (window.confirm(`⚠️ "${customerName}" müşterisini kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!`)) {
+      try {
+        await customersAPI.permanentDeleteCustomer(customerId);
+        toast.success('🗑️ Müşteri kalıcı olarak silindi', { duration: 3000 });
+        fetchDeletedCustomers();
+        fetchStats();
+      } catch (error) {
+        console.error('Permanent delete customer error:', error);
+        if (error.response?.data?.message) {
+          toast.error(`❌ ${error.response.data.message}`, { duration: 5000 });
+        } else {
+          toast.error('❌ Müşteri kalıcı olarak silinemedi', { duration: 3000 });
+        }
+      }
+    }
+  };
 
   // Handle form submit
   const handleSubmit = async (e) => {
@@ -382,6 +450,14 @@ const Customers = () => {
     fetchStats();
   }, [currentPage, searchTerm, fetchCustomers, fetchStats]);
 
+  useEffect(() => {
+    console.log('🔄 useEffect showDeletedCustomers değişti:', showDeletedCustomers);
+    if (showDeletedCustomers) {
+      console.log('📥 Silinen müşteriler yükleniyor...');
+      fetchDeletedCustomers();
+    }
+  }, [showDeletedCustomers, fetchDeletedCustomers]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero header */}
@@ -473,7 +549,7 @@ const Customers = () => {
         {/* Search Bar */}
         <div className="bg-white shadow-sm rounded-lg mb-6">
           <div className="p-4">
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
@@ -484,6 +560,16 @@ const Customers = () => {
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
+              <button
+                onClick={() => setShowDeletedCustomers(!showDeletedCustomers)}
+                className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                  showDeletedCustomers
+                    ? 'bg-red-100 text-red-700 border border-red-200 hover:bg-red-200'
+                    : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                }`}
+              >
+                {showDeletedCustomers ? 'Aktif Müşteriler' : 'Silinen Müşteriler'}
+              </button>
             </div>
           </div>
         </div>
@@ -495,13 +581,108 @@ const Customers = () => {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
               <p className="mt-4 text-gray-600">Müşteriler yükleniyor...</p>
             </div>
+          ) : showDeletedCustomers ? (
+            deletedCustomersLoading ? (
+              <div className="p-12 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
+                <p className="mt-4 text-gray-600">Silinen müşteriler yükleniyor...</p>
+              </div>
+            ) : deletedCustomers.length === 0 ? (
+              <div className="p-12 text-center">
+                <div className="text-gray-400 mb-4">
+                  <UsersIcon className="h-12 w-12 mx-auto" />
+                </div>
+                <p className="text-gray-600">Silinen müşteri bulunamadı</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Silinen Müşteri Bilgileri
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Bakiye
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Silinen Tarih
+                      </th>
+                      <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        İşlemler
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {deletedCustomers.map((customer) => (
+                      <tr
+                        key={customer.id}
+                        className="hover:bg-gray-50 transition-colors bg-red-50"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">
+                                {customer.fullName}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {customer.phone || 'Telefon yok'}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {customer.tcNumber ? `TC: ${customer.tcNumber}` : 'TC bilgisi yok'}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-lg font-medium">
+                            <span className={customer.balance > 0 ? 'text-red-600' : customer.balance < 0 ? 'text-green-600' : 'text-gray-600'}>
+                              {formatNumberForDisplay(customer.balance) || '0,00'} ₺
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-500">
+                            {new Date(customer.updatedAt).toLocaleDateString('tr-TR', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-center">
+                          <div className="flex items-center justify-center space-x-2">
+                            <button
+                              onClick={() => handleRestoreCustomer(customer.id)}
+                              className="inline-flex items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                              title="Geri Yükle"
+                            >
+                              <RotateCcw className="w-4 h-4 mr-2" />
+                              Geri Yükle
+                            </button>
+                            <button
+                              onClick={() => handlePermanentDeleteCustomer(customer.id, customer.fullName)}
+                              className="inline-flex items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+                              title="Kalıcı Sil"
+                            >
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Kalıcı Sil
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Müşteri Bilgileri
+                      {showDeletedCustomers ? 'Silinen Müşteri Bilgileri' : 'Müşteri Bilgileri'}
                     </th>
                     <th 
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
@@ -522,7 +703,7 @@ const Customers = () => {
                       </div>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Oluşturan
+                      {showDeletedCustomers ? 'Silinen Tarih' : 'Oluşturan'}
                     </th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                       İşlemler
@@ -530,76 +711,135 @@ const Customers = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {customers.map((customer) => (
-                    <tr
-                      key={customer.id}
-                      className="hover:bg-gray-50 cursor-pointer transition-colors"
-                      onDoubleClick={() => navigate(`/customers/${customer.id}`)}
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {customer.fullName}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {customer.phone || 'Telefon yok'}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {customer.tcNumber ? `TC: ${customer.tcNumber}` : 'TC bilgisi yok'}
+                  {showDeletedCustomers ? (
+                    // Silinen müşteriler listesi
+                    deletedCustomers.map((customer) => (
+                      <tr
+                        key={customer.id}
+                        className="hover:bg-gray-50 transition-colors bg-red-50"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">
+                                {customer.fullName}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {customer.phone || 'Telefon yok'}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {customer.tcNumber ? `TC: ${customer.tcNumber}` : 'TC bilgisi yok'}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-lg font-medium">
-                          <span className={customer.balance > 0 ? 'text-red-600' : customer.balance < 0 ? 'text-green-600' : 'text-gray-600'}>
-                            {formatNumberForDisplay(customer.balance) || '0,00'} ₺
-                          </span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {customer.createdByUser ? customer.createdByUser.fullName || customer.createdByUser.username : 'Sistem'}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center">
-                        <div className="flex items-center justify-center space-x-2">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/customers/${customer.id}`);
-                            }}
-                            className="inline-flex items-center p-1.5 border border-transparent text-xs font-medium rounded-full text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-                            title="Detayları Görüntüle"
-                          >
-                            <Eye className="w-3 h-3" />
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleEdit(customer);
-                            }}
-                            className="inline-flex items-center p-1.5 border border-transparent text-xs font-medium rounded-full text-yellow-700 bg-yellow-100 hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors"
-                            title="Düzenle"
-                          >
-                            <Edit className="w-3 h-3" />
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(customer.id);
-                            }}
-                            className="inline-flex items-center p-1.5 border border-transparent text-xs font-medium rounded-full text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
-                            title="Sil"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-lg font-medium">
+                            <span className={customer.balance > 0 ? 'text-red-600' : customer.balance < 0 ? 'text-green-600' : 'text-gray-600'}>
+                              {formatNumberForDisplay(customer.balance) || '0,00'} ₺
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-500">
+                            {new Date(customer.updatedAt).toLocaleDateString('tr-TR', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-center">
+                          <div className="flex items-center justify-center space-x-2">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRestoreCustomer(customer.id);
+                              }}
+                              className="inline-flex items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                              title="Geri Yükle"
+                            >
+                              <RotateCcw className="w-3 h-3 mr-1" />
+                              Geri Yükle
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    // Aktif müşteriler listesi
+                    customers.map((customer) => (
+                      <tr
+                        key={customer.id}
+                        className="hover:bg-gray-50 cursor-pointer transition-colors"
+                        onDoubleClick={() => navigate(`/customers/${customer.id}`)}
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">
+                                {customer.fullName}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {customer.phone || 'Telefon yok'}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {customer.tcNumber ? `TC: ${customer.tcNumber}` : 'TC bilgisi yok'}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-lg font-medium">
+                            <span className={customer.balance > 0 ? 'text-red-600' : customer.balance < 0 ? 'text-green-600' : 'text-gray-600'}>
+                              {formatNumberForDisplay(customer.balance) || '0,00'} ₺
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {customer.createdByUser ? customer.createdByUser.fullName || customer.createdByUser.username : 'Sistem'}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-center">
+                          <div className="flex items-center justify-center space-x-2">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/customers/${customer.id}`);
+                              }}
+                              className="inline-flex items-center p-1.5 border border-transparent text-xs font-medium rounded-full text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                              title="Detayları Görüntüle"
+                            >
+                              <Eye className="w-3 h-3" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleEdit(customer);
+                              }}
+                              className="inline-flex items-center p-1.5 border border-transparent text-xs font-medium rounded-full text-yellow-700 bg-yellow-100 hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors"
+                              title="Düzenle"
+                            >
+                              <Edit className="w-3 h-3" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(customer.id);
+                              }}
+                              className="inline-flex items-center p-1.5 border border-transparent text-xs font-medium rounded-full text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+                              title="Sil"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

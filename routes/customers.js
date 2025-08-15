@@ -4,6 +4,8 @@ const { sequelize } = require('../config/database');
 const Customer = require('../models/Customer');
 const User = require('../models/User');
 const SimpleCustomer = require('../models/SimpleCustomer');
+const Sale = require('../models/Sale');
+const BalanceTransaction = require('../models/BalanceTransaction');
 const { authenticateToken } = require('../middleware/auth');
 const { validateCustomer, validateCustomerUpdate } = require('../middleware/validation');
 
@@ -100,6 +102,94 @@ router.get('/', authenticateToken, async (req, res) => {
     res.status(500).json({
       error: 'Sunucu hatası',
       message: 'Müşteriler alınamadı'
+    });
+  }
+});
+
+// @route   GET /api/customers/deleted
+// @desc    Silinen müşterileri listele
+// @access  Private
+router.get('/deleted', authenticateToken, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search || '';
+    const sortBy = req.query.sortBy || 'updatedAt';
+    const sortOrder = req.query.sortOrder === 'desc' ? 'DESC' : 'ASC';
+
+    // Build where clause for deleted customers
+    const whereClause = {
+      isActive: false
+    };
+
+    if (search) {
+      const term = search.trim();
+      whereClause[Op.or] = [
+        { firstName: { [Op.like]: `${term}%` } },
+        { lastName: { [Op.like]: `${term}%` } },
+        { phone: { [Op.like]: `${term}%` } },
+        { email: { [Op.like]: `${term}%` } },
+        { tcNumber: { [Op.like]: `${term}%` } }
+      ];
+    }
+
+    // Calculate skip value for pagination
+    const skip = (page - 1) * limit;
+
+    // Get deleted customers with pagination
+    const customers = await Customer.findAll({
+      where: whereClause,
+      attributes: [
+        'id','firstName','lastName','phone','email','tcNumber',
+        'city','district','balance','totalPurchases','totalOrders',
+        'smsPermission','emailPermission','isActive','createdAt','updatedAt'
+      ],
+      order: [[sortBy, sortOrder]],
+      offset: skip,
+      limit: limit,
+      include: [
+        {
+          model: User,
+          as: 'updatedByUser',
+          attributes: ['id', 'username', 'fullName'],
+          required: false
+        }
+      ]
+    });
+
+    // Get total count for pagination
+    const total = await Customer.count({ where: whereClause });
+
+    // Calculate pagination info
+    const totalPages = Math.ceil(total / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    // Add calculated fields to customers
+    const customersWithCalculations = customers.map(customer => ({
+      ...customer.toJSON(),
+      fullName: customer.getFullName(),
+      balanceStatus: customer.getBalanceStatus(),
+      balanceColor: customer.getBalanceColor()
+    }));
+
+    res.json({
+      customers: customersWithCalculations,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalCustomers: total,
+        hasNextPage,
+        hasPrevPage,
+        limit
+      }
+    });
+
+  } catch (error) {
+    console.error('Get deleted customers error:', error);
+    res.status(500).json({
+      error: 'Sunucu hatası',
+      message: 'Silinen müşteriler alınamadı'
     });
   }
 });
@@ -210,44 +300,19 @@ router.post('/', authenticateToken, validateCustomer, async (req, res) => {
       createdBy: req.user.id
     });
 
-    // Normalize returned customer (works for both Sequelize model and SimpleCustomer plain object)
-    const base = (customer && typeof customer.toJSON === 'function') ? customer.toJSON() : customer;
-    const safeParseJSON = (value) => {
-      if (typeof value === 'string') {
-        try { return JSON.parse(value); } catch { return value; }
-      }
-      return value;
-    };
-
-    const totalPurchases = parseFloat(base?.totalPurchases || 0);
-    const totalOrders = parseInt(base?.totalOrders || 0);
-
-    const customerData = {
-      ...base,
-      preferredColors: safeParseJSON(base?.preferredColors),
-      preferredBrands: safeParseJSON(base?.preferredBrands),
-      fullName: (customer && typeof customer.getFullName === 'function')
-        ? customer.getFullName()
-        : `${base?.firstName || ''} ${base?.lastName || ''}`.trim(),
-      customerSegment: (customer && typeof customer.getCustomerSegment === 'function')
-        ? customer.getCustomerSegment()
-        : (totalPurchases >= 1000 ? 'Premium' : totalPurchases >= 500 ? 'Gold' : totalPurchases >= 100 ? 'Silver' : 'Bronze'),
-      averageOrderValue: (customer && typeof customer.getAverageOrderValue === 'function')
-        ? customer.getAverageOrderValue()
-        : (totalOrders === 0 ? 0 : (totalPurchases / totalOrders).toFixed(2))
-    };
-
     res.status(201).json({
       message: 'Müşteri başarıyla oluşturuldu',
-      customer: customerData
+      customer: {
+        ...customer.toJSON(),
+        fullName: customer.getFullName()
+      }
     });
 
   } catch (error) {
     console.error('Create customer error:', error);
     res.status(500).json({
       error: 'Sunucu hatası',
-      message: 'Müşteri oluşturulamadı',
-      details: error?.message || 'Unknown error'
+      message: 'Müşteri oluşturulamadı'
     });
   }
 });
@@ -255,7 +320,7 @@ router.post('/', authenticateToken, validateCustomer, async (req, res) => {
 // @route   PUT /api/customers/:id
 // @desc    Müşteri bilgilerini güncelle
 // @access  Private
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put('/:id', authenticateToken, validateCustomerUpdate, async (req, res) => {
   try {
     const customer = await Customer.findByPk(req.params.id);
     
@@ -283,75 +348,36 @@ router.put('/:id', authenticateToken, async (req, res) => {
       notes
     } = req.body;
 
-    // Helper function to normalize phone numbers
-    const normalizePhone = (phoneNumber) => {
-      if (!phoneNumber) return '';
-      return phoneNumber.replace(/[\s\-\(\)]/g, '').trim();
-    };
-
-    // Check if phone already exists (excluding current customer)
-    if (phone && phone.trim()) {
-      const normalizedNewPhone = normalizePhone(phone);
-      const normalizedCurrentPhone = normalizePhone(customer.phone);
-      
-      if (normalizedNewPhone && normalizedNewPhone !== normalizedCurrentPhone) {
-        const existingCustomer = await Customer.findOne({
-          where: {
-            phone: phone.trim(),
-            id: { [Op.ne]: req.params.id },
-            isActive: true
-          }
+    // Check if phone already exists (if provided and changed)
+    if (phone && phone.trim() && phone !== customer.phone) {
+      const existingCustomer = await SimpleCustomer.findByPhone(phone);
+      if (existingCustomer) {
+        return res.status(400).json({
+          error: 'Müşteri hatası',
+          message: 'Bu telefon numarası ile kayıtlı müşteri bulunmaktadır'
         });
-        if (existingCustomer) {
-          return res.status(400).json({
-            error: 'Müşteri hatası',
-            message: 'Bu telefon numarası ile kayıtlı başka bir müşteri bulunmaktadır'
-          });
-        }
       }
     }
 
-    // Check if email already exists (excluding current customer)
-    if (email && email.trim()) {
-      const trimmedNewEmail = email.trim().toLowerCase();
-      const trimmedCurrentEmail = customer.email ? customer.email.trim().toLowerCase() : '';
-      
-      if (trimmedNewEmail && trimmedNewEmail !== trimmedCurrentEmail) {
-        const existingEmail = await Customer.findOne({
-          where: {
-            email: email.trim(),
-            id: { [Op.ne]: req.params.id },
-            isActive: true
-          }
+    // Check if email already exists (if provided and changed)
+    if (email && email !== customer.email) {
+      const existingEmail = await SimpleCustomer.findByEmail(email);
+      if (existingEmail) {
+        return res.status(400).json({
+          error: 'Müşteri hatası',
+          message: 'Bu e-posta adresi ile kayıtlı müşteri bulunmaktadır'
         });
-        if (existingEmail) {
-          return res.status(400).json({
-            error: 'Müşteri hatası',
-            message: 'Bu e-posta adresi ile kayıtlı başka bir müşteri bulunmaktadır'
-          });
-        }
       }
     }
 
-    // Check if TC number already exists (excluding current customer)
-    if (tcNumber && tcNumber.trim()) {
-      const trimmedNewTC = tcNumber.trim();
-      const trimmedCurrentTC = customer.tcNumber ? customer.tcNumber.trim() : '';
-      
-      if (trimmedNewTC && trimmedNewTC !== trimmedCurrentTC) {
-        const existingTC = await Customer.findOne({
-          where: {
-            tcNumber: tcNumber.trim(),
-            id: { [Op.ne]: req.params.id },
-            isActive: true
-          }
+    // Check if TC number already exists (if provided and changed)
+    if (tcNumber && tcNumber.trim() && tcNumber !== customer.tcNumber) {
+      const existingTC = await SimpleCustomer.findByTC(tcNumber);
+      if (existingTC) {
+        return res.status(400).json({
+          error: 'Müşteri hatası',
+          message: 'Bu TC kimlik numarası ile kayıtlı müşteri bulunmaktadır'
         });
-        if (existingTC) {
-          return res.status(400).json({
-            error: 'Müşteri hatası',
-            message: 'Bu TC kimlik numarası ile kayıtlı başka bir müşteri bulunmaktadır'
-          });
-        }
       }
     }
 
@@ -374,55 +400,19 @@ router.put('/:id', authenticateToken, async (req, res) => {
       updatedBy: req.user.id
     });
 
-    // Reload the customer to get fresh data
-    await customer.reload();
-
-    const customerData = {
-      ...customer.toJSON(),
-      fullName: customer.getFullName(),
-      customerSegment: customer.getCustomerSegment(),
-      averageOrderValue: customer.getAverageOrderValue()
-    };
-
     res.json({
       message: 'Müşteri başarıyla güncellendi',
-      customer: customerData
+      customer: {
+        ...customer.toJSON(),
+        fullName: customer.getFullName()
+      }
     });
 
   } catch (error) {
     console.error('Update customer error:', error);
-    
-    // Sequelize validation errors
-    if (error.name === 'SequelizeValidationError') {
-      return res.status(400).json({
-        error: 'Validation hatası',
-        message: 'Girilen bilgiler geçersiz',
-        details: error.errors.map(err => ({
-          field: err.path,
-          message: err.message
-        }))
-      });
-    }
-    
-    // Sequelize unique constraint errors
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      const field = error.errors[0]?.path;
-      let message = 'Bu bilgi zaten kullanılıyor';
-      
-      if (field === 'phone') message = 'Bu telefon numarası zaten kayıtlı';
-      else if (field === 'email') message = 'Bu e-posta adresi zaten kayıtlı';
-      else if (field === 'tcNumber') message = 'Bu TC kimlik numarası zaten kayıtlı';
-      
-      return res.status(400).json({
-        error: 'Müşteri hatası',
-        message: message
-      });
-    }
-    
     res.status(500).json({
       error: 'Sunucu hatası',
-      message: 'Müşteri güncellenemedi',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      message: 'Müşteri güncellenemedi'
     });
   }
 });
@@ -442,7 +432,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     }
 
     // Soft delete
-    await customer.update({ 
+    await customer.update({
       isActive: false,
       updatedBy: req.user.id
     });
@@ -460,117 +450,154 @@ router.delete('/:id', authenticateToken, async (req, res) => {
   }
 });
 
-// @route   GET /api/customers/search/phone/:phone
-// @desc    Telefon numarası ile müşteri ara
+// @route   POST /api/customers/:id/restore
+// @desc    Silinen müşteriyi geri yükle
 // @access  Private
-router.get('/search/phone/:phone', authenticateToken, async (req, res) => {
+router.post('/:id/restore', authenticateToken, async (req, res) => {
   try {
-    const customer = await Customer.findByPhone(req.params.phone);
+    const customer = await Customer.findByPk(req.params.id);
     
     if (!customer) {
       return res.status(404).json({
         error: 'Müşteri bulunamadı',
-        message: 'Bu telefon numarası ile kayıtlı müşteri bulunamadı'
+        message: 'Belirtilen ID ile müşteri bulunamadı'
       });
     }
 
-    const customerData = {
-      ...customer.toJSON(),
-      fullName: customer.getFullName(),
-      customerSegment: customer.getCustomerSegment(),
-      averageOrderValue: customer.getAverageOrderValue()
-    };
+    // Check if customer is already active
+    if (customer.isActive) {
+      return res.status(400).json({
+        error: 'Müşteri hatası',
+        message: 'Müşteri zaten aktif durumda'
+      });
+    }
 
-    res.json({ customer: customerData });
-
-  } catch (error) {
-    console.error('Search customer by phone error:', error);
-    res.status(500).json({
-      error: 'Sunucu hatası',
-      message: 'Müşteri aranamadı'
-    });
-  }
-});
-
-// @route   GET /api/customers/filters/options
-// @desc    Filtre seçeneklerini getir
-// @access  Private
-router.get('/filters/options', authenticateToken, async (req, res) => {
-  try {
-    const cities = await Customer.findAll({
-      attributes: [[sequelize.fn('DISTINCT', sequelize.col('city')), 'city']],
-      where: { isActive: true, city: { [Op.ne]: null } },
-      raw: true
-    });
-
-    res.json({
-      cities: cities.map(item => item.city)
-    });
-
-  } catch (error) {
-    console.error('Get filter options error:', error);
-    res.status(500).json({
-      error: 'Sunucu hatası',
-      message: 'Filtre seçenekleri alınamadı'
-    });
-  }
-});
-
-// @route   GET /api/customers/stats/overview
-// @desc    Müşteri istatistiklerini getir
-// @access  Private
-router.get('/stats/overview', authenticateToken, async (req, res) => {
-  try {
-    res.set('Cache-Control', 'no-store');
-
-    const totalCustomers = await Customer.count({ where: { isActive: true } });
-    const newCustomers = await Customer.count({ 
-      where: { 
-        isActive: true,
-        createdAt: {
-          [Op.gte]: new Date(new Date().setDate(new Date().getDate() - 30))
-        }
-      } 
-    });
-
-    // Toplam borç (aktif müşterilerde pozitif bakiye toplamı)
-    const totalOutstandingDebt = await Customer.sum('balance', { where: { isActive: true, balance: { [Op.gt]: 0 } } });
-
-    // Aktif müşteri filtre listesi
-    const activeCustomers = await Customer.findAll({ attributes: ['id'], where: { isActive: true }, raw: true });
-    const activeCustomerIds = activeCustomers.map(c => c.id);
-    const customerFilter = activeCustomerIds.length > 0 ? { customerId: { [Op.in]: activeCustomerIds } } : { customerId: -1 };
-
-    // Bu ayın başlangıcı
-    const currentDate = new Date();
-    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    // Check for conflicts with active customers
+    const conflicts = [];
     
-    // Satış (borç) toplamları - aktif müşterilerle sınırlı
-    const BalanceTransaction = require('../models/BalanceTransaction');
-    const [thisMonthDebtTotal, allTimeDebtTotal] = await Promise.all([
-      BalanceTransaction.sum('amount', {
-        where: { type: 'debt', category: 'Satış', date: { [Op.gte]: startOfMonth }, ...customerFilter }
-      }),
-      BalanceTransaction.sum('amount', {
-        where: { type: 'debt', category: 'Satış', ...customerFilter }
-      })
-    ]);
+    if (customer.phone) {
+      const phoneConflict = await Customer.findOne({
+        where: {
+          phone: customer.phone,
+          isActive: true,
+          id: { [Op.ne]: customer.id }
+        }
+      });
+      if (phoneConflict) {
+        conflicts.push('telefon numarası');
+      }
+    }
+
+    if (customer.email) {
+      const emailConflict = await Customer.findOne({
+        where: {
+          email: customer.email,
+          isActive: true,
+          id: { [Op.ne]: customer.id }
+        }
+      });
+      if (emailConflict) {
+        conflicts.push('e-posta adresi');
+      }
+    }
+
+    if (customer.tcNumber) {
+      const tcConflict = await Customer.findOne({
+        where: {
+          tcNumber: customer.tcNumber,
+          isActive: true,
+          id: { [Op.ne]: customer.id }
+        }
+      });
+      if (tcConflict) {
+        conflicts.push('TC kimlik numarası');
+      }
+    }
+
+    if (conflicts.length > 0) {
+      return res.status(400).json({
+        error: 'Çakışma hatası',
+        message: `Bu ${conflicts.join(', ')} ile aktif bir müşteri bulunmaktadır. Önce o müşteriyi silin veya bilgilerini değiştirin.`
+      });
+    }
+
+    // Restore customer
+    await customer.update({
+      isActive: true,
+      updatedBy: req.user.id
+    });
 
     res.json({
-      totalCustomers,
-      newCustomers,
-      totalOutstandingDebt: parseFloat(totalOutstandingDebt || 0),
-      thisMonthSales: thisMonthDebtTotal || 0,
-      totalRevenue: allTimeDebtTotal || 0
+      message: 'Müşteri başarıyla geri yüklendi',
+      customer: {
+        ...customer.toJSON(),
+        fullName: customer.getFullName()
+      }
     });
 
   } catch (error) {
-    console.error('Get customer stats error:', error);
+    console.error('Restore customer error:', error);
     res.status(500).json({
       error: 'Sunucu hatası',
-      message: 'Müşteri istatistikleri alınamadı'
+      message: 'Müşteri geri yüklenemedi'
     });
   }
 });
 
-module.exports = router; 
+// @route   DELETE /api/customers/:id/permanent
+// @desc    Müşteriyi kalıcı olarak sil
+// @access  Private
+router.delete('/:id/permanent', authenticateToken, async (req, res) => {
+  try {
+    const customer = await Customer.findByPk(req.params.id);
+    
+    if (!customer) {
+      return res.status(404).json({
+        error: 'Müşteri bulunamadı',
+        message: 'Belirtilen ID ile müşteri bulunamadı'
+      });
+    }
+
+    // Check if customer has sales history
+    const salesCount = await Sale.count({
+      where: { customerId: customer.id }
+    });
+
+    if (salesCount > 0) {
+      return res.status(400).json({
+        error: 'Silme hatası',
+        message: 'Bu müşterinin satış geçmişi bulunmaktadır. Kalıcı olarak silinemez.'
+      });
+    }
+
+    // Check and delete balance transactions
+    const balanceTransactionsCount = await BalanceTransaction.count({
+      where: { customerId: customer.id }
+    });
+
+    if (balanceTransactionsCount > 0) {
+      // Delete balance transactions first
+      await BalanceTransaction.destroy({
+        where: { customerId: customer.id }
+      });
+      console.log(`Deleted ${balanceTransactionsCount} balance transactions for customer ${customer.id}`);
+    }
+
+    // Permanent delete customer
+    await customer.destroy();
+
+    res.json({
+      message: 'Müşteri kalıcı olarak silindi',
+      deletedTransactions: balanceTransactionsCount
+    });
+
+  } catch (error) {
+    console.error('Permanent delete customer error:', error);
+    res.status(500).json({
+      error: 'Sunucu hatası',
+      message: 'Müşteri kalıcı olarak silinemedi'
+    });
+  }
+});
+
+module.exports = router;

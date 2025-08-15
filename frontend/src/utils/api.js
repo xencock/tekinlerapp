@@ -142,6 +142,15 @@ export const customersAPI = {
   
   // Bakiye işlemi ekle
   addBalanceTransaction: (customerId, transactionData) => api.post('/balance', { customerId, ...transactionData }),
+  
+  // Silinen müşterileri listele
+  getDeletedCustomers: (params) => api.get('/customers/deleted', { params }),
+  
+  // Silinen müşteriyi geri yükle
+  restoreCustomer: (id) => api.post(`/customers/${id}/restore`),
+  
+  // Müşteriyi kalıcı olarak sil
+  permanentDeleteCustomer: (id) => api.delete(`/customers/${id}/permanent`),
 };
 
 // Sales API

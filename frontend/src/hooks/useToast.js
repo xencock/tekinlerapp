@@ -229,9 +229,146 @@ export const useToast = () => {
   };
 };
 
-// Kısa kullanım için direkt export'lar
-export const showSuccess = (message, options) => useToast().success(message, options);
-export const showError = (message, options) => useToast().error(message, options);
-export const showInfo = (message, options) => useToast().info(message, options);
-export const showWarning = (message, options) => useToast().warning(message, options);
-export const showLoading = (message, options) => useToast().loading(message, options);
+// Kısa kullanım için direkt export'lar - useToast hook'u kullanmadan
+export const showSuccess = (message, options = {}) => {
+  return toast.success(message, {
+    duration: 3000,
+    position: 'top-right',
+    onClick: (toast) => toast.dismiss(),
+    style: {
+      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%)',
+      backdropFilter: 'blur(20px)',
+      color: '#ffffff',
+      padding: '16px 20px',
+      borderRadius: '16px',
+      boxShadow: '0 25px 50px -12px rgba(16, 185, 129, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.2)',
+      border: '1px solid rgba(16, 185, 129, 0.3)',
+      fontSize: '14px',
+      fontWeight: '500',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      cursor: 'pointer',
+      userSelect: 'none',
+      animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+    },
+    iconTheme: {
+      primary: '#ffffff',
+      secondary: '#10b981',
+    },
+    ...options,
+  });
+};
+
+export const showError = (message, options = {}) => {
+  return toast.error(message, {
+    duration: 4500,
+    position: 'top-right',
+    onClick: (toast) => toast.dismiss(),
+    style: {
+      background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(220, 38, 38, 0.95) 100%)',
+      backdropFilter: 'blur(20px)',
+      color: '#ffffff',
+      padding: '16px 20px',
+      borderRadius: '16px',
+      boxShadow: '0 25px 50px -12px rgba(239, 68, 68, 0.4), 0 0 0 1px rgba(239, 68, 68, 0.2)',
+      border: '1px solid rgba(239, 68, 68, 0.3)',
+      fontSize: '14px',
+      fontWeight: '500',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      cursor: 'pointer',
+      userSelect: 'none',
+      animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+    },
+    iconTheme: {
+      primary: '#ffffff',
+      secondary: '#ef4444',
+    },
+    ...options,
+  });
+};
+
+export const showInfo = (message, options = {}) => {
+  return toast(message, {
+    duration: 4000,
+    position: 'top-right',
+    icon: '💡',
+    onClick: (toast) => toast.dismiss(),
+    style: {
+      background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(37, 99, 235, 0.95) 100%)',
+      backdropFilter: 'blur(20px)',
+      color: '#ffffff',
+      padding: '16px 20px',
+      borderRadius: '16px',
+      boxShadow: '0 25px 50px -12px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.2)',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      fontSize: '14px',
+      fontWeight: '500',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      cursor: 'pointer',
+      userSelect: 'none',
+      animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+    },
+    ...options,
+  });
+};
+
+export const showWarning = (message, options = {}) => {
+  return toast(message, {
+    duration: 4000,
+    position: 'top-right',
+    icon: '⚠️',
+    onClick: (toast) => toast.dismiss(),
+    style: {
+      background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.95) 0%, rgba(217, 119, 6, 0.95) 100%)',
+      backdropFilter: 'blur(20px)',
+      color: '#ffffff',
+      padding: '16px 20px',
+      borderRadius: '16px',
+      boxShadow: '0 25px 50px -12px rgba(245, 158, 11, 0.4), 0 0 0 1px rgba(245, 158, 11, 0.2)',
+      border: '1px solid rgba(245, 158, 11, 0.3)',
+      fontSize: '14px',
+      fontWeight: '500',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      cursor: 'pointer',
+      userSelect: 'none',
+      animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+    },
+    ...options,
+  });
+};
+
+export const showLoading = (message, options = {}) => {
+  return toast.loading(message, {
+    position: 'top-right',
+    onClick: (toast) => toast.dismiss(),
+    style: {
+      background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.95) 0%, rgba(139, 92, 246, 0.95) 100%)',
+      backdropFilter: 'blur(20px)',
+      color: '#ffffff',
+      padding: '16px 20px',
+      borderRadius: '16px',
+      boxShadow: '0 25px 50px -12px rgba(99, 102, 241, 0.4), 0 0 0 1px rgba(99, 102, 241, 0.2)',
+      border: '1px solid rgba(99, 102, 241, 0.3)',
+      fontSize: '14px',
+      fontWeight: '500',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      cursor: 'pointer',
+      userSelect: 'none',
+      animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+    },
+    iconTheme: {
+      primary: '#ffffff',
+      secondary: '#6366f1',
+    },
+    ...options,
+  });
+};

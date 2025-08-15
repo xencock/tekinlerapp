@@ -4,40 +4,18 @@ require('dotenv').config(); // Ortam değişkenlerini yüklemek için
 
 let sequelize;
 
-if (process.env.NODE_ENV === 'production') {
-  // Production ortamı için PostgreSQL konfigürasyonu
-  sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
-    host: process.env.DB_HOST,
-    dialect: 'postgres',
-    port: process.env.DB_PORT || 5432,
-    logging: false, // Production'da detaylı loglamayı kapat
-    benchmark: false,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false // Hosting sağlayıcınıza göre bu ayar değişebilir
-      }
-    },
-    define: {
-      timestamps: true,
-      underscored: false,
-      freezeTableName: true
-    }
-  });
-} else {
-  // Development ortamı için SQLite konfigürasyonu
-  sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: path.join(__dirname, '..', 'database.sqlite'),
-    logging: console.log,
-    benchmark: true,
-    define: {
-      timestamps: true,
-      underscored: false,
-      freezeTableName: true
-    }
-  });
-}
+// Sadece SQLite kullan (PostgreSQL devre dışı)
+sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: path.join(__dirname, '..', 'database.sqlite'),
+  logging: console.log,
+  benchmark: true,
+  define: {
+    timestamps: true,
+    underscored: false,
+    freezeTableName: true
+  }
+});
 
 // Veritabanı bağlantısını test et
 const testConnection = async () => {

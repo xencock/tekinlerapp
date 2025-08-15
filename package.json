@@ -44,16 +44,17 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4",
+    "semver": "^7.7.2",
     "sequelize": "^6.37.7",
     "socket.io": "^4.7.4",
-    "sqlite3": "^5.1.7",
-    "pg": "^8.11.5",
-    "pg-hstore": "^2.3.4"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2",
     "concurrently": "^8.2.2",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.2"
   },
   "engines": {
     "node": ">=18 <21"
