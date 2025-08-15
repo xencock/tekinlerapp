@@ -44,6 +44,12 @@ const CustomerDetail = () => {
     description: '',
     date: getTodayDateOnly()
   });
+  
+  // Satış özeti state'i
+  const [salesSummary, setSalesSummary] = useState(null);
+  const [salesPeriod, setSalesPeriod] = useState('all'); // 'all' veya 'monthly'
+  const [loadingSalesSummary, setLoadingSalesSummary] = useState(false);
+  
   const { id } = useParams();
 
   // Satış işlemi kontrolü: yalnızca satıştan kaynaklanan borçları satış olarak işaretle
@@ -281,6 +287,9 @@ const CustomerDetail = () => {
         // İşlemleri tersine çevir (en eski yukarıda)
         const reversedTransactions = transactionsResponse.data.transactions.reverse();
         setTransactions(reversedTransactions);
+        
+        // Fetch sales summary
+        await fetchSalesSummary('all');
       } catch (error) {
         toast.error('Müşteri detayları yüklenemedi');
         console.error('Fetch customer details error:', error);
@@ -292,6 +301,20 @@ const CustomerDetail = () => {
 
     fetchCustomerDetails();
   }, [id]);
+
+  // Fetch sales summary
+  const fetchSalesSummary = async (period = 'all') => {
+    try {
+      setLoadingSalesSummary(true);
+      const response = await customersAPI.getCustomerSalesSummary(id, period);
+      setSalesSummary(response.data);
+    } catch (error) {
+      console.error('Fetch sales summary error:', error);
+      toast.error('Satış özeti alınamadı');
+    } finally {
+      setLoadingSalesSummary(false);
+    }
+  };
 
   // Handle quick balance transaction
   const handleQuickBalanceSubmit = async (e) => {
@@ -609,6 +632,146 @@ const CustomerDetail = () => {
                 </>
               );
             })()}
+          </div>
+        </div>
+
+        {/* Sales Summary Section */}
+        <div className="bg-white shadow-sm rounded-lg overflow-hidden mb-8">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900">Satış Özeti</h3>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    setSalesPeriod('all');
+                    fetchSalesSummary('all');
+                  }}
+                  className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                    salesPeriod === 'all'
+                      ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                      : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                  }`}
+                >
+                  Tüm Satışlar
+                </button>
+                <button
+                  onClick={() => {
+                    setSalesPeriod('monthly');
+                    fetchSalesSummary('monthly');
+                  }}
+                  className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                    salesPeriod === 'monthly'
+                      ? 'bg-green-100 text-green-700 border border-green-200'
+                      : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                  }`}
+                >
+                  Bu Ay
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div className="p-6">
+            {loadingSalesSummary ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                <p className="mt-2 text-gray-600">Satış özeti yükleniyor...</p>
+              </div>
+            ) : salesSummary ? (
+              <div>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  {/* Toplam Satış Sayısı */}
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-gray-500">Toplam Satış</p>
+                    <p className="text-2xl font-bold text-blue-600">
+                      {salesSummary.summary.totalSales}
+                    </p>
+                  </div>
+                  
+                  {/* Toplam Satış Tutarı */}
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-gray-500">Toplam Tutar</p>
+                    <p className="text-2xl font-bold text-green-600">
+                      {formatNumberForDisplay(salesSummary.summary.totalAmount)} ₺
+                    </p>
+                  </div>
+                  
+                  {/* Aylık Ortalama */}
+                  {salesPeriod === 'monthly' && (
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-500">Aylık Ortalama</p>
+                      <p className="text-2xl font-bold text-purple-600">
+                        {formatNumberForDisplay(salesSummary.summary.monthlyAverage)} ₺
+                      </p>
+                    </div>
+                  )}
+                  
+                  {/* Ödeme Yöntemleri */}
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-gray-500">Ödeme Yöntemleri</p>
+                    <div className="mt-2 space-y-1">
+                      {Object.entries(salesSummary.summary.paymentMethods).map(([method, count]) => (
+                        <div key={method} className="text-sm">
+                          <span className="font-medium text-gray-700">{method}:</span>
+                          <span className="ml-1 text-gray-600">{count}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Satış Listesi */}
+                {salesSummary.sales.length > 0 && (
+                  <div className="mt-6">
+                    <h4 className="text-md font-semibold text-gray-900 mb-3">
+                      {salesPeriod === 'monthly' ? 'Bu Ayın Satışları' : 'Tüm Satışlar'}
+                    </h4>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Tarih
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Tutar
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Ödeme Yöntemi
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Notlar
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {salesSummary.sales.map((sale) => (
+                            <tr key={sale.id} className="hover:bg-gray-50">
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {new Date(sale.date).toLocaleDateString('tr-TR')}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
+                                {formatNumberForDisplay(sale.totalAmount)} ₺
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {sale.paymentMethod}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {sale.notes || '-'}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                Satış verisi bulunamadı.
+              </div>
+            )}
           </div>
         </div>
 

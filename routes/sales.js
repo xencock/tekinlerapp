@@ -292,4 +292,120 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
   }
 });
 
+// @route   DELETE /api/sales/:id
+// @desc    Satışı sil ve müşteri bakiyesini güncelle
+// @access  Private
+router.delete('/:id', authenticateToken, async (req, res) => {
+  const transaction = await Sale.sequelize.transaction();
+  
+  try {
+    const sale = await Sale.findByPk(req.params.id, {
+      include: [
+        {
+          model: SaleItem,
+          as: 'items'
+        },
+        {
+          model: Customer,
+          as: 'customer'
+        }
+      ],
+      transaction
+    });
+
+    if (!sale) {
+      return res.status(404).json({
+        error: 'Satış bulunamadı',
+        message: 'Belirtilen ID ile satış bulunamadı'
+      });
+    }
+
+    // Müşterili satışlar için bakiye güncelle
+    if (sale.customerId) {
+      const customer = await Customer.findByPk(sale.customerId, { transaction });
+      if (customer) {
+        // Müşteri bakiyesini geri al (satış tutarını çıkar)
+        await customer.update({
+          balance: customer.balance - sale.totalAmount
+        }, { transaction });
+
+        // İlgili bakiye işlemini de sil
+        await BalanceTransaction.destroy({
+          where: {
+            customerId: sale.customerId,
+            type: 'debt',
+            category: 'Satış',
+            notes: { [Op.like]: `%Satış fatura no: ${sale.id}%` }
+          },
+          transaction
+        });
+      }
+    }
+
+    // Satış kalemlerini sil ve stokları geri al
+    for (const item of sale.items) {
+      const product = await Product.findByPk(item.productId, { transaction });
+      if (product) {
+        // Stok miktarını geri al
+        await product.update({
+          currentStock: product.currentStock + item.quantity
+        }, { transaction });
+
+        // Stok hareketi kaydet
+        await StockMovement.create({
+          productId: product.id,
+          type: 'sale_cancellation',
+          quantity: item.quantity,
+          stockBefore: product.currentStock - item.quantity,
+          stockAfter: product.currentStock,
+          referenceId: `Satış İptali`,
+          userId: req.user.id
+        }, { transaction });
+      }
+    }
+
+    // Satış kalemlerini sil
+    await SaleItem.destroy({
+      where: { saleId: sale.id },
+      transaction
+    });
+
+    // Ana satış kaydını sil
+    await sale.destroy({ transaction });
+
+    await transaction.commit();
+
+    // Stats cache'ini temizle - frontend'e bildirim gönder
+    try {
+      // WebSocket veya Server-Sent Events kullanarak frontend'e bildirim gönder
+      // Şimdilik response header'ında bir flag ekleyelim
+      res.set('X-Stats-Updated', 'true');
+      res.set('X-Sale-Deleted', sale.id.toString());
+    } catch (webhookError) {
+      console.error('Webhook error:', webhookError);
+      // Webhook hatası ana işlemi etkilemesin
+    }
+
+    res.json({
+      message: 'Satış başarıyla silindi',
+      customerBalance: sale.customer ? sale.customer.balance - sale.totalAmount : null,
+      deletedSale: {
+        id: sale.id,
+        totalAmount: sale.totalAmount,
+        customerId: sale.customerId,
+        createdAt: sale.createdAt
+      },
+      statsUpdated: true
+    });
+
+  } catch (error) {
+    await transaction.rollback();
+    console.error('Delete sale error:', error);
+    res.status(500).json({
+      error: 'Satış silinemedi',
+      message: error.message
+    });
+  }
+});
+
 module.exports = router;

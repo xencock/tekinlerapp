@@ -13,7 +13,9 @@ import {
   ChevronUp,
   ChevronDown,
   RotateCcw,
-  UsersIcon
+  UsersIcon,
+  Calendar,
+  RefreshCw
 } from 'lucide-react';
 import { customersAPI } from '../utils/api';
 import toast from 'react-hot-toast';
@@ -59,6 +61,42 @@ const Customers = () => {
     totalRevenue: 0,
     avgOrderValue: 0
   });
+
+  // Ay seçimi için state
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; // YYYY-MM
+  });
+
+  // Türkçe ay isimleri
+  const getTurkishMonthName = (monthIndex) => {
+    const monthsTR = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+    return monthsTR[monthIndex] || '';
+  };
+
+  const formatSelectedMonthTR = (value) => {
+    try {
+      const [yearStr, monthStr] = value.split('-');
+      const year = Number(yearStr);
+      const month = Number(monthStr);
+      if (!year || !month) return '';
+      return `${getTurkishMonthName(month - 1)} ${year}`;
+    } catch {
+      return '';
+    }
+  };
+
+  const generateMonthOptions = (monthsBack = 24) => {
+    const options = [];
+    const now = new Date();
+    for (let i = 0; i < monthsBack; i += 1) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      const label = `${getTurkishMonthName(d.getMonth())} ${d.getFullYear()}`;
+      options.push({ value, label });
+    }
+    return options;
+  };
 
   // Form state
   const [formData, setFormData] = useState({
@@ -113,12 +151,21 @@ const Customers = () => {
   // Fetch stats
   const fetchStats = React.useCallback(async () => {
     try {
-      const response = await customersAPI.getStats({ _t: Date.now() });
+      // Seçilen ay için tarih aralığı hesapla
+      const [year, month] = selectedMonth.split('-').map(Number);
+      const startDate = new Date(year, month - 1, 1).toISOString();
+      const endDate = new Date(year, month, 0, 23, 59, 59, 999).toISOString();
+      
+      const response = await customersAPI.getStats({ 
+        startDate, 
+        endDate, 
+        _t: Date.now() 
+      });
       setStats(response.data);
     } catch (error) {
       console.error('Fetch stats error:', error);
     }
-  }, []);
+  }, [selectedMonth]);
 
   // Fetch deleted customers
   const fetchDeletedCustomers = React.useCallback(async () => {
@@ -210,74 +257,61 @@ const Customers = () => {
       }
       
       if (formData.phone.trim().length < 10 || formData.phone.trim().length > 15) {
-        toast.error('📞 Telefon numarası 10-15 karakter arasında olmalı', { duration: 4000 });
+        toast.error('📞 Telefon numarası 10-15 karakter arasında olmalıdır', { duration: 4000 });
         return;
       }
     }
-    
-    // TC kimlik numarası validasyonu (eğer girilmişse)
-    if (formData.tcNumber && formData.tcNumber.trim()) {
-      const tcRegex = /^[0-9]{11}$/;
-      if (!tcRegex.test(formData.tcNumber.trim())) {
-        toast.error('🆔 TC kimlik numarası 11 haneli olmalı ve sadece rakam içerebilir', { duration: 4000 });
-        return;
-      }
-    }
-    
-    console.log('Form data being sent:', formData);
     
     try {
-      // Clean form data - only send non-empty values
-      const cleanData = {
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-      };
-      if (formData.phone && formData.phone.trim()) {
-        cleanData.phone = formData.phone.trim();
-      }
+      setLoading(true);
       
-      // Add optional fields only if they have values
-      if (formData.tcNumber && formData.tcNumber.trim()) {
-        cleanData.tcNumber = formData.tcNumber.trim();
-      }
-      if (formData.address && formData.address.trim()) {
-        cleanData.address = formData.address.trim();
-      }
-      if (formData.city && formData.city.trim()) {
-        cleanData.city = formData.city.trim();
-      }
-      
-      console.log('Clean data being sent:', cleanData);
-      
-      if (showEditModal) {
-        await customersAPI.updateCustomer(selectedCustomer.id, cleanData);
-        toast.success('✅ Müşteri bilgileri başarıyla güncellendi', { duration: 3000 });
+      if (selectedCustomer) {
+        // Update existing customer
+        await customersAPI.updateCustomer(selectedCustomer.id, formData);
+        toast.success('✅ Müşteri başarıyla güncellendi', { duration: 3000 });
       } else {
-        await customersAPI.createCustomer(cleanData);
-        toast.success('🎉 Yeni müşteri başarıyla eklendi', { duration: 3000 });
+        // Create new customer
+        await customersAPI.createCustomer(formData);
+        toast.success('✅ Müşteri başarıyla oluşturuldu', { duration: 3000 });
       }
+      
       setShowAddModal(false);
-      setShowEditModal(false);
-      resetForm();
+      setSelectedCustomer(null);
+      setFormData({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        tcNumber: '',
+        address: '',
+        city: '',
+        district: '',
+        postalCode: '',
+        preferredColors: [],
+        preferredBrands: [],
+        smsPermission: true,
+        emailPermission: true,
+        notes: ''
+      });
+      
+      // Refresh data
       fetchCustomers();
-      fetchStats();
+      fetchStats(); // İstatistikleri güncelle
+      
     } catch (error) {
       console.error('Submit error:', error);
-      console.error('Error response:', error.response);
-      console.error('Error data:', error.response?.data);
-      
-      // Handle specific error messages
-      if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else if (error.response?.status === 500) {
-        toast.error('Sunucu hatası. Lütfen tekrar deneyin.');
-      } else if (error.response?.status === 400) {
-        toast.error('Geçersiz veri. Lütfen bilgileri kontrol edin.');
-      } else if (error.code === 'NETWORK_ERROR' || !error.response) {
-        toast.error('Sunucu bağlantısı kurulamadı. Backend çalışıyor mu?');
+      if (error.response?.data?.details) {
+        // Validation hatalarını detaylı göster
+        const validationErrors = error.response.data.details;
+        validationErrors.forEach(err => {
+          toast.error(`${err.field}: ${err.message}`, { duration: 5000 });
+        });
+      } else if (error.response?.data?.message) {
+        toast.error(`❌ ${error.response.data.message}`, { duration: 5000 });
       } else {
-        toast.error(showEditModal ? 'Müşteri güncellenemedi' : 'Müşteri eklenemedi');
+        toast.error('❌ Müşteri kaydedilemedi', { duration: 3000 });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -448,7 +482,56 @@ const Customers = () => {
   useEffect(() => {
     fetchCustomers();
     fetchStats();
-  }, [currentPage, searchTerm, fetchCustomers, fetchStats]);
+  }, [currentPage, searchTerm, fetchCustomers, fetchStats, selectedMonth]);
+
+  // Otomatik istatistik güncelleme (her 30 saniyede bir - daha az sıklıkta)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchStats();
+    }, 30000); // 30 saniye
+
+    return () => clearInterval(interval);
+  }, [fetchStats]);
+
+  // Satış silme işleminden sonra istatistikleri güncelle
+  useEffect(() => {
+    const handleSaleDeleted = () => {
+      console.log('Satış silindi, istatistikler güncelleniyor...');
+      fetchStats();
+    };
+
+    // Custom event listener ekle
+    window.addEventListener('saleDeleted', handleSaleDeleted);
+    
+    // Ayrıca sayfa focus olduğunda da güncelle
+    const handleFocus = () => {
+      console.log('Sayfa focus oldu, istatistikler güncelleniyor...');
+      fetchStats();
+    };
+    
+    window.addEventListener('focus', handleFocus);
+    
+    return () => {
+      window.removeEventListener('saleDeleted', handleSaleDeleted);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [fetchStats]);
+
+  // Sayfa görünür olduğunda istatistikleri güncelle
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        console.log('Sayfa görünür oldu, istatistikler güncelleniyor...');
+        fetchStats();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [fetchStats]);
 
   useEffect(() => {
     console.log('🔄 useEffect showDeletedCustomers değişti:', showDeletedCustomers);
@@ -460,21 +543,61 @@ const Customers = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero header */}
-      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gradient-to-r from-indigo-50 via-white to-blue-50">
+      {/* Hero Header */}
+      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gradient-to-r from-blue-50 via-white to-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6 sm:py-8">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Müşteri Yönetimi</h1>
+              <div className="mt-1 flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-gray-500" />
+                <p className="text-sm text-gray-600">{formatSelectedMonthTR(selectedMonth)} - Aylık Özet</p>
+              </div>
               <p className="mt-1 text-sm text-gray-600">Müşteri bilgilerini yönetin ve takip edin</p>
             </div>
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Yeni Müşteri
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={fetchStats}
+                className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                title="İstatistikleri Yenile"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Yenile
+              </button>
+              <select
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(e.target.value)}
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {generateMonthOptions(12).map((opt) => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+              <button
+                onClick={() => {
+                  setShowAddModal(true);
+                  setFormData({
+                    firstName: '',
+                    lastName: '',
+                    phone: '',
+                    tcNumber: '',
+                    address: '',
+                    city: '',
+                    district: '',
+                    postalCode: '',
+                    preferredColors: [],
+                    preferredBrands: [],
+                    smsPermission: true,
+                    emailPermission: true,
+                    notes: ''
+                  });
+                }}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Yeni Müşteri
+              </button>
+            </div>
           </div>
         </div>
       </div>

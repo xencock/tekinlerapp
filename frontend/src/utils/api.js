@@ -26,9 +26,20 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor - hata yönetimi
+// Response interceptor - hata yönetimi ve stats güncelleme
 api.interceptors.response.use(
   (response) => {
+    // Satış silindiğinde stats'ı güncelle
+    if (response.headers['x-stats-updated'] === 'true') {
+      console.log('Stats güncellendi, frontend\'e bildirim gönderiliyor...');
+      // Custom event ile frontend'e bildir
+      window.dispatchEvent(new CustomEvent('saleDeleted', {
+        detail: {
+          saleId: response.headers['x-sale-deleted'],
+          timestamp: Date.now()
+        }
+      }));
+    }
     return response;
   },
   (error) => {
@@ -151,6 +162,11 @@ export const customersAPI = {
   
   // Müşteriyi kalıcı olarak sil
   permanentDeleteCustomer: (id) => api.delete(`/customers/${id}/permanent`),
+  
+  // Müşteri satış özetini getir
+  getCustomerSalesSummary: (customerId, period = 'all') => api.get(`/customers/${customerId}/sales-summary`, { 
+    params: { period } 
+  }),
 };
 
 // Sales API
@@ -162,7 +178,10 @@ export const salesAPI = {
   createSale: (saleData) => api.post('/sales', saleData),
   
   // Satış detaylarını getir
-  getSaleDetails: (saleId) => api.get(`/sales/${saleId}`),
+  getSaleDetails: (id) => api.get(`/sales/${id}`),
+  
+  // Satışı sil
+  deleteSale: (id) => api.delete(`/sales/${id}`),
   
   // Satış istatistikleri
   getStats: (params) => api.get('/sales/stats/overview', { params }),

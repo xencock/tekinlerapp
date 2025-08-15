@@ -6,6 +6,8 @@ const User = require('../models/User');
 const SimpleCustomer = require('../models/SimpleCustomer');
 const Sale = require('../models/Sale');
 const BalanceTransaction = require('../models/BalanceTransaction');
+const SaleItem = require('../models/SaleItem'); // Added SaleItem import
+const StockMovement = require('../models/StockMovement'); // Added StockMovement import
 const { authenticateToken } = require('../middleware/auth');
 const { validateCustomer, validateCustomerUpdate } = require('../middleware/validation');
 
@@ -421,8 +423,10 @@ router.put('/:id', authenticateToken, validateCustomerUpdate, async (req, res) =
 // @desc    Müşteriyi sil (soft delete)
 // @access  Private
 router.delete('/:id', authenticateToken, async (req, res) => {
+  const transaction = await sequelize.transaction();
+  
   try {
-    const customer = await Customer.findByPk(req.params.id);
+    const customer = await Customer.findByPk(req.params.id, { transaction });
     
     if (!customer) {
       return res.status(404).json({
@@ -431,17 +435,56 @@ router.delete('/:id', authenticateToken, async (req, res) => {
       });
     }
 
-    // Soft delete
+    // Müşteriye ait satışları kontrol et
+    const salesCount = await Sale.count({
+      where: { customerId: customer.id },
+      transaction
+    });
+
+    // Müşteriye ait bakiye işlemlerini kontrol et
+    const balanceTransactionsCount = await BalanceTransaction.count({
+      where: { customerId: customer.id },
+      transaction
+    });
+
+    // Soft delete - müşteriyi pasif yap
     await customer.update({
       isActive: false,
       updatedBy: req.user.id
-    });
+    }, { transaction });
+
+    // Müşteriye ait satışları da pasif yap (soft delete)
+    if (salesCount > 0) {
+      await Sale.update({
+        isActive: false // Sales tablosuna isActive alanı eklenmeli
+      }, {
+        where: { customerId: customer.id },
+        transaction
+      });
+      console.log(`Updated ${salesCount} sales to inactive for customer ${customer.id}`);
+    }
+
+    // Müşteriye ait bakiye işlemlerini de pasif yap
+    if (balanceTransactionsCount > 0) {
+      await BalanceTransaction.update({
+        isActive: false // BalanceTransaction tablosuna isActive alanı eklenmeli
+      }, {
+        where: { customerId: customer.id },
+        transaction
+      });
+      console.log(`Updated ${balanceTransactionsCount} balance transactions to inactive for customer ${customer.id}`);
+    }
+
+    await transaction.commit();
 
     res.json({
-      message: 'Müşteri başarıyla silindi'
+      message: 'Müşteri başarıyla silindi',
+      deletedSales: salesCount,
+      deletedBalanceTransactions: balanceTransactionsCount
     });
 
   } catch (error) {
+    await transaction.rollback();
     console.error('Delete customer error:', error);
     res.status(500).json({
       error: 'Sunucu hatası',
@@ -558,18 +601,6 @@ router.delete('/:id/permanent', authenticateToken, async (req, res) => {
       });
     }
 
-    // Check if customer has sales history
-    const salesCount = await Sale.count({
-      where: { customerId: customer.id }
-    });
-
-    if (salesCount > 0) {
-      return res.status(400).json({
-        error: 'Silme hatası',
-        message: 'Bu müşterinin satış geçmişi bulunmaktadır. Kalıcı olarak silinemez.'
-      });
-    }
-
     // Check and delete balance transactions
     const balanceTransactionsCount = await BalanceTransaction.count({
       where: { customerId: customer.id }
@@ -581,6 +612,51 @@ router.delete('/:id/permanent', authenticateToken, async (req, res) => {
         where: { customerId: customer.id }
       });
       console.log(`Deleted ${balanceTransactionsCount} balance transactions for customer ${customer.id}`);
+    }
+
+    // Delete all sales and related data for this customer
+    const sales = await Sale.findAll({
+      where: { customerId: customer.id },
+      include: [
+        {
+          model: SaleItem,
+          as: 'items'
+        }
+      ]
+    });
+
+    for (const sale of sales) {
+      // Delete sale items
+      if (sale.items && sale.items.length > 0) {
+        await SaleItem.destroy({
+          where: { saleId: sale.id }
+        });
+      }
+      
+      // Delete the sale
+      await sale.destroy();
+    }
+
+    console.log(`Deleted ${sales.length} sales for customer ${customer.id}`);
+
+    // Delete stock movements related to this customer's sales
+    const stockMovementsCount = await StockMovement.count({
+      where: {
+        referenceId: {
+          [Op.like]: `%Satış%`
+        }
+      }
+    });
+
+    if (stockMovementsCount > 0) {
+      await StockMovement.destroy({
+        where: {
+          referenceId: {
+            [Op.like]: `%Satış%`
+          }
+        }
+      });
+      console.log(`Deleted ${stockMovementsCount} stock movements for customer ${customer.id}`);
     }
 
     // Permanent delete customer
@@ -596,6 +672,225 @@ router.delete('/:id/permanent', authenticateToken, async (req, res) => {
     res.status(500).json({
       error: 'Sunucu hatası',
       message: 'Müşteri kalıcı olarak silinemedi'
+    });
+  }
+});
+
+// @route   GET /api/customers/stats/overview
+// @desc    Müşteri istatistiklerini getir
+// @access  Private
+router.get('/stats/overview', authenticateToken, async (req, res) => {
+  try {
+    // Cache control - stats'ın her zaman güncel olmasını sağla
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    
+    const { startDate, endDate } = req.query;
+    
+    // Tarih filtresi için where clause
+    let dateFilter = {};
+    if (startDate && endDate) {
+      dateFilter = {
+        createdAt: {
+          [Op.between]: [new Date(startDate), new Date(endDate)]
+        }
+      };
+    }
+
+    // Toplam müşteri sayısı
+    const totalCustomers = await Customer.count({
+      where: { isActive: true }
+    });
+
+    // Toplam borç (negatif bakiye)
+    const totalOutstandingDebt = await Customer.sum('balance', {
+      where: {
+        isActive: true,
+        balance: { [Op.lt]: 0 }
+      }
+    });
+
+    // Toplam alacak (pozitif bakiye)
+    const totalCredit = await Customer.sum('balance', {
+      where: {
+        isActive: true,
+        balance: { [Op.gt]: 0 }
+      }
+    });
+
+    // Toplam satış geliri - BalanceTransaction tablosundan gerçek veriyi çek (daha güncel)
+    let totalRevenue = 0;
+    let totalOrders = 0;
+    
+    if (startDate && endDate) {
+      // Aylık filtreleme için
+      totalRevenue = await BalanceTransaction.sum('amount', {
+        where: {
+          type: 'debt',
+          category: 'Satış',
+          customerId: {
+            [Op.in]: await Customer.findAll({
+              where: { isActive: true },
+              attributes: ['id']
+            }).then(customers => customers.map(c => c.id))
+          },
+          date: dateFilter.createdAt
+        }
+      });
+
+      totalOrders = await BalanceTransaction.count({
+        where: {
+          type: 'debt',
+          category: 'Satış',
+          customerId: {
+            [Op.in]: await Customer.findAll({
+              where: { isActive: true },
+              attributes: ['id']
+            }).then(customers => customers.map(c => c.id))
+          },
+          date: dateFilter.createdAt
+        }
+      });
+    } else {
+      // Genel toplam için
+      totalRevenue = await BalanceTransaction.sum('amount', {
+        where: {
+          type: 'debt',
+          category: 'Satış',
+          customerId: {
+            [Op.in]: await Customer.findAll({
+              where: { isActive: true },
+              attributes: ['id']
+            }).then(customers => customers.map(c => c.id))
+          }
+        }
+      });
+
+      totalOrders = await BalanceTransaction.count({
+        where: {
+          type: 'debt',
+          category: 'Satış',
+          customerId: {
+            [Op.in]: await Customer.findAll({
+              where: { isActive: true },
+              attributes: ['id']
+            }).then(customers => customers.map(c => c.id))
+          }
+        }
+      });
+    }
+
+    // Ortalama sipariş değeri
+    const avgOrderValue = totalCustomers > 0 ? (totalRevenue / totalCustomers) : 0;
+
+    res.json({
+      totalCustomers: totalCustomers || 0,
+      totalOutstandingDebt: Math.abs(totalOutstandingDebt || 0),
+      totalCredit: totalCredit || 0,
+      totalRevenue: totalRevenue || 0,
+      totalOrders: totalOrders || 0,
+      avgOrderValue: avgOrderValue || 0
+    });
+
+  } catch (error) {
+    console.error('Get customer stats error:', error);
+    res.status(500).json({
+      error: 'Sunucu hatası',
+      message: 'Müşteri istatistikleri alınamadı'
+    });
+  }
+});
+
+// @route   GET /api/customers/:id/sales-summary
+// @desc    Müşterinin aylık ve genel satış özetini getir
+// @access  Private
+router.get('/:id/sales-summary', authenticateToken, async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const { period } = req.query; // 'monthly' veya 'all'
+    
+    const customer = await Customer.findByPk(customerId);
+    if (!customer) {
+      return res.status(404).json({
+        error: 'Müşteri bulunamadı',
+        message: 'Belirtilen ID ile müşteri bulunamadı'
+      });
+    }
+
+    let whereClause = {
+      customerId: customerId,
+      isActive: true
+    };
+
+    // Aylık satışlar için tarih filtresi
+    if (period === 'monthly') {
+      const currentDate = new Date();
+      const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+      const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+      
+      whereClause.createdAt = {
+        [Op.between]: [startOfMonth, endOfMonth]
+      };
+    }
+
+    // Satış verilerini getir
+    const sales = await Sale.findAll({
+      where: whereClause,
+      attributes: [
+        'id',
+        'totalAmount',
+        'paymentMethod',
+        'createdAt',
+        'notes'
+      ],
+      order: [['createdAt', 'DESC']]
+    });
+
+    // Toplam satış tutarı
+    const totalAmount = sales.reduce((sum, sale) => sum + parseFloat(sale.totalAmount), 0);
+    
+    // Satış sayısı
+    const salesCount = sales.length;
+    
+    // Aylık ortalama (eğer aylık seçilmişse)
+    const monthlyAverage = period === 'monthly' ? totalAmount : null;
+
+    // Ödeme yöntemlerine göre dağılım
+    const paymentMethodStats = sales.reduce((acc, sale) => {
+      const method = sale.paymentMethod;
+      acc[method] = (acc[method] || 0) + 1;
+      return acc;
+    }, {});
+
+    res.json({
+      customer: {
+        id: customer.id,
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        fullName: customer.getFullName()
+      },
+      period: period || 'all',
+      summary: {
+        totalSales: salesCount,
+        totalAmount: totalAmount,
+        monthlyAverage: monthlyAverage,
+        paymentMethods: paymentMethodStats
+      },
+      sales: sales.map(sale => ({
+        id: sale.id,
+        totalAmount: sale.totalAmount,
+        paymentMethod: sale.paymentMethod,
+        date: sale.createdAt,
+        notes: sale.notes
+      }))
+    });
+
+  } catch (error) {
+    console.error('Get customer sales summary error:', error);
+    res.status(500).json({
+      error: 'Sunucu hatası',
+      message: 'Müşteri satış özeti alınamadı'
     });
   }
 });

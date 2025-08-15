@@ -5,12 +5,15 @@ const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   
   if (!errors.isEmpty()) {
+    console.log('Validation errors:', errors.array());
+    
     return res.status(400).json({
       error: 'Validasyon hatası',
       message: 'Girilen bilgiler hatalı',
       details: errors.array().map(err => ({
         field: err.path,
-        message: err.msg
+        message: err.msg,
+        value: err.value
       }))
     });
   }
@@ -109,14 +112,14 @@ const validateCustomer = [
     .isLength({ min: 2, max: 50 })
     .withMessage('Ad 2-50 karakter arasında olmalı')
     .matches(/^[a-zA-ZğüşıöçĞÜŞİÖÇ\s]+$/)
-    .withMessage('Ad sadece harf içerebilir'),
+    .withMessage('Ad sadece harf içerebilir (Türkçe karakterler dahil)'),
   
   body('lastName')
     .trim()
     .isLength({ min: 2, max: 50 })
     .withMessage('Soyad 2-50 karakter arasında olmalı')
     .matches(/^[a-zA-ZğüşıöçĞÜŞİÖÇ\s]+$/)
-    .withMessage('Soyad sadece harf içerebilir'),
+    .withMessage('Soyad sadece harf içerebilir (Türkçe karakterler dahil)'),
   
   body('phone')
     .optional({ nullable: true, checkFalsy: true })
@@ -124,16 +127,16 @@ const validateCustomer = [
     .isLength({ min: 10, max: 15 })
     .withMessage('Telefon numarası 10-15 karakter arasında olmalı')
     .matches(/^[0-9+\-\s()]+$/)
-    .withMessage('Geçerli bir telefon numarası girin (örn: 0555 123 45 67)'),
+    .withMessage('Telefon numarası sadece rakam, +, -, boşluk ve parantez içerebilir'),
   
   body('email')
-    .optional()
+    .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isEmail()
     .withMessage('Geçerli bir e-posta adresi girin'),
   
   body('tcNumber')
-    .optional()
+    .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isLength({ min: 11, max: 11 })
     .withMessage('TC kimlik numarası 11 haneli olmalı')
