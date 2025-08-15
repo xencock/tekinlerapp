@@ -652,33 +652,11 @@ const BarcodeScanner = ({ onScan, onClose }) => {
               Kamera Desteklenmiyor
             </h4>
             <p className="text-gray-600 mb-4">
-              Tarayıcınız kamera erişimini desteklemiyor. Manuel barkod girişi kullanabilirsiniz.
+              Tarayıcınız kamera erişimini desteklemiyor. Ürün arama ekranından barkod ile arama yapabilirsiniz.
             </p>
           </div>
 
-          {/* Manuel Barkod Girişi */}
-          <div className="border-t pt-4">
-            <h4 className="text-sm font-medium text-gray-700 mb-2">
-              Manuel Barkod Girişi
-            </h4>
-            <form onSubmit={handleManualSubmit} className="flex space-x-2">
-              <input
-                type="text"
-                value={manualBarcode}
-                onChange={(e) => setManualBarcode(e.target.value)}
-                placeholder="Barkod numarasını girin"
-                className="flex-1 input"
-                autoFocus
-              />
-              <button
-                type="submit"
-                className="btn-primary"
-                disabled={!manualBarcode.trim()}
-              >
-                <Search size={16} />
-              </button>
-            </form>
-          </div>
+
         </div>
       </div>
     );
@@ -696,7 +674,7 @@ const BarcodeScanner = ({ onScan, onClose }) => {
                 className="text-blue-500 hover:text-blue-700 p-1"
                 title="Barkod Test"
               >
-                <Search size={18} />
+                🔍
               </button>
               <button
                 onClick={testZXingLibrary}
