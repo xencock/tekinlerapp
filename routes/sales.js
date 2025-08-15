@@ -89,7 +89,7 @@ router.post('/', authenticateToken, async (req, res) => {
     }, { transaction });
 
     // Müşterili satışlar için bakiye güncelle (Veresiye ve Hesaba Kayıt)
-    if ((paymentMethod === 'Veresiye' || paymentMethod === 'Hesaba Kayıt') && customerId) {
+    if (customerId) {
       // Müşteri bakiyesini güncelle
       const customer = await Customer.findByPk(customerId, { transaction });
       if (customer) {
@@ -102,7 +102,7 @@ router.post('/', authenticateToken, async (req, res) => {
           customerId: customerId,
           type: 'debt',
           amount: totalAmount,
-          description: `Satış - ${paymentMethod}`,
+          description: `Satış`,
           category: 'Satış',
           date: new Date(),
           createdBy: req.user.id,
