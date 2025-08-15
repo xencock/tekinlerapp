@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Camera, X, Search, RefreshCw, Settings } from 'lucide-react';
+import { Camera, X, RefreshCw, Settings } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import * as ZXing from '@zxing/library';
 import { useCameraPermission } from '../hooks/useCameraPermission';
@@ -8,7 +8,6 @@ import CameraTest from './CameraTest';
 
 const BarcodeScanner = ({ onScan, onClose }) => {
   const [isScanning, setIsScanning] = useState(false);
-  const [manualBarcode, setManualBarcode] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [showPermissionHelper, setShowPermissionHelper] = useState(true);
   const [showCameraTest, setShowCameraTest] = useState(false);
@@ -347,13 +346,7 @@ const BarcodeScanner = ({ onScan, onClose }) => {
     onClose();
   };
 
-  const handleManualSubmit = (e) => {
-    e.preventDefault();
-    if (manualBarcode.trim()) {
-      onScan(manualBarcode.trim());
-      setManualBarcode('');
-    }
-  };
+
 
   const handleRetryPermission = async () => {
     setErrorMessage('');
@@ -809,41 +802,13 @@ const BarcodeScanner = ({ onScan, onClose }) => {
             </div>
           </div>
 
-          {/* Manuel Barkod Girişi */}
-          <div className="border-t pt-4">
-            <h4 className="text-sm font-medium text-gray-700 mb-2">
-              Manuel Barkod Girişi
-            </h4>
-            <form onSubmit={handleManualSubmit} className="flex space-x-2">
-              <input
-                type="text"
-                value={manualBarcode}
-                onChange={(e) => setManualBarcode(e.target.value)}
-                placeholder="Barkod numarasını girin"
-                className="flex-1 input"
-                autoFocus
-              />
-              <button
-                type="submit"
-                className="btn-primary"
-                disabled={!manualBarcode.trim()}
-              >
-                <Search size={16} />
-              </button>
-            </form>
-          </div>
 
-          <div className="mt-4 text-xs text-gray-500 space-y-1">
-            <div>💡 Barkod tarama için kamerayı açın veya barkod numarasını manuel olarak girin</div>
-            {isScanning && (
-              <div className="text-green-600">
-                🔍 Kamera açık - Barkod aranıyor... Barkodu kameraya gösterin
-              </div>
-            )}
-            <div className="text-blue-600">
-              📱 Desteklenen formatlar: EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR Code
+
+          {isScanning && (
+            <div className="mt-4 text-xs text-green-600 text-center">
+              🔍 Kamera açık - Barkod aranıyor... Barkodu kameraya gösterin
             </div>
-          </div>
+          )}
         </div>
       </div>
 
