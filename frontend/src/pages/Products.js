@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { productsAPI, categoriesAPI } from '../utils/api';
 import { useAuth } from '../contexts/AuthContext';
-import toast from 'react-hot-toast';
+import * as ReactHotToast from 'react-hot-toast';
 import BarcodeScanner from '../components/BarcodeScanner';
 import BarcodeGenerator from '../components/BarcodeGenerator';
 
@@ -116,7 +116,7 @@ const Products = () => {
       console.error('Fetch products error:', error);
       console.error('Error response:', error.response?.data);
       console.error('Error status:', error.response?.status);
-      toast.error(error.response?.data?.message || 'Ürünler yüklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
+      ReactHotToast.toast.error(error.response?.data?.message || 'Ürünler yüklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
     } finally {
       setLoading(false);
     }
@@ -207,10 +207,10 @@ const Products = () => {
     try {
       if (showEditModal && selectedProduct) {
         await productsAPI.updateProduct(selectedProduct.id, formData);
-        toast.success('Ürün bilgileri başarıyla güncellendi!', { duration: 3000 });
+        ReactHotToast.toast.success('Ürün bilgileri başarıyla güncellendi!', { duration: 3000 });
       } else {
         await productsAPI.createProduct(formData);
-        toast.success('Yeni ürün başarıyla eklendi!', { duration: 3000 });
+        ReactHotToast.toast.success('Yeni ürün başarıyla eklendi!', { duration: 3000 });
       }
       
       resetForm();
@@ -229,7 +229,7 @@ const Products = () => {
         message = error.message;
       }
       
-      toast.error(`${message}`, { duration: 4000 });
+      ReactHotToast.toast.error(`${message}`, { duration: 4000 });
     }
   };
 
@@ -238,10 +238,10 @@ const Products = () => {
     if (window.confirm('Bu ürünü silmek istediğinizden emin misiniz?')) {
       try {
         await productsAPI.deleteProduct(productId);
-        toast.success('Ürün başarıyla silindi', { duration: 3000 });
+        ReactHotToast.toast.success('Ürün başarıyla silindi', { duration: 3000 });
         fetchProducts();
       } catch (error) {
-        toast.error('Ürün silinemedi. Lütfen tekrar deneyin.', { duration: 4000 });
+        ReactHotToast.toast.error('Ürün silinemedi. Lütfen tekrar deneyin.', { duration: 4000 });
       }
     }
   };
@@ -265,7 +265,7 @@ const Products = () => {
       setShowEditModal(true);
     } catch (error) {
       console.error('Ürün düzenleme hatası:', error);
-      toast.error('Ürün düzenleme sırasında bir hata oluştu. Lütfen tekrar deneyin.', { duration: 4000 });
+      ReactHotToast.toast.error('Ürün düzenleme sırasında bir hata oluştu. Lütfen tekrar deneyin.', { duration: 4000 });
     }
   };
 
@@ -287,7 +287,7 @@ const Products = () => {
   const handleBarcodeScan = (scannedBarcode) => {
     setShowBarcodeScanner(false);
     setSearchTerm(scannedBarcode);
-    toast.success(`Barkod başarıyla tarandı: ${scannedBarcode}`, { duration: 2500 });
+    ReactHotToast.toast.success(`Barkod başarıyla tarandı: ${scannedBarcode}`, { duration: 2500 });
   };
 
   // Barkod üretme işlemi
@@ -297,19 +297,12 @@ const Products = () => {
     setShowBarcodeGenerator(true);
   };
 
-  // Barkod arama işlemi
-  const handleBarcodeSearch = () => {
-    if (currentBarcode) {
-      setSearchTerm(currentBarcode);
-      setShowBarcodeGenerator(false);
-      toast.success(`Barkod aranıyor: ${currentBarcode}`, { duration: 2000 });
-    }
-  };
+
 
   // Kategori bazlı barkod önerisi
   const handleSuggestBarcode = async () => {
     if (!formData.category) {
-      toast.error('Barkod önerisi için lütfen önce kategori seçiniz', { duration: 3500 });
+      ReactHotToast.toast.error('Barkod önerisi için lütfen önce kategori seçiniz', { duration: 3500 });
       return;
     }
 
@@ -326,7 +319,7 @@ const Products = () => {
           barcode: suggestion.barcode
         }));
         
-        toast.success(
+        ReactHotToast.toast.success(
           `Kategori için barkod önerisi: ${suggestion.formatted}`,
           { 
             duration: 5000,
@@ -337,7 +330,7 @@ const Products = () => {
           }
         );
       } else {
-        toast.error(response.data.message || 'Barkod önerisi oluşturulamadı. Lütfen tekrar deneyin.', { duration: 4000 });
+        ReactHotToast.toast.error(response.data.message || 'Barkod önerisi oluşturulamadı. Lütfen tekrar deneyin.', { duration: 4000 });
       }
     } catch (error) {
       console.error('Barkod önerisi hatası:', error);
@@ -350,7 +343,7 @@ const Products = () => {
         message = error.message;
       }
       
-      toast.error(`${message}`, {
+      ReactHotToast.toast.error(`${message}`, {
         duration: 5000,
         style: {
           background: '#EF4444',

@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Search, Plus, Download, Filter, Calendar, User, DollarSign } from 'lucide-react';
-import { toast } from 'react-hot-toast';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Download, User, DollarSign } from 'lucide-react';
+import * as ReactHotToast from 'react-hot-toast';
 import { balanceAPI } from '../services/api';
 
 const BalanceTransactions = () => {
-  const navigate = useNavigate();
   const [transactions, setTransactions] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     customerId: '',
     type: '',
@@ -24,12 +21,7 @@ const BalanceTransactions = () => {
     limit: 100
   });
 
-  useEffect(() => {
-    fetchTransactions();
-    fetchCustomers();
-  }, [pagination.currentPage, filters]);
-
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     try {
       setLoading(true);
       const params = {
@@ -49,11 +41,16 @@ const BalanceTransactions = () => {
       }));
     } catch (error) {
       console.error('Transactions fetch error:', error);
-      toast.error('Bakiye işlemleri yüklenemedi');
+      ReactHotToast.toast.error('Bakiye işlemleri yüklenemedi');
     } finally {
       setLoading(false);
     }
-  };
+  }, [pagination.currentPage, pagination.limit, filters]);
+
+  useEffect(() => {
+    fetchTransactions();
+    fetchCustomers();
+  }, [fetchTransactions]);
 
   const fetchCustomers = async () => {
     try {
@@ -75,7 +72,7 @@ const BalanceTransactions = () => {
 
   const exportToExcel = () => {
     // Excel export functionality would go here
-    toast.success('Excel dosyası indiriliyor...');
+    ReactHotToast.toast.success('Excel dosyası indiriliyor...');
   };
 
   const getTypeColor = (type) => {

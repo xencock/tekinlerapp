@@ -3,7 +3,7 @@ import { Search, X, Plus, Minus, Trash2, Camera, Scan, ShoppingBag } from 'lucid
 import { productsAPI } from '../utils/api';
 import { customersAPI } from '../utils/api';
 import { salesAPI } from '../utils/api';
-import toast from 'react-hot-toast';
+import * as ReactHotToast from 'react-hot-toast';
 import { debounce } from 'lodash';
 import BarcodeScanner from '../components/BarcodeScanner';
 
@@ -74,7 +74,7 @@ const POS = () => {
 
   // Quick balance actions removed
 
-  const searchProducts = async (term) => {
+  const searchProducts = useCallback(async (term) => {
     if (!term.trim()) {
       setSearchedProducts([]);
       return;
@@ -101,7 +101,7 @@ const POS = () => {
       if (response.data.products.length > 1) {
         const exactMatch = response.data.products.find(p => p.barcode === term.trim());
         if (exactMatch) {
-          toast.success(`Tam barkod eşleşmesi: ${exactMatch.name}`, { duration: 3000 });
+          ReactHotToast.toast.success(`Tam barkod eşleşmesi: ${exactMatch.name}`, { duration: 3000 });
         }
       }
       
@@ -118,7 +118,7 @@ const POS = () => {
             }
             const checkDigit = (10 - (sum % 10)) % 10;
             const suggestedBarcode = term.trim() + checkDigit.toString();
-            toast.error(`Bu barkod ile ürün bulunamadı. Önerilen: ${suggestedBarcode}`, { duration: 4500 });
+            ReactHotToast.toast.error(`Bu barkod ile ürün bulunamadı. Önerilen: ${suggestedBarcode}`, { duration: 4500 });
           } else if (term.trim().length === 13) {
             // 13 haneli barkod için check digit kontrolü
             let sum = 0;
@@ -131,24 +131,24 @@ const POS = () => {
             
             if (expectedCheckDigit !== actualCheckDigit) {
               const correctedBarcode = term.trim().substring(0, 12) + expectedCheckDigit.toString();
-              toast.error(`Barkod hatası düzeltildi: ${correctedBarcode}`, { duration: 4000 });
+              ReactHotToast.toast.error(`Barkod hatası düzeltildi: ${correctedBarcode}`, { duration: 4000 });
             } else {
-              toast.error('Bu barkod ile ürün bulunamadı. Lütfen kontrol edin.', { duration: 4000 });
+              ReactHotToast.toast.error('Bu barkod ile ürün bulunamadı. Lütfen kontrol edin.', { duration: 4000 });
             }
           } else {
-            toast.error('Bu barkod ile ürün bulunamadı. Lütfen kontrol edin.', { duration: 4000 });
+            ReactHotToast.toast.error('Bu barkod ile ürün bulunamadı. Lütfen kontrol edin.', { duration: 4000 });
           }
         } else {
-          toast.error('Ürün bulunamadı', { duration: 3500 });
+          ReactHotToast.toast.error('Ürün bulunamadı', { duration: 3500 });
         }
       }
     } catch (error) {
       console.error('Product search error:', error);
-      toast.error('Ürün arama hatası. Lütfen tekrar deneyin.', { duration: 4000 });
+      ReactHotToast.toast.error('Ürün arama hatası. Lütfen tekrar deneyin.', { duration: 4000 });
     } finally {
       setSearchLoading(false);
     }
-  };
+  }, []);
 
   const debouncedProductSearch = useCallback(
     debounce(async (term) => {
@@ -158,7 +158,6 @@ const POS = () => {
         setSearchedProducts([]);
       }
     }, 300),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -178,7 +177,7 @@ const POS = () => {
         const completedBarcode = searchTermToUse + checkDigit.toString();
         
         // Kullanıcıya bilgi ver
-        toast.success(`Barkod otomatik tamamlandı: ${completedBarcode}`, { duration: 3000 });
+        ReactHotToast.toast.success(`Barkod otomatik tamamlandı: ${completedBarcode}`, { duration: 3000 });
         setSearchTerm(completedBarcode);
         searchTermToUse = completedBarcode;
       } else if (/^\d{13}$/.test(searchTermToUse)) {
@@ -193,7 +192,7 @@ const POS = () => {
         
         if (expectedCheckDigit !== actualCheckDigit) {
           const correctedBarcode = searchTermToUse.substring(0, 12) + expectedCheckDigit.toString();
-          toast.success(`Barkod düzeltildi: ${correctedBarcode}`, { duration: 3000 });
+          ReactHotToast.toast.success(`Barkod düzeltildi: ${correctedBarcode}`, { duration: 3000 });
           setSearchTerm(correctedBarcode);
           searchTermToUse = correctedBarcode;
         }
@@ -201,7 +200,7 @@ const POS = () => {
       
       searchProducts(searchTermToUse);
     } else {
-      toast.error('Lütfen bir arama terimi girin', { duration: 3000 });
+      ReactHotToast.toast.error('Lütfen bir arama terimi girin', { duration: 3000 });
     }
   };
 
@@ -230,7 +229,6 @@ const POS = () => {
         setSearchedCustomers([]);
       }
     }, 300),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -276,7 +274,7 @@ const POS = () => {
     setShowBarcodeScanner(false);
     // Auto search for the scanned barcode
     searchProducts(barcode);
-    toast.success(`Barkod tarandı: ${barcode}`, { duration: 2000 });
+    ReactHotToast.toast.success(`Barkod tarandı: ${barcode}`, { duration: 2000 });
   };
 
   // Keyboard shortcuts
@@ -341,7 +339,7 @@ const POS = () => {
   const addToCartWithQuantity = (product, quantity) => {
     const qty = parseInt(quantity);
     if (qty <= 0) {
-      toast.error('Adet 0\'dan büyük olmalıdır', { duration: 3000 });
+      ReactHotToast.toast.error('Adet 0\'dan büyük olmalıdır', { duration: 3000 });
       return;
     }
 
@@ -354,14 +352,14 @@ const POS = () => {
             item.id === product.id ? { ...item, quantity: newQuantity } : item
           );
         } else {
-          toast.error(`Maksimum stok: ${product.currentStock} adet`, { duration: 3500 });
+          ReactHotToast.toast.error(`Maksimum stok: ${product.currentStock} adet`, { duration: 3500 });
           return prevCart;
         }
       } else {
         if (qty <= product.currentStock) {
           return [...prevCart, { ...product, quantity: qty }];
         } else {
-          toast.error(`Maksimum stok: ${product.currentStock} adet`, { duration: 3500 });
+          ReactHotToast.toast.error(`Maksimum stok: ${product.currentStock} adet`, { duration: 3500 });
           return prevCart;
         }
       }
@@ -371,7 +369,7 @@ const POS = () => {
     setSearchTerm('');
     setSearchedProducts([]);
     
-    toast.success(`${product.name} - ${qty} adet sepete eklendi`, { duration: 2500 });
+    ReactHotToast.toast.success(`${product.name} - ${qty} adet sepete eklendi`, { duration: 2500 });
     
     // Auto-focus back to barcode input for next scan
     setTimeout(() => {
@@ -390,7 +388,7 @@ const POS = () => {
             return { ...item, quantity: newQuantity };
           }
           if (newQuantity > item.currentStock) {
-            toast.error('Maksimum stok adedine ulaşıldı', { duration: 3500 });
+            ReactHotToast.toast.error('Maksimum stok adedine ulaşıldı', { duration: 3500 });
           }
         }
         return item;
@@ -408,7 +406,7 @@ const POS = () => {
     let parsed = parseInt(rawValue, 10);
     if (isNaN(parsed) || parsed <= 0) parsed = 1;
     if (parsed > currentStock) {
-      toast.error(`Maksimum stok: ${currentStock} adet`, { duration: 3000 });
+      ReactHotToast.toast.error(`Maksimum stok: ${currentStock} adet`, { duration: 3000 });
       parsed = currentStock;
     }
 
@@ -570,7 +568,7 @@ const POS = () => {
     // Hedef pencere verilmişse onu kullan, yoksa son çare yeni pencere açmayı dene
     const printWindow = targetWindow || window.open('', '_blank', 'width=900,height=700,scrollbars=yes,resizable=yes');
     if (!printWindow) {
-      toast.error('Yazdırma penceresi tarayıcı tarafından engellendi. Lütfen pop-up izni verin.');
+      ReactHotToast.toast.error('Yazdırma penceresi tarayıcı tarafından engellendi. Lütfen pop-up izni verin.');
       return;
     }
     printWindow.document.open();
@@ -581,13 +579,13 @@ const POS = () => {
 
   const handleCompleteSale = async () => {
     if (cart.length === 0) {
-      toast.error('Sepetiniz boş. Lütfen ürün ekleyin.', { duration: 3500 });
+      ReactHotToast.toast.error('Sepetiniz boş. Lütfen ürün ekleyin.', { duration: 3500 });
       return;
     }
 
     // Müşteri seçimi zorunlu
     if (!selectedCustomer) {
-      toast.error('Satış için müşteri seçimi zorunludur.', { duration: 4000 });
+      ReactHotToast.toast.error('Satış için müşteri seçimi zorunludur.', { duration: 4000 });
       return;
     }
 
@@ -606,7 +604,7 @@ const POS = () => {
       // Pop-up engelleyicilere takılmamak için pencereyi kullanıcı tıklaması sırasında hemen aç
       const preOpenedWindow = window.open('', '_blank', 'width=900,height=700,scrollbars=yes,resizable=yes');
       if (!preOpenedWindow) {
-        toast.error('Yazdırma penceresi engellendi. Lütfen tarayıcıda pop-up izni verin.');
+        ReactHotToast.toast.error('Yazdırma penceresi engellendi. Lütfen tarayıcıda pop-up izni verin.');
       } else {
         // Minimal geçici içerik, sayfa hazırlanırken boş görünmesin
         preOpenedWindow.document.open();
@@ -617,13 +615,12 @@ const POS = () => {
       const preBalance = selectedCustomer ? Number(selectedCustomer.balance || 0) : 0;
       const response = await salesAPI.createSale(saleData);
       
-      toast.success(`Satış tamamlandı! ${cartTotal.toFixed(2)} ₺ müşteri hesabına eklendi.`, { duration: 4000 });
+      ReactHotToast.toast.success(`Satış tamamlandı! ${cartTotal.toFixed(2)} ₺ müşteri hesabına eklendi.`, { duration: 4000 });
       
       // Satış kağıdını yazdır
       printSaleReceipt(response.data, cart, preOpenedWindow, preBalance, Number(cartTotal));
       
       // Reset state
-      const cartItems = [...cart]; // Yazdırmak için kopyala
       setCart([]);
       setSelectedCustomer(null);
       setSearchTerm('');
@@ -643,7 +640,7 @@ const POS = () => {
       }, 100);
 
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Satış tamamlanamadı. Lütfen tekrar deneyin.', { duration: 4000 });
+      ReactHotToast.toast.error(error.response?.data?.message || 'Satış tamamlanamadı. Lütfen tekrar deneyin.', { duration: 4000 });
       console.error('Sale completion error:', error);
     } finally {
       setLoading(false);

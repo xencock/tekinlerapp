@@ -1,13 +1,13 @@
-import toast from 'react-hot-toast';
+import * as ReactHotToast from 'react-hot-toast';
 
 // Modern ve kullanıcı dostu toast mesajları için özel hook
 export const useToast = () => {
   // Başarı mesajları için özelleştirilmiş toast
   const success = (message, options = {}) => {
-    return toast.success(message, {
+    return ReactHotToast.toast.success(message, {
       duration: 3000,
       position: 'top-right',
-      onClick: (toast) => toast.dismiss(),
+      onClick: (toast) => ReactHotToast.toast.dismiss(),
       style: {
         background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%)',
         backdropFilter: 'blur(20px)',
@@ -35,10 +35,10 @@ export const useToast = () => {
 
   // Hata mesajları için özelleştirilmiş toast
   const error = (message, options = {}) => {
-    return toast.error(message, {
+    return ReactHotToast.toast.error(message, {
       duration: 4500,
       position: 'top-right',
-      onClick: (toast) => toast.dismiss(),
+      onClick: (toast) => ReactHotToast.toast.dismiss(),
       style: {
         background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(220, 38, 38, 0.95) 100%)',
         backdropFilter: 'blur(20px)',
@@ -70,7 +70,7 @@ export const useToast = () => {
       duration: 4000,
       position: 'top-right',
       icon: '💡',
-      onClick: (toast) => toast.dismiss(),
+      onClick: (toast) => ReactHotToast.toast.dismiss(),
       style: {
         background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(37, 99, 235, 0.95) 100%)',
         backdropFilter: 'blur(20px)',
@@ -98,7 +98,7 @@ export const useToast = () => {
       duration: 4000,
       position: 'top-right',
       icon: '⚠️',
-      onClick: (toast) => toast.dismiss(),
+      onClick: (toast) => ReactHotToast.toast.dismiss(),
       style: {
         background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.95) 0%, rgba(217, 119, 6, 0.95) 100%)',
         backdropFilter: 'blur(20px)',
@@ -122,9 +122,9 @@ export const useToast = () => {
 
   // Yükleme mesajları için özelleştirilmiş toast
   const loading = (message, options = {}) => {
-    return toast.loading(message, {
+    return ReactHotToast.toast.loading(message, {
       position: 'top-right',
-      onClick: (toast) => toast.dismiss(),
+      onClick: (toast) => ReactHotToast.toast.dismiss(),
       style: {
         background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.95) 0%, rgba(139, 92, 246, 0.95) 100%)',
         backdropFilter: 'blur(20px)',
@@ -152,7 +152,7 @@ export const useToast = () => {
 
   // Promise tabanlı toast (async işlemler için)
   const promise = (promise, messages, options = {}) => {
-    return toast.promise(
+    return ReactHotToast.toast.promise(
       promise,
       {
         loading: messages.loading || 'Yükleniyor...',
@@ -212,9 +212,9 @@ export const useToast = () => {
   // Toast'ı kapat
   const dismiss = (toastId) => {
     if (toastId) {
-      toast.dismiss(toastId);
+      ReactHotToast.toast.dismiss(toastId);
     } else {
-      toast.dismiss();
+      ReactHotToast.toast.dismiss();
     }
   };
 
@@ -231,10 +231,10 @@ export const useToast = () => {
 
 // Kısa kullanım için direkt export'lar - useToast hook'u kullanmadan
 export const showSuccess = (message, options = {}) => {
-  return toast.success(message, {
+  return ReactHotToast.toast.success(message, {
     duration: 3000,
     position: 'top-right',
-    onClick: (toast) => toast.dismiss(),
+    onClick: (toast) => ReactHotToast.toast.dismiss(),
     style: {
       background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%)',
       backdropFilter: 'blur(20px)',
@@ -261,10 +261,10 @@ export const showSuccess = (message, options = {}) => {
 };
 
 export const showError = (message, options = {}) => {
-  return toast.error(message, {
+  return ReactHotToast.toast.error(message, {
     duration: 4500,
     position: 'top-right',
-    onClick: (toast) => toast.dismiss(),
+    onClick: (toast) => ReactHotToast.toast.dismiss(),
     style: {
       background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(220, 38, 38, 0.95) 100%)',
       backdropFilter: 'blur(20px)',
@@ -295,7 +295,7 @@ export const showInfo = (message, options = {}) => {
     duration: 4000,
     position: 'top-right',
     icon: '💡',
-    onClick: (toast) => toast.dismiss(),
+    onClick: (toast) => ReactHotToast.toast.dismiss(),
     style: {
       background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(37, 99, 235, 0.95) 100%)',
       backdropFilter: 'blur(20px)',
@@ -322,7 +322,7 @@ export const showWarning = (message, options = {}) => {
     duration: 4000,
     position: 'top-right',
     icon: '⚠️',
-    onClick: (toast) => toast.dismiss(),
+    onClick: (toast) => ReactHotToast.toast.dismiss(),
     style: {
       background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.95) 0%, rgba(217, 119, 6, 0.95) 100%)',
       backdropFilter: 'blur(20px)',
@@ -345,9 +345,9 @@ export const showWarning = (message, options = {}) => {
 };
 
 export const showLoading = (message, options = {}) => {
-  return toast.loading(message, {
+  return ReactHotToast.toast.loading(message, {
     position: 'top-right',
-    onClick: (toast) => toast.dismiss(),
+    onClick: (toast) => ReactHotToast.toast.dismiss(),
     style: {
       background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.95) 0%, rgba(139, 92, 246, 0.95) 100%)',
       backdropFilter: 'blur(20px)',

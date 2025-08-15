@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { customersAPI, balanceAPI, productsAPI, salesAPI } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import * as ReactHotToast from 'react-hot-toast';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -152,12 +152,12 @@ const Dashboard = () => {
       
       // Debug modunda başarı mesajı göster
       if (debugMode) {
-        toast.success('📊 Dashboard verileri başarıyla yüklendi', { duration: 2500 });
+        ReactHotToast.toast.success('📊 Dashboard verileri başarıyla yüklendi', { duration: 2500 });
       }
       
     } catch (error) {
       console.error('Dashboard data fetch error:', error);
-      toast.error('📊 Dashboard verileri yüklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
+      ReactHotToast.toast.error('📊 Dashboard verileri yüklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
     } finally {
       setLoading(false);
     }

@@ -275,6 +275,30 @@ const CustomerDetail = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchCustomerDetails = async () => {
+      try {
+        setLoading(true);
+        const customerResponse = await customersAPI.getCustomer(id);
+        setCustomer(customerResponse.data.customer);
+
+        // Fetch balance transactions instead of sales
+        const transactionsResponse = await balanceAPI.getCustomerTransactions(id, { limit: 50 });
+        // İşlemleri tersine çevir (en eski yukarıda)
+        const reversedTransactions = transactionsResponse.data.transactions.reverse();
+        setTransactions(reversedTransactions);
+        
+        // Fetch sales summary
+        await fetchSalesSummary('all');
+      } catch (error) {
+        ReactHotToast.toast.error('Müşteri detayları yüklenemedi');
+        console.error('Fetch customer details error:', error);
+      } finally {
+        setLoading(false);
+        setLoadingTransactions(false);
+      }
+    };
+
   // Fetch sales summary
   const fetchSalesSummary = useCallback(async (period = 'all') => {
     try {
@@ -289,33 +313,9 @@ const CustomerDetail = () => {
     }
   }, [id]);
 
-  // Fetch customer details
-  const fetchCustomerDetails = useCallback(async () => {
-    try {
-      setLoading(true);
-      const customerResponse = await customersAPI.getCustomer(id);
-      setCustomer(customerResponse.data.customer);
-
-      // Fetch balance transactions instead of sales
-      const transactionsResponse = await balanceAPI.getCustomerTransactions(id, { limit: 50 });
-      // İşlemleri tersine çevir (en eski yukarıda)
-      const reversedTransactions = transactionsResponse.data.transactions.reverse();
-      setTransactions(reversedTransactions);
-      
-      // Fetch sales summary
-      await fetchSalesSummary('all');
-    } catch (error) {
-      ReactHotToast.toast.error('Müşteri detayları yüklenemedi');
-      console.error('Fetch customer details error:', error);
-    } finally {
-      setLoading(false);
-      setLoadingTransactions(false);
-    }
-  }, [id, fetchSalesSummary]);
-
   useEffect(() => {
     fetchCustomerDetails();
-  }, [fetchCustomerDetails]);
+  }, [fetchSalesSummary]);
 
   // Handle quick balance transaction
   const handleQuickBalanceSubmit = async (e) => {

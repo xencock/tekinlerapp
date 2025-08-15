@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { authAPI } from '../utils/api';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const AuthContext = createContext();
 
@@ -17,12 +17,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Sayfa yüklendiğinde kullanıcı durumunu kontrol et
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const checkAuthStatus = async () => {
+  // checkAuthStatus function definition moved here to avoid "used before defined" warning
+  const checkAuthStatus = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
@@ -36,7 +32,12 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // Sayfa yüklendiğinde kullanıcı durumunu kontrol et
+  useEffect(() => {
+    checkAuthStatus();
+  }, [checkAuthStatus]);
 
   const login = async (credentials) => {
     try {

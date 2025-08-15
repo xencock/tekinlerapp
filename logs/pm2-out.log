@@ -18632,3 +18632,900 @@ Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActi
 GET /api/auth/me 304 - - 13.884 ms
 Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
 GET /api/auth/me 304 - - 2.192 ms
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+Executed (default): SELECT 1+1 AS result Elapsed time: 3ms
+Veritabanına (sqlite) başarıyla bağlanıldı
+Executed (default): PRAGMA journal_mode = WAL; Elapsed time: 4ms
+Executed (default): PRAGMA synchronous = NORMAL; Elapsed time: 0ms
+Executed (default): PRAGMA temp_store = MEMORY; Elapsed time: 0ms
+Executed (default): PRAGMA cache_size = -20000; Elapsed time: 0ms
+SQLite PRAGMA ayarları uygulandı
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Users'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Users`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`users_username`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='customers'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`customers`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_tc_number`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_first_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_last_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_created_at`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active_created_at`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sales'; Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_LIST(`sales`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Products'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Products`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_barcode`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_category`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_season`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_is_active`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_products_credit_price`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='balance_transactions'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`balance_transactions`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_date`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_category`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sale_items'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sale_items`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_product_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`stock_movements`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_product_id`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_type`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_reference_id`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Categories'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Categories`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_is_active`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='invoices'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`invoices`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_invoices_1`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`invoices_invoice_number`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`invoices_sale_id`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`invoices_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`invoices_status`) Elapsed time: 0ms
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`username` = 'TekinlerAdmin'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 1ms
+  ENV admin kullanıcısı güncellendi -> username: TekinlerAdmin
+GET /manifest.json 404 136 - 9.207 ms
+GET /manifest.json 404 136 - 2.799 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 9ms
+GET /api/auth/me 304 - - 23.576 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+GET /api/auth/me 304 - - 2.059 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 0ms
+GET /api/customers/stats/overview?_t=1755275656148 200 112 - 19.277 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755275656183 200 154 - 8.990 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 0ms
+GET /api/customers/stats/overview?_t=1755275656148 200 112 - 13.064 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755275656200 200 154 - 4.621 ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755275656198 200 74 - 7.560 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 7.486 ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755275656210 200 74 - 10.362 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 4ms
+GET /api/products/low-stock 404 79 - 6.172 ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 4ms
+GET /api/balance/recent?limit=5 200 19 - 5.913 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 0ms
+GET /api/products/low-stock 404 79 - 1.636 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 132 - 9.361 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755275659693 200 112 - 27.487 ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 5.358 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755275659693 200 112 - 6.796 ms
+GET /manifest.json 404 136 - 3.916 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 10ms
+GET /api/auth/me 304 - - 18.911 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+GET /api/auth/me 304 - - 2.373 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 8ms
+GET /api/auth/me 304 - - 25.179 ms
+GET /manifest.json 404 136 - 1.241 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 8ms
+GET /api/auth/me 304 - - 16.549 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+GET /api/auth/me 304 - - 5.816 ms
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+Executed (default): SELECT 1+1 AS result Elapsed time: 1ms
+Veritabanına (sqlite) başarıyla bağlanıldı
+Executed (default): PRAGMA journal_mode = WAL; Elapsed time: 5ms
+Executed (default): PRAGMA synchronous = NORMAL; Elapsed time: 0ms
+Executed (default): PRAGMA temp_store = MEMORY; Elapsed time: 0ms
+Executed (default): PRAGMA cache_size = -20000; Elapsed time: 1ms
+SQLite PRAGMA ayarları uygulandı
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Users'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Users`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`users_username`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='customers'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`customers`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_phone`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_email`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_tc_number`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_first_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_last_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_created_at`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active_created_at`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sales'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sales`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Products'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Products`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_barcode`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_category`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_season`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_is_active`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`idx_products_credit_price`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='balance_transactions'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`balance_transactions`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_date`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_category`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sale_items'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sale_items`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_product_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`stock_movements`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_product_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_reference_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Categories'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Categories`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`categories_is_active`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='invoices'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`invoices`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_invoices_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`invoices_invoice_number`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`invoices_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`invoices_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`invoices_status`) Elapsed time: 0ms
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`username` = 'TekinlerAdmin'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 2ms
+  ENV admin kullanıcısı güncellendi -> username: TekinlerAdmin
+GET /manifest.json 404 136 - 3.633 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 11ms
+GET /api/auth/me 304 - - 26.771 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+GET /api/auth/me 304 - - 1.932 ms
+GET /api/health 200 93 - 1.969 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 7ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 10ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 12ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 6ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 26.984 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276041107 200 112 - 27.799 ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276041108 200 112 - 26.274 ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 6.104 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 8.341 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276042663 200 112 - 21.581 ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 8.066 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276042663 200 112 - 8.014 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+GET /api/customers/stats/overview?_t=1755276043143 200 112 - 9.079 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 4ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 4ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 7ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 4ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276043165 200 154 - 12.520 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 0ms
+GET /api/customers/stats/overview?_t=1755276043143 200 112 - 19.887 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276043186 200 74 - 8.559 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 4ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 5ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 4ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 5ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276043192 200 154 - 10.157 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 5.045 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276043211 200 74 - 7.478 ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 1ms
+GET /api/products/low-stock 404 79 - 3.594 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 2.868 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 0ms
+GET /api/products/low-stock 404 79 - 2.212 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `brand` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`brand` IS NOT NULL GROUP BY `brand` ORDER BY `Product`.`brand` ASC; Elapsed time: 2ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10; Elapsed time: 5ms
+Executed (default): SELECT `category` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 GROUP BY `category` ORDER BY `Product`.`category` ASC; Elapsed time: 5ms
+Executed (default): SELECT `season` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`season` IS NOT NULL GROUP BY `season` ORDER BY `Product`.`season` ASC; Elapsed time: 4ms
+GET /api/products/filters/options 304 - - 9.142 ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 4ms
+GET /api/categories 304 - - 10.860 ms
+Executed (default): SELECT count(*) AS `count` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1; Elapsed time: 4ms
+GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false 304 - - 14.228 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `category` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 GROUP BY `category` ORDER BY `Product`.`category` ASC; Elapsed time: 5ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 5ms
+Executed (default): SELECT `season` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`season` IS NOT NULL GROUP BY `season` ORDER BY `Product`.`season` ASC; Elapsed time: 7ms
+Executed (default): SELECT `brand` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`brand` IS NOT NULL GROUP BY `brand` ORDER BY `Product`.`brand` ASC; Elapsed time: 7ms
+GET /api/products/filters/options 304 - - 10.065 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 5ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 4ms
+GET /api/categories 304 - - 9.477 ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1; Elapsed time: 1ms
+GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false 304 - - 10.443 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 0ms
+GET /api/categories 304 - - 2.426 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 0ms
+GET /api/categories 304 - - 1.488 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 9.018 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 3ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276044295 200 112 - 21.926 ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 8.264 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276044295 200 112 - 7.662 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 2ms
+GET /api/customers/stats/overview?_t=1755276045325 200 112 - 18.252 ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 2ms
+GET /api/customers/stats/overview?_t=1755276045326 200 112 - 16.838 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276045363 200 154 - 7.579 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 4ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276045363 200 154 - 7.501 ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276045378 200 74 - 10.070 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 3.840 ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276045390 200 74 - 9.006 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 2ms
+GET /api/products/low-stock 404 79 - 4.576 ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 4.195 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 0ms
+GET /api/products/low-stock 404 79 - 1.753 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1; Elapsed time: 4ms
+GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false 304 - - 8.941 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `category` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 GROUP BY `category` ORDER BY `Product`.`category` ASC; Elapsed time: 3ms
+Executed (default): SELECT `season` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`season` IS NOT NULL GROUP BY `season` ORDER BY `Product`.`season` ASC; Elapsed time: 4ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 3ms
+GET /api/categories 304 - - 8.652 ms
+Executed (default): SELECT `brand` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`brand` IS NOT NULL GROUP BY `brand` ORDER BY `Product`.`brand` ASC; Elapsed time: 5ms
+GET /api/products/filters/options 304 - - 11.615 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1; Elapsed time: 4ms
+GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false 304 - - 10.518 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 2ms
+GET /api/categories 304 - - 6.889 ms
+Executed (default): SELECT `category` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 GROUP BY `category` ORDER BY `Product`.`category` ASC; Elapsed time: 2ms
+Executed (default): SELECT `season` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`season` IS NOT NULL GROUP BY `season` ORDER BY `Product`.`season` ASC; Elapsed time: 2ms
+Executed (default): SELECT `brand` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`brand` IS NOT NULL GROUP BY `brand` ORDER BY `Product`.`brand` ASC; Elapsed time: 3ms
+GET /api/products/filters/options 304 - - 7.476 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 1ms
+GET /api/categories 304 - - 1.709 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 0ms
+GET /api/categories 304 - - 1.739 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 7.414 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 3ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276047229 200 112 - 19.487 ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 8.061 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755276047229 200 112 - 4.693 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `category` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 GROUP BY `category` ORDER BY `Product`.`category` ASC; Elapsed time: 2ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 2ms
+GET /api/categories 304 - - 6.285 ms
+Executed (default): SELECT `season` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`season` IS NOT NULL GROUP BY `season` ORDER BY `Product`.`season` ASC; Elapsed time: 4ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10; Elapsed time: 4ms
+Executed (default): SELECT `brand` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`brand` IS NOT NULL GROUP BY `brand` ORDER BY `Product`.`brand` ASC; Elapsed time: 4ms
+GET /api/products/filters/options 304 - - 10.255 ms
+Executed (default): SELECT count(*) AS `count` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1; Elapsed time: 1ms
+GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false 304 - - 10.001 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 0ms
+GET /api/categories 304 - - 2.787 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT `category` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 GROUP BY `category` ORDER BY `Product`.`category` ASC; Elapsed time: 4ms
+Executed (default): SELECT `season` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`season` IS NOT NULL GROUP BY `season` ORDER BY `Product`.`season` ASC; Elapsed time: 4ms
+Executed (default): SELECT `brand` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`brand` IS NOT NULL GROUP BY `brand` ORDER BY `Product`.`brand` ASC; Elapsed time: 4ms
+GET /api/products/filters/options 304 - - 10.146 ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 3ms
+GET /api/categories 304 - - 9.475 ms
+Executed (default): SELECT count(*) AS `count` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1; Elapsed time: 3ms
+GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false 304 - - 11.492 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 0ms
+GET /api/categories 304 - - 1.524 ms
+GET /manifest.json 404 136 - 3.081 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 9ms
+GET /api/auth/me 304 - - 21.541 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+GET /api/auth/me 304 - - 1.114 ms
+GET /manifest.json 404 136 - 3.399 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 10ms
+GET /api/auth/me 304 - - 15.795 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+GET /api/auth/me 304 - - 2.099 ms
+GET /manifest.json 200 993 - 8.438 ms
+GET /manifest.json 304 - - 1.897 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 7ms
+GET /api/auth/me 304 - - 12.034 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+GET /api/auth/me 304 - - 1.860 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+GET /api/customers/stats/overview?_t=1755277006576 200 112 - 12.266 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 0ms
+GET /api/customers/stats/overview?_t=1755277006576 200 112 - 6.940 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277006639 200 154 - 8.544 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 4ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 4ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 5ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 4ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 6ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 6ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 6ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277006639 200 154 - 14.204 ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277006656 200 74 - 15.890 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277006675 200 74 - 5.696 ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 2.515 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 0ms
+GET /api/products/low-stock 404 79 - 1.775 ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 2.490 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 0ms
+GET /api/products/low-stock 404 79 - 1.178 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 6ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 6ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 7ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+GET /api/customers/stats/overview?_t=1755277051590 200 112 - 34.880 ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 2ms
+GET /api/customers/stats/overview?_t=1755277051600 200 112 - 28.502 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+GET /api/auth/me 304 - - 2.035 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+GET /api/auth/me 304 - - 3.054 ms
+GET /manifest.json 200 993 - 2.465 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 4ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+GET /api/customers/stats/overview?_t=1755277052836 200 112 - 16.470 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 3ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL); Elapsed time: 1ms
+GET /api/customers/stats/overview?_t=1755277052836 200 112 - 15.968 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277052884 200 154 - 17.354 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'payment' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 2ms
+GET /api/balance/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277052884 200 154 - 8.601 ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277052919 200 74 - 10.119 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` >= '2025-08-14 21:00:00.000 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 1ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 1.877 ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00' AND `BalanceTransaction`.`customerId` = -1; Elapsed time: 0ms
+GET /api/sales/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277052932 200 74 - 5.441 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 1ms
+GET /api/products/low-stock 404 79 - 2.230 ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `customer`.`id` AS `customer.id`, `customer`.`firstName` AS `customer.firstName`, `customer`.`lastName` AS `customer.lastName`, `customer`.`phone` AS `customer.phone`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` INNER JOIN `customers` AS `customer` ON `BalanceTransaction`.`customerId` = `customer`.`id` AND `customer`.`isActive` = 1 LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` ORDER BY `BalanceTransaction`.`createdAt` DESC LIMIT 5; Elapsed time: 1ms
+GET /api/balance/recent?limit=5 200 19 - 1.853 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`id` = 'low-stock'; Elapsed time: 1ms
+GET /api/products/low-stock 404 79 - 1.387 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 6ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 6ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 5ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 5ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 5ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 3ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 4ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 15.437 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 4ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 4ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277054108 200 112 - 31.797 ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277054109 200 112 - 27.917 ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 6.946 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 5ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 3ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 11.647 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 3ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277056037 200 112 - 28.195 ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 8.119 ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277056038 200 112 - 27.171 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 5ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 5ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `category` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 GROUP BY `category` ORDER BY `Product`.`category` ASC; Elapsed time: 4ms
+Executed (default): SELECT `brand` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`brand` IS NOT NULL GROUP BY `brand` ORDER BY `Product`.`brand` ASC; Elapsed time: 5ms
+Executed (default): SELECT `season` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`season` IS NOT NULL GROUP BY `season` ORDER BY `Product`.`season` ASC; Elapsed time: 5ms
+GET /api/products/filters/options 304 - - 12.403 ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10; Elapsed time: 9ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 6ms
+GET /api/categories 304 - - 13.838 ms
+Executed (default): SELECT count(*) AS `count` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1; Elapsed time: 2ms
+GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false 304 - - 18.465 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `category` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 GROUP BY `category` ORDER BY `Product`.`category` ASC; Elapsed time: 4ms
+Executed (default): SELECT `brand` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`brand` IS NOT NULL GROUP BY `brand` ORDER BY `Product`.`brand` ASC; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 2ms
+Executed (default): SELECT `season` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 AND `Product`.`season` IS NOT NULL GROUP BY `season` ORDER BY `Product`.`season` ASC; Elapsed time: 4ms
+GET /api/products/filters/options 304 - - 8.611 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `cashPrice`, `creditPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 1ms
+GET /api/categories 304 - - 6.077 ms
+Executed (default): SELECT count(*) AS `count` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1; Elapsed time: 1ms
+GET /api/products?page=1&limit=10&search=&category=&season=&lowStock=false 304 - - 5.911 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 1ms
+GET /api/categories 304 - - 3.652 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 0ms
+GET /api/categories 304 - - 1.876 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 5ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 6ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 4ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 4ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 5ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 4ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 3ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 16.684 ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 1ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277118260 200 112 - 30.235 ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277118261 200 112 - 25.705 ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 4.236 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+GET /api/auth/me 304 - - 1.946 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+GET /api/auth/me 304 - - 2.700 ms
+GET /manifest.json 304 - - 1.203 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 15ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 16ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 3ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 23.661 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277119518 200 112 - 26.940 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 2.861 ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277119518 200 112 - 5.596 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+GET /api/auth/me 304 - - 2.522 ms
+GET /manifest.json 304 - - 2.131 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 5ms
+GET /api/auth/me 304 - - 6.167 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 4ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 9.805 ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 3ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 3ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 2ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277120318 200 112 - 25.099 ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 8.566 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 1; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`balance`) AS `sum` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1 AND `Customer`.`balance` > 0; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT sum(`amount`) AS `sum` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+Executed (default): SELECT `id` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`type` = 'debt' AND `BalanceTransaction`.`category` = 'Satış' AND `BalanceTransaction`.`customerId` IN (NULL) AND `BalanceTransaction`.`date` BETWEEN '2025-07-31 21:00:00.000 +00:00' AND '2025-08-31 20:59:59.999 +00:00'; Elapsed time: 0ms
+GET /api/customers/stats/overview?startDate=2025-07-31T21:00:00.000Z&endDate=2025-08-31T20:59:59.999Z&_t=1755277120318 200 112 - 6.081 ms

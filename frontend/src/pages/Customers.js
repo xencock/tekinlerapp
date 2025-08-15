@@ -18,7 +18,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { customersAPI } from '../utils/api';
-import toast from 'react-hot-toast';
+import * as ReactHotToast from 'react-hot-toast';
 
 const Customers = () => {
   // Helper functions for number formatting
@@ -140,7 +140,7 @@ const Customers = () => {
       setCustomers(response.data.customers);
       setTotalPages(response.data.pagination.totalPages);
     } catch (error) {
-      toast.error('🔄 Müşteriler yüklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
+      ReactHotToast.toast.error('🔄 Müşteriler yüklenemedi. Lütfen tekrar deneyin.', { duration: 4000 });
       console.error('Fetch customers error:', error);
     } finally {
       setLoading(false);
@@ -184,7 +184,7 @@ const Customers = () => {
       setDeletedCustomers(response.data.customers);
     } catch (error) {
       console.error('❌ Fetch deleted customers error:', error);
-      toast.error('🔄 Silinen müşteriler yüklenemedi', { duration: 3000 });
+      ReactHotToast.toast.error('🔄 Silinen müşteriler yüklenemedi', { duration: 3000 });
     } finally {
       console.log('🏁 Loading state false yapılıyor');
       setDeletedCustomersLoading(false);
@@ -195,7 +195,7 @@ const Customers = () => {
   const handleRestoreCustomer = async (customerId) => {
     try {
       await customersAPI.restoreCustomer(customerId);
-      toast.success('✅ Müşteri başarıyla geri yüklendi', { duration: 3000 });
+      ReactHotToast.toast.success('✅ Müşteri başarıyla geri yüklendi', { duration: 3000 });
       fetchDeletedCustomers();
       fetchCustomers();
       fetchStats();
@@ -203,9 +203,9 @@ const Customers = () => {
       console.error('Restore customer error:', error);
       if (error.response?.data?.conflicts) {
         const conflicts = error.response.data.conflicts.join(', ');
-        toast.error(`❌ Müşteri geri yüklenemedi: ${conflicts}`, { duration: 5000 });
+        ReactHotToast.toast.error(`❌ Müşteri geri yüklenemedi: ${conflicts}`, { duration: 5000 });
       } else {
-        toast.error('❌ Müşteri geri yüklenemedi', { duration: 3000 });
+        ReactHotToast.toast.error('❌ Müşteri geri yüklenemedi', { duration: 3000 });
       }
     }
   };
@@ -215,15 +215,15 @@ const Customers = () => {
     if (window.confirm(`⚠️ "${customerName}" müşterisini kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!`)) {
       try {
         await customersAPI.permanentDeleteCustomer(customerId);
-        toast.success('🗑️ Müşteri kalıcı olarak silindi', { duration: 3000 });
+        ReactHotToast.toast.success('🗑️ Müşteri kalıcı olarak silindi', { duration: 3000 });
         fetchDeletedCustomers();
         fetchStats();
       } catch (error) {
         console.error('Permanent delete customer error:', error);
         if (error.response?.data?.message) {
-          toast.error(`❌ ${error.response.data.message}`, { duration: 5000 });
+          ReactHotToast.toast.error(`❌ ${error.response.data.message}`, { duration: 5000 });
         } else {
-          toast.error('❌ Müşteri kalıcı olarak silinemedi', { duration: 3000 });
+          ReactHotToast.toast.error('❌ Müşteri kalıcı olarak silinemedi', { duration: 3000 });
         }
       }
     }
@@ -235,29 +235,29 @@ const Customers = () => {
     
     const token = localStorage.getItem('token');
     if (!token) {
-      toast.error('⏰ Oturum süresi dolmuş. Lütfen tekrar giriş yapın.', { duration: 5000 });
+      ReactHotToast.toast.error('⏰ Oturum süresi dolmuş. Lütfen tekrar giriş yapın.', { duration: 5000 });
       return;
     }
     
     // Basic validation
     if (!formData.firstName.trim()) {
-      toast.error('📝 Ad alanı zorunludur', { duration: 3000 });
+      ReactHotToast.toast.error('📝 Ad alanı zorunludur', { duration: 3000 });
       return;
     }
     if (!formData.lastName.trim()) {
-      toast.error('📝 Soyad alanı zorunludur', { duration: 3000 });
+      ReactHotToast.toast.error('📝 Soyad alanı zorunludur', { duration: 3000 });
       return;
     }
     // Telefon formatı validasyonu (eğer girilmişse)
     if (formData.phone && formData.phone.trim()) {
       const phoneRegex = /^[0-9+\-\s()]+$/;
       if (!phoneRegex.test(formData.phone.trim())) {
-        toast.error('📞 Geçerli bir telefon numarası girin (örn: 0555 123 45 67)', { duration: 4000 });
+        ReactHotToast.toast.error('📞 Geçerli bir telefon numarası girin (örn: 0555 123 45 67)', { duration: 4000 });
         return;
       }
       
       if (formData.phone.trim().length < 10 || formData.phone.trim().length > 15) {
-        toast.error('📞 Telefon numarası 10-15 karakter arasında olmalıdır', { duration: 4000 });
+        ReactHotToast.toast.error('📞 Telefon numarası 10-15 karakter arasında olmalıdır', { duration: 4000 });
         return;
       }
     }
@@ -268,11 +268,11 @@ const Customers = () => {
       if (selectedCustomer) {
         // Update existing customer
         await customersAPI.updateCustomer(selectedCustomer.id, formData);
-        toast.success('✅ Müşteri başarıyla güncellendi', { duration: 3000 });
+        ReactHotToast.toast.success('✅ Müşteri başarıyla güncellendi', { duration: 3000 });
       } else {
         // Create new customer
         await customersAPI.createCustomer(formData);
-        toast.success('✅ Müşteri başarıyla oluşturuldu', { duration: 3000 });
+        ReactHotToast.toast.success('✅ Müşteri başarıyla oluşturuldu', { duration: 3000 });
       }
       
       setShowAddModal(false);
@@ -303,12 +303,12 @@ const Customers = () => {
         // Validation hatalarını detaylı göster
         const validationErrors = error.response.data.details;
         validationErrors.forEach(err => {
-          toast.error(`${err.field}: ${err.message}`, { duration: 5000 });
+          ReactHotToast.toast.error(`${err.field}: ${err.message}`, { duration: 5000 });
         });
       } else if (error.response?.data?.message) {
-        toast.error(`❌ ${error.response.data.message}`, { duration: 5000 });
+        ReactHotToast.toast.error(`❌ ${error.response.data.message}`, { duration: 5000 });
       } else {
-        toast.error('❌ Müşteri kaydedilemedi', { duration: 3000 });
+        ReactHotToast.toast.error('❌ Müşteri kaydedilemedi', { duration: 3000 });
       }
     } finally {
       setLoading(false);
@@ -320,11 +320,11 @@ const Customers = () => {
     if (window.confirm('Bu müşteriyi silmek istediğinizden emin misiniz?')) {
       try {
         await customersAPI.deleteCustomer(customerId);
-        toast.success('Müşteri silindi');
+        ReactHotToast.toast.success('Müşteri silindi');
         fetchCustomers();
         fetchStats();
       } catch (error) {
-        toast.error('Müşteri silinemedi');
+        ReactHotToast.toast.error('Müşteri silinemedi');
         console.error('Delete error:', error);
       }
     }
@@ -357,13 +357,13 @@ const Customers = () => {
     e.preventDefault();
     
     if (!balanceFormData.amount || !balanceFormData.description) {
-      toast.error('Tutar ve açıklama alanları zorunludur');
+      ReactHotToast.toast.error('Tutar ve açıklama alanları zorunludur');
       return;
     }
 
     try {
       await customersAPI.addBalanceTransaction(selectedCustomer.id, balanceFormData);
-      toast.success(`Bakiye ${balanceFormData.type === 'payment' ? 'eklendi' : 'çıkarıldı'}`);
+      ReactHotToast.toast.success(`Bakiye ${balanceFormData.type === 'payment' ? 'eklendi' : 'çıkarıldı'}`);
       setShowBalanceModal(false);
       setBalanceFormData({
         type: 'payment',
@@ -378,9 +378,9 @@ const Customers = () => {
     } catch (error) {
       console.error('Balance transaction error:', error);
       if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
+        ReactHotToast.toast.error(error.response.data.message);
       } else {
-        toast.error('Bakiye işlemi eklenemedi');
+        ReactHotToast.toast.error('Bakiye işlemi eklenemedi');
       }
     }
   };
