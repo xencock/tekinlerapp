@@ -66,7 +66,7 @@ export const useToast = () => {
 
   // Bilgi mesajları için özelleştirilmiş toast
   const info = (message, options = {}) => {
-    return toast(message, {
+    return ReactHotToast.toast(message, {
       duration: 4000,
       position: 'top-right',
       icon: '💡',
@@ -94,7 +94,7 @@ export const useToast = () => {
 
   // Uyarı mesajları için özelleştirilmiş toast
   const warning = (message, options = {}) => {
-    return toast(message, {
+    return ReactHotToast.toast(message, {
       duration: 4000,
       position: 'top-right',
       icon: '⚠️',
@@ -291,13 +291,13 @@ export const showError = (message, options = {}) => {
 };
 
 export const showInfo = (message, options = {}) => {
-  return toast(message, {
+  return ReactHotToast.toast(message, {
     duration: 4000,
     position: 'top-right',
     icon: '💡',
     onClick: (toast) => ReactHotToast.toast.dismiss(),
     style: {
-      background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(37, 99, 235, 0.95) 100%)',
+      background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(34, 99, 240, 0.95) 100%)',
       backdropFilter: 'blur(20px)',
       color: '#ffffff',
       padding: '16px 20px',
@@ -318,7 +318,7 @@ export const showInfo = (message, options = {}) => {
 };
 
 export const showWarning = (message, options = {}) => {
-  return toast(message, {
+  return ReactHotToast.toast(message, {
     duration: 4000,
     position: 'top-right',
     icon: '⚠️',

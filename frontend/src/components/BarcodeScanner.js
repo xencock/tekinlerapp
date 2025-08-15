@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Camera, X, Settings } from 'lucide-react';
-import { toast } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import * as ZXing from '@zxing/library';
 import { useCameraPermission } from '../hooks/useCameraPermission';
 import CameraPermissionHelper from './CameraPermissionHelper';
@@ -477,7 +477,7 @@ const BarcodeScanner = ({ onScan, onClose }) => {
         toast.success('🔍 Barkod tarama başladı', { duration: 2000 });
       } else {
         console.warn('⚠️ Tarama sistemi başlatılamadı');
-        toast.warning('⚠️ Barkod tarama başlatılamadı', { duration: 3000 });
+        toast.error('⚠️ Barkod tarama başlatılamadı', { duration: 3000 });
       }
       
     } catch (error) {
