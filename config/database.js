@@ -91,7 +91,7 @@ const syncDatabase = async () => {
     
     // Production'da sync() kullanmak veri kaybına yol açabilir. Dikkatli kullanılmalıdır.
     // Genellikle sadece geliştirme ortamında kullanılır.
-    await sequelize.sync({ alter: process.env.NODE_ENV !== 'production' });
+    await sequelize.sync({ alter: false });
     console.log('Veritabanı tabloları senkronize edildi');
 
   } catch (error) {

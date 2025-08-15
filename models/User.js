@@ -38,12 +38,12 @@ const User = sequelize.define('User', {
     }
   },
   isActive: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true
+    type: DataTypes.INTEGER,
+    defaultValue: 1
   },
   isAdmin: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   },
   lastLogin: {
     type: DataTypes.DATE,
@@ -134,7 +134,8 @@ User.findByCredentials = async function(username, pin) {
     throw new Error('Geçersiz kullanıcı adı veya PIN');
   }
 
-  if (!user.isActive) {
+  // getDataValue kullanarak direkt veritabanı değerini kontrol et
+  if (user.isActive !== 1) {
     throw new Error('Hesabınız aktif değil. Lütfen bir yönetici ile iletişime geçin.');
   }
   
