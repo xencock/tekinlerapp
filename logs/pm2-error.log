@@ -4402,3 +4402,662 @@ Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinle
 Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
 Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
 Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeForeignKeyConstraintError',
+  parent: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:08:10.386 +00:00',
+    '$7': '2025-08-15 12:08:10.386 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:08:10.386 +00:00',
+    '$7': '2025-08-15 12:08:10.386 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {},
+  table: undefined,
+  fields: undefined,
+  value: undefined,
+  index: undefined,
+  reltype: undefined
+}
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeForeignKeyConstraintError',
+  parent: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:09:16.915 +00:00',
+    '$7': '2025-08-15 12:09:16.915 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:09:16.915 +00:00',
+    '$7': '2025-08-15 12:09:16.915 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {},
+  table: undefined,
+  fields: undefined,
+  value: undefined,
+  index: undefined,
+  reltype: undefined
+}
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeForeignKeyConstraintError',
+  parent: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:09:24.079 +00:00',
+    '$7': '2025-08-15 12:09:24.079 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:09:24.079 +00:00',
+    '$7': '2025-08-15 12:09:24.079 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {},
+  table: undefined,
+  fields: undefined,
+  value: undefined,
+  index: undefined,
+  reltype: undefined
+}
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeForeignKeyConstraintError',
+  parent: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:09:35.751 +00:00',
+    '$7': '2025-08-15 12:09:35.751 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:09:35.751 +00:00',
+    '$7': '2025-08-15 12:09:35.751 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {},
+  table: undefined,
+  fields: undefined,
+  value: undefined,
+  index: undefined,
+  reltype: undefined
+}
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeForeignKeyConstraintError',
+  parent: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:12:01.373 +00:00',
+    '$7': '2025-08-15 12:12:01.373 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:12:01.373 +00:00',
+    '$7': '2025-08-15 12:12:01.373 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {},
+  table: undefined,
+  fields: undefined,
+  value: undefined,
+  index: undefined,
+  reltype: undefined
+}
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeForeignKeyConstraintError',
+  parent: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:14:28.676 +00:00',
+    '$7': '2025-08-15 12:14:28.676 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:14:28.676 +00:00',
+    '$7': '2025-08-15 12:14:28.676 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {},
+  table: undefined,
+  fields: undefined,
+  value: undefined,
+  index: undefined,
+  reltype: undefined
+}
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeForeignKeyConstraintError',
+  parent: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:15:06.262 +00:00',
+    '$7': '2025-08-15 12:15:06.262 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed
+  --> in Statement#run([Object: null prototype] {
+    '$1': 44,
+    '$2': 3,
+    '$3': 0,
+    '$4': 'Veresiye',
+    '$5': 'Otomatik hesaba kaydedilen satış',
+    '$6': '2025-08-15 12:15:06.262 +00:00',
+    '$7': '2025-08-15 12:15:06.262 +00:00'
+  }, [Function: afterExecute])
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:76:19)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sqlite3/lib/sqlite3.js:20:19)
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+      at new Promise (<anonymous>)
+      at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+      at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28 {
+    errno: 19,
+    code: 'SQLITE_CONSTRAINT',
+    __augmented: true,
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {},
+  table: undefined,
+  fields: undefined,
+  value: undefined,
+  index: undefined,
+  reltype: undefined
+}
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeDatabaseError',
+  parent: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {}
+}
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeDatabaseError',
+  parent: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {}
+}
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeDatabaseError',
+  parent: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {}
+}
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeDatabaseError',
+  parent: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {}
+}
+Create sale error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.insert (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:308:21)
+    at async model.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2490:35)
+    at async Sale.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:28:18 {
+  name: 'SequelizeDatabaseError',
+  parent: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  original: [Error: SQLITE_ERROR: no such table: sales] {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);'
+  },
+  sql: 'INSERT INTO `sales` (`id`,`customerId`,`userId`,`totalAmount`,`paymentMethod`,`notes`,`createdAt`,`updatedAt`) VALUES (NULL,$1,$2,$3,$4,$5,$6,$7);',
+  parameters: {}
+}
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Get customer sales summary error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Sale.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/customers.js:838:19 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: Sale.isActive
+  --> in Database#all("SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;", [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: "SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;"
+  },
+  original: Error: SQLITE_ERROR: no such column: Sale.isActive
+  --> in Database#all("SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;", [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: "SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;"
+  },
+  sql: "SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;",
+  parameters: {}
+}
+Get customer sales summary error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Sale.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/customers.js:838:19 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: Sale.isActive
+  --> in Database#all("SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;", [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: "SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;"
+  },
+  original: Error: SQLITE_ERROR: no such column: Sale.isActive
+  --> in Database#all("SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;", [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: "SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;"
+  },
+  sql: "SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;",
+  parameters: {}
+}

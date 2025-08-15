@@ -27,14 +27,26 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'tiny' : 'dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-    // SQLite veritabanı bağlantısı
+// Load models to ensure they are registered with Sequelize before sync
+require('./models/BalanceTransaction');
+require('./models/Category');
+require('./models/Customer');
+require('./models/Invoice');
+require('./models/Product');
+require('./models/Sale');
+require('./models/SaleItem');
+require('./models/SimpleCustomer');
+require('./models/StockMovement');
+require('./models/User');
+
+// SQLite veritabanı bağlantısı
 const connectDB = async () => {
   try {
     await testConnection();
     await syncDatabase();
     console.log('✅ SQLite veritabanı hazır');
     // Seed/ensure admin user with ENV-configured credentials
-    const User = require('./models/User');
+    const User = require('./models/User'); // Re-require User model after sync to ensure it's up-to-date
     const adminUsername = process.env.SEED_ADMIN_USERNAME || 'TekinlerAdmin';
     const adminPin = process.env.SEED_ADMIN_PIN || '582765';
     const adminFullName = process.env.SEED_ADMIN_FULLNAME || 'Tekinler Admin';
