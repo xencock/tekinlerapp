@@ -303,7 +303,7 @@ router.post('/', authenticateToken, validateCustomer, async (req, res) => {
     res.status(201).json({
       message: 'Müşteri başarıyla oluşturuldu',
       customer: {
-        ...customer.toJSON(),
+        ...customer,
         fullName: customer.getFullName()
       }
     });

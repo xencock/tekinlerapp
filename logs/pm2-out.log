@@ -1219,3 +1219,918 @@ Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActi
 Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 0ms
 Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
 GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 3.948 ms
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+Executed (default): SELECT 1+1 AS result Elapsed time: 1ms
+Veritabanına (sqlite) başarıyla bağlanıldı
+Executed (default): PRAGMA journal_mode = WAL; Elapsed time: 1ms
+Executed (default): PRAGMA synchronous = NORMAL; Elapsed time: 0ms
+Executed (default): PRAGMA temp_store = MEMORY; Elapsed time: 0ms
+Executed (default): PRAGMA cache_size = -20000; Elapsed time: 1ms
+SQLite PRAGMA ayarları uygulandı
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Users'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Users`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`users_username`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='customers'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`customers`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_first_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_last_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_created_at`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active_created_at`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_firstName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_lastName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_isActive_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_tc_number`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sales'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sales`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Products'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Products`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_barcode`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_category`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_season`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_is_active`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_name`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='balance_transactions'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`balance_transactions`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_date`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_category`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sale_items'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sale_items`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_product_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`stock_movements`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_product_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_reference_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Categories'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Categories`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`categories_is_active`) Elapsed time: 0ms
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`username` = 'TekinlerAdmin'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 0ms
+  ENV admin kullanıcısı güncellendi -> username: TekinlerAdmin
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 500 65 - 36.660 ms
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+Executed (default): SELECT 1+1 AS result Elapsed time: 1ms
+Veritabanına (sqlite) başarıyla bağlanıldı
+Executed (default): PRAGMA journal_mode = WAL; Elapsed time: 1ms
+Executed (default): PRAGMA synchronous = NORMAL; Elapsed time: 0ms
+Executed (default): PRAGMA temp_store = MEMORY; Elapsed time: 0ms
+Executed (default): PRAGMA cache_size = -20000; Elapsed time: 0ms
+SQLite PRAGMA ayarları uygulandı
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Users'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Users`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`users_username`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='customers'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`customers`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_first_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_last_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_created_at`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active_created_at`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_firstName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_lastName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_isActive_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_tc_number`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sales'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sales`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Products'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Products`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_barcode`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_category`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_season`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_is_active`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_name`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='balance_transactions'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`balance_transactions`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_date`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_category`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sale_items'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sale_items`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_product_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`stock_movements`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_product_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_reference_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Categories'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Categories`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_is_active`) Elapsed time: 0ms
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`username` = 'TekinlerAdmin'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 0ms
+  ENV admin kullanıcısı güncellendi -> username: TekinlerAdmin
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+POST /api/customers 400 101 - 31.297 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+POST /api/customers 500 65 - 8.013 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` ASC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers 200 1047 - 13.859 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 500 65 - 8.529 ms
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+Executed (default): SELECT 1+1 AS result Elapsed time: 1ms
+Veritabanına (sqlite) başarıyla bağlanıldı
+Executed (default): PRAGMA journal_mode = WAL; Elapsed time: 2ms
+Executed (default): PRAGMA synchronous = NORMAL; Elapsed time: 0ms
+Executed (default): PRAGMA temp_store = MEMORY; Elapsed time: 0ms
+Executed (default): PRAGMA cache_size = -20000; Elapsed time: 0ms
+SQLite PRAGMA ayarları uygulandı
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Users'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Users`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`users_username`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='customers'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`customers`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_first_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_last_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_created_at`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active_created_at`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_firstName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_lastName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_isActive_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_tc_number`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sales'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sales`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Products'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Products`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_barcode`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_category`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_season`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_is_active`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_name`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='balance_transactions'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`balance_transactions`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_type`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_date`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_category`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sale_items'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sale_items`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_product_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`stock_movements`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_product_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_reference_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Categories'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Categories`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_is_active`) Elapsed time: 0ms
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`username` = 'TekinlerAdmin'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 1ms
+  ENV admin kullanıcısı güncellendi -> username: TekinlerAdmin
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 400 101 - 26.136 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+GET /api/auth/me 304 - - 4.055 ms
+GET /manifest.json 404 136 - 3.913 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+GET /api/auth/me 304 - - 6.205 ms
+GET /api/customers/stats/overview?_t=1755254675135 404 32 - 1.190 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+GET /api/customers/stats/overview?_t=1755254675135 404 32 - 0.319 ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1505 - 10.063 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 3.984 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 500 65 - 12.980 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 500 65 - 9.632 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '20'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+DELETE /api/customers/20 200 43 - 8.599 ms
+GET /api/customers/stats/overview?_t=1755254696950 404 32 - 0.664 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1942 - 8.649 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '22'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+DELETE /api/customers/22 200 43 - 7.203 ms
+GET /api/customers/stats/overview?_t=1755254698795 404 32 - 0.635 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1501 - 7.172 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '19'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+DELETE /api/customers/19 200 43 - 6.117 ms
+GET /api/customers/stats/overview?_t=1755254701511 404 32 - 2.216 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1043 - 9.103 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '18'; Elapsed time: 0ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 2ms
+DELETE /api/customers/18 200 43 - 6.062 ms
+GET /api/customers/stats/overview?_t=1755254703511 404 32 - 1.925 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 585 - 6.751 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+GET /api/auth/me 304 - - 2.234 ms
+GET /manifest.json 404 136 - 2.081 ms
+GET /api/customers/stats/overview?_t=1755254704946 404 32 - 0.644 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 6ms
+GET /api/auth/me 304 - - 6.852 ms
+GET /api/customers/stats/overview?_t=1755254704946 404 32 - 0.513 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 10.453 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 4.970 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 0ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 1954 - 6.218 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '22'; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 22; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 22; Elapsed time: 1ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 22 Elapsed time: 4ms
+DELETE /api/customers/22/permanent 200 71 - 13.288 ms
+GET /api/customers/stats/overview?_t=1755254708621 404 32 - 1.702 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 1511 - 7.344 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '20'; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 20; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 20; Elapsed time: 0ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 20 Elapsed time: 2ms
+DELETE /api/customers/20/permanent 200 71 - 7.564 ms
+GET /api/customers/stats/overview?_t=1755254709946 404 32 - 2.042 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 1051 - 8.734 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '19'; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 19; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 19; Elapsed time: 1ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 19 Elapsed time: 3ms
+DELETE /api/customers/19/permanent 200 71 - 7.899 ms
+GET /api/customers/stats/overview?_t=1755254712393 404 32 - 1.794 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 591 - 7.692 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '18'; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 18; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 18; Elapsed time: 1ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 18 Elapsed time: 2ms
+DELETE /api/customers/18/permanent 200 71 - 10.556 ms
+GET /api/customers/stats/overview?_t=1755254714391 404 32 - 1.274 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 0ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 132 - 4.868 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '21'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+DELETE /api/customers/21 200 43 - 5.727 ms
+GET /api/customers/stats/overview?_t=1755254717992 404 32 - 1.662 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 132 - 7.222 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 587 - 5.837 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '21'; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 21; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 21; Elapsed time: 1ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 21 Elapsed time: 2ms
+DELETE /api/customers/21/permanent 200 71 - 7.619 ms
+GET /api/customers/stats/overview?_t=1755254720275 404 32 - 1.801 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 132 - 6.446 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+POST /api/customers 500 65 - 12.184 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 500 65 - 10.247 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 500 65 - 6.964 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+POST /api/customers 500 65 - 9.480 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+POST /api/customers 500 65 - 7.251 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+GET /api/auth/me 304 - - 1.606 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+GET /api/auth/me 304 - - 3.828 ms
+GET /manifest.json 404 136 - 1.122 ms
+GET /api/customers/stats/overview?_t=1755254730989 404 32 - 0.722 ms
+GET /api/customers/stats/overview?_t=1755254730989 404 32 - 0.342 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 2336 - 6.363 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 19ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 2ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 27.842 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '27'; Elapsed time: 0ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 3ms
+DELETE /api/customers/27 200 43 - 8.611 ms
+GET /api/customers/stats/overview?_t=1755254733810 404 32 - 1.691 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1895 - 6.333 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '26'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 2ms
+DELETE /api/customers/26 200 43 - 7.303 ms
+GET /api/customers/stats/overview?_t=1755254735579 404 32 - 0.862 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1454 - 5.991 ms
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+Executed (default): SELECT 1+1 AS result Elapsed time: 1ms
+Veritabanına (sqlite) başarıyla bağlanıldı
+Executed (default): PRAGMA journal_mode = WAL; Elapsed time: 3ms
+Executed (default): PRAGMA synchronous = NORMAL; Elapsed time: 0ms
+Executed (default): PRAGMA temp_store = MEMORY; Elapsed time: 0ms
+Executed (default): PRAGMA cache_size = -20000; Elapsed time: 1ms
+SQLite PRAGMA ayarları uygulandı
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Users'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Users`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`users_username`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='customers'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`customers`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_first_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_last_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_created_at`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active_created_at`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_firstName`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_lastName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_isActive_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_tc_number`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sales'; Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_LIST(`sales`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Products'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Products`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_barcode`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_category`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_season`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_is_active`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_name`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='balance_transactions'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`balance_transactions`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_date`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_category`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sale_items'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sale_items`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_product_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`stock_movements`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_product_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_reference_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Categories'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Categories`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_is_active`) Elapsed time: 0ms
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`username` = 'TekinlerAdmin'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 0ms
+  ENV admin kullanıcısı güncellendi -> username: TekinlerAdmin
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 500 65 - 30.385 ms
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+Executed (default): SELECT 1+1 AS result Elapsed time: 1ms
+Veritabanına (sqlite) başarıyla bağlanıldı
+Executed (default): PRAGMA journal_mode = WAL; Elapsed time: 2ms
+Executed (default): PRAGMA synchronous = NORMAL; Elapsed time: 0ms
+Executed (default): PRAGMA temp_store = MEMORY; Elapsed time: 0ms
+Executed (default): PRAGMA cache_size = -20000; Elapsed time: 0ms
+SQLite PRAGMA ayarları uygulandı
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Users'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Users`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`users_username`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='customers'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`customers`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_first_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_last_name`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_created_at`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active_created_at`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_firstName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_lastName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_isActive_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber_unique`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_tc_number`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sales'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sales`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Products'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Products`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_barcode`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_category`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_season`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_is_active`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`products_name`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='balance_transactions'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`balance_transactions`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_date`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_category`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sale_items'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sale_items`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_product_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`stock_movements`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_product_id`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_type`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_reference_id`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Categories'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Categories`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_is_active`) Elapsed time: 0ms
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`username` = 'TekinlerAdmin'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 0ms
+  ENV admin kullanıcısı güncellendi -> username: TekinlerAdmin
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+POST /api/customers 500 65 - 27.576 ms
+🚀 Server 5000 portunda çalışıyor
+📱 API: http://localhost:5000/api
+🏥 Health Check: http://localhost:5000/api/health
+Executed (default): SELECT 1+1 AS result Elapsed time: 1ms
+Veritabanına (sqlite) başarıyla bağlanıldı
+Executed (default): PRAGMA journal_mode = WAL; Elapsed time: 2ms
+Executed (default): PRAGMA synchronous = NORMAL; Elapsed time: 1ms
+Executed (default): PRAGMA temp_store = MEMORY; Elapsed time: 0ms
+Executed (default): PRAGMA cache_size = -20000; Elapsed time: 0ms
+SQLite PRAGMA ayarları uygulandı
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Users'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Users`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`users_username`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='customers'; Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_LIST(`customers`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_first_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_last_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_created_at`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`customers_is_active_created_at`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_firstName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_lastName`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_isActive_createdAt`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber_unique`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`idx_customers_tcNumber`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_phone`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_email`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`customers_tc_number`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sales'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sales`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Products'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Products`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_barcode`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_category`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_season`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_is_active`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`products_name`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='balance_transactions'; Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_LIST(`balance_transactions`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_customer_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_type`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_date`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`balance_transactions_category`) Elapsed time: 0ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='sale_items'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`sale_items`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_sale_id`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`sale_items_product_id`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`stock_movements`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_product_id`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_type`) Elapsed time: 1ms
+Executed (default): PRAGMA INDEX_INFO(`stock_movements_reference_id`) Elapsed time: 1ms
+Executed (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Categories'; Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_LIST(`Categories`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_name`) Elapsed time: 0ms
+Executed (default): PRAGMA INDEX_INFO(`categories_is_active`) Elapsed time: 0ms
+Veritabanı tabloları senkronize edildi
+✅ SQLite veritabanı hazır
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 0ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`username` = 'TekinlerAdmin'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 0ms
+  ENV admin kullanıcısı güncellendi -> username: TekinlerAdmin
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+POST /api/customers 201 531 - 34.267 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+GET /api/auth/me 304 - - 6.573 ms
+GET /manifest.json 404 136 - 5.910 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 4ms
+GET /api/auth/me 304 - - 7.229 ms
+GET /api/customers/stats/overview?_t=1755254852709 404 32 - 4.580 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 3ms
+GET /api/customers/stats/overview?_t=1755254852709 404 32 - 0.470 ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 5ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 2860 - 24.327 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 3.028 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '25'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+DELETE /api/customers/25 200 43 - 10.641 ms
+GET /api/customers/stats/overview?_t=1755254865353 404 32 - 2.613 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 2419 - 11.686 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '24'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+DELETE /api/customers/24 200 43 - 5.777 ms
+GET /api/customers/stats/overview?_t=1755254867440 404 32 - 2.292 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1978 - 9.051 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '23'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+DELETE /api/customers/23 200 43 - 5.499 ms
+GET /api/customers/stats/overview?_t=1755254869957 404 32 - 2.078 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1537 - 8.364 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '30'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+DELETE /api/customers/30 200 43 - 4.942 ms
+GET /api/customers/stats/overview?_t=1755254872256 404 32 - 1.966 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 7ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 1065 - 13.606 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '29'; Elapsed time: 0ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 0ms
+DELETE /api/customers/29 200 43 - 4.834 ms
+GET /api/customers/stats/overview?_t=1755254874570 404 32 - 1.478 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 7ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 589 - 12.698 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '28'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 2ms
+DELETE /api/customers/28 200 43 - 6.760 ms
+GET /api/customers/stats/overview?_t=1755254876355 404 32 - 0.848 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 132 - 5.464 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 3758 - 8.992 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '27'; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 27; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 27; Elapsed time: 1ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 27 Elapsed time: 1ms
+DELETE /api/customers/27/permanent 200 71 - 9.150 ms
+GET /api/customers/stats/overview?_t=1755254879894 404 32 - 1.683 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 3315 - 6.833 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '26'; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 26; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 26; Elapsed time: 1ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 26 Elapsed time: 2ms
+DELETE /api/customers/26/permanent 200 71 - 8.576 ms
+GET /api/customers/stats/overview?_t=1755254881542 404 32 - 1.984 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 2872 - 9.432 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '25'; Elapsed time: 4ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 25; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 25; Elapsed time: 0ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 25 Elapsed time: 2ms
+DELETE /api/customers/25/permanent 200 71 - 21.762 ms
+GET /api/customers/stats/overview?_t=1755254883145 404 32 - 1.295 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 0ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 2429 - 5.954 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '24'; Elapsed time: 4ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 24; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 24; Elapsed time: 0ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 24 Elapsed time: 2ms
+DELETE /api/customers/24/permanent 200 71 - 14.267 ms
+GET /api/customers/stats/overview?_t=1755254884682 404 32 - 1.352 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 0ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 1986 - 5.941 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '23'; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 23; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 23; Elapsed time: 0ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 23 Elapsed time: 4ms
+DELETE /api/customers/23/permanent 200 71 - 10.759 ms
+GET /api/customers/stats/overview?_t=1755254886461 404 32 - 1.578 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 1543 - 7.664 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '30'; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 30; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 30; Elapsed time: 0ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 30 Elapsed time: 1ms
+DELETE /api/customers/30/permanent 200 71 - 6.387 ms
+GET /api/customers/stats/overview?_t=1755254888591 404 32 - 0.566 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 0ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 1069 - 6.508 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '29'; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 29; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 29; Elapsed time: 1ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 29 Elapsed time: 1ms
+DELETE /api/customers/29/permanent 200 71 - 6.681 ms
+GET /api/customers/stats/overview?_t=1755254890306 404 32 - 1.635 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 591 - 6.998 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '28'; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 28; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 28; Elapsed time: 0ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 28 Elapsed time: 1ms
+DELETE /api/customers/28/permanent 200 71 - 5.757 ms
+GET /api/customers/stats/overview?_t=1755254891890 404 32 - 2.141 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 132 - 6.259 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+POST /api/customers 201 500 - 11.214 ms
+GET /api/customers/stats/overview?_t=1755254898080 404 32 - 2.024 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 572 - 6.999 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '31'; Elapsed time: 0ms
+GET /api/customers/31 200 471 - 4.074 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '31'; Elapsed time: 0ms
+GET /api/customers/31 304 - - 3.981 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT count(`BalanceTransaction`.`id`) AS `count` FROM `balance_transactions` AS `BalanceTransaction` LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` WHERE `BalanceTransaction`.`customerId` = '31'; Elapsed time: 1ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` WHERE `BalanceTransaction`.`customerId` = '31' ORDER BY `BalanceTransaction`.`date` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '31'; Elapsed time: 1ms
+GET /api/balance/customer/31?limit=50 200 468 - 7.649 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT count(`BalanceTransaction`.`id`) AS `count` FROM `balance_transactions` AS `BalanceTransaction` LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` WHERE `BalanceTransaction`.`customerId` = '31'; Elapsed time: 2ms
+Executed (default): SELECT `BalanceTransaction`.`id`, `BalanceTransaction`.`customerId`, `BalanceTransaction`.`type`, `BalanceTransaction`.`amount`, `BalanceTransaction`.`description`, `BalanceTransaction`.`category`, `BalanceTransaction`.`date`, `BalanceTransaction`.`createdBy`, `BalanceTransaction`.`notes`, `BalanceTransaction`.`createdAt`, `BalanceTransaction`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `createdByUser`.`username` AS `createdByUser.username` FROM `balance_transactions` AS `BalanceTransaction` LEFT OUTER JOIN `Users` AS `createdByUser` ON `BalanceTransaction`.`createdBy` = `createdByUser`.`id` WHERE `BalanceTransaction`.`customerId` = '31' ORDER BY `BalanceTransaction`.`date` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '31'; Elapsed time: 1ms
+GET /api/balance/customer/31?limit=50 304 - - 5.404 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 1ms
+GET /api/categories 304 - - 7.070 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `name`, `description`, `isActive`, `sortOrder`, `color`, `createdAt`, `updatedAt` FROM `Categories` AS `Category` WHERE `Category`.`isActive` = 1 ORDER BY `Category`.`sortOrder` ASC, `Category`.`name` ASC; Elapsed time: 0ms
+GET /api/categories 304 - - 3.656 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` ORDER BY `User`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+GET /api/users?page=1&limit=10&search= 200 876 - 4.849 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` ORDER BY `User`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 0ms
+GET /api/users?page=1&limit=10&search= 304 - - 4.031 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = '2'; Elapsed time: 1ms
+Executed (default): UPDATE `Users` SET `isActive`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 1ms
+DELETE /api/users/2 200 52 - 7.850 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` ORDER BY `User`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+GET /api/users?page=1&limit=10&search= 200 877 - 4.532 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = '2'; Elapsed time: 0ms
+Executed (default): UPDATE `Users` SET `isActive`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 1ms
+PATCH /api/users/2/activate 200 50 - 4.818 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` ORDER BY `User`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 0ms
+GET /api/users?page=1&limit=10&search= 200 876 - 3.544 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = '2'; Elapsed time: 1ms
+Executed (default): UPDATE `Users` SET `pin`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 2ms
+PUT /api/users/2 200 299 - 319.310 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `Users` AS `User`; Elapsed time: 1ms
+Executed (default): SELECT `id`, `username`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` ORDER BY `User`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+GET /api/users?page=1&limit=10&search= 200 876 - 5.527 ms
+GET /api/customers/stats/overview?_t=1755254926578 404 32 - 0.502 ms
+GET /api/customers/stats/overview?_t=1755254926579 404 32 - 0.529 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 0ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 7.049 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 304 - - 4.929 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '31'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `phone`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 1ms
+PUT /api/customers/31 200 493 - 14.392 ms
+GET /api/customers/stats/overview?_t=1755254932435 404 32 - 1.709 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 666 - 8.381 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '31'; Elapsed time: 0ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedAt`=$2 WHERE `id` = $3 Elapsed time: 1ms
+DELETE /api/customers/31 200 43 - 6.170 ms
+GET /api/customers/stats/overview?_t=1755254934709 404 32 - 2.119 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 3ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 132 - 7.300 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 0ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 587 - 5.316 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+POST /api/customers 201 513 - 10.844 ms
+GET /api/customers/stats/overview?_t=1755254942561 404 32 - 2.324 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 585 - 7.024 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '32'; Elapsed time: 1ms
+Executed (default): UPDATE `customers` SET `isActive`=$1,`updatedBy`=$2,`updatedAt`=$3 WHERE `id` = $4 Elapsed time: 9ms
+DELETE /api/customers/32 200 43 - 12.737 ms
+GET /api/customers/stats/overview?_t=1755254945995 404 32 - 1.115 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `createdByUser`.`id` AS `createdByUser.id`, `createdByUser`.`username` AS `createdByUser.username`, `createdByUser`.`fullName` AS `createdByUser.fullName`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `createdByUser` ON `Customer`.`createdBy` = `createdByUser`.`id` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 1 ORDER BY `Customer`.`createdAt` DESC LIMIT 0, 10; Elapsed time: 2ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 1; Elapsed time: 1ms
+GET /api/customers?page=1&limit=10&search=&sortBy=createdAt&sortOrder=desc 200 132 - 6.059 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 0ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 2ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 1043 - 7.920 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '31'; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 31; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 31; Elapsed time: 1ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 31 Elapsed time: 2ms
+DELETE /api/customers/31/permanent 200 71 - 8.665 ms
+GET /api/customers/stats/overview?_t=1755254948843 404 32 - 0.526 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 0ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 587 - 5.992 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 1ms
+Executed (default): SELECT `id`, `firstName`, `lastName`, `phone`, `email`, `tcNumber`, `address`, `city`, `district`, `postalCode`, `preferredColors`, `preferredBrands`, `balance`, `totalPurchases`, `totalOrders`, `smsPermission`, `emailPermission`, `notes`, `isActive`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt` FROM `customers` AS `Customer` WHERE `Customer`.`id` = '32'; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = 32; Elapsed time: 0ms
+Executed (default): SELECT count(*) AS `count` FROM `balance_transactions` AS `BalanceTransaction` WHERE `BalanceTransaction`.`customerId` = 32; Elapsed time: 0ms
+Executed (default): DELETE FROM `customers` WHERE `id` = 32 Elapsed time: 7ms
+DELETE /api/customers/32/permanent 200 71 - 13.137 ms
+GET /api/customers/stats/overview?_t=1755254950582 404 32 - 1.787 ms
+Executed (default): SELECT `id`, `username`, `pin`, `fullName`, `phone`, `isActive`, `isAdmin`, `lastLogin`, `loginAttempts`, `lockUntil`, `createdAt`, `updatedAt` FROM `Users` AS `User` WHERE `User`.`id` = 3; Elapsed time: 2ms
+Executed (default): SELECT `Customer`.`id`, `Customer`.`firstName`, `Customer`.`lastName`, `Customer`.`phone`, `Customer`.`email`, `Customer`.`tcNumber`, `Customer`.`city`, `Customer`.`district`, `Customer`.`balance`, `Customer`.`totalPurchases`, `Customer`.`totalOrders`, `Customer`.`smsPermission`, `Customer`.`emailPermission`, `Customer`.`isActive`, `Customer`.`createdAt`, `Customer`.`updatedAt`, `updatedByUser`.`id` AS `updatedByUser.id`, `updatedByUser`.`username` AS `updatedByUser.username`, `updatedByUser`.`fullName` AS `updatedByUser.fullName` FROM `customers` AS `Customer` LEFT OUTER JOIN `Users` AS `updatedByUser` ON `Customer`.`updatedBy` = `updatedByUser`.`id` WHERE `Customer`.`isActive` = 0 ORDER BY `Customer`.`updatedAt` ASC LIMIT 0, 50; Elapsed time: 1ms
+Executed (default): SELECT count(*) AS `count` FROM `customers` AS `Customer` WHERE `Customer`.`isActive` = 0; Elapsed time: 1ms
+GET /api/customers/deleted?page=1&limit=50&search= 200 132 - 6.637 ms

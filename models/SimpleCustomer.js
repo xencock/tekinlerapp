@@ -88,11 +88,13 @@ class SimpleCustomer {
         now
       ], function(err) {
         if (err) {
+          stmt.finalize();
           db.close();
           reject(err);
         } else {
           // Get the created customer
           db.get('SELECT * FROM customers WHERE id = ?', [this.lastID], (err, row) => {
+            stmt.finalize();
             db.close();
             if (err) {
               reject(err);
@@ -114,8 +116,6 @@ class SimpleCustomer {
           });
         }
       });
-      
-      stmt.finalize();
     });
   }
 }
