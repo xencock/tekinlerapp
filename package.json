@@ -11,7 +11,7 @@
     "build": "npm run build:client",
     "build:client": "npm --prefix frontend run build",
     "start:prod": "cross-env NODE_ENV=production node server.js",
-    "postinstall": "npx npm --prefix frontend install",
+    "postinstall": "echo 'Skipping frontend install in Docker'",
     "setup": "npm run sync-db && npm run create-admin && npm run seed-categories",
     "sync-db": "node scripts/sync-database.js",
     "create-admin": "node scripts/create-admin-user.js",
