@@ -69,3 +69,4 @@ echo "  tail -f logs/cron-maintenance.log"
 echo "  tail -f logs/cron-check.log"
 echo ""
 echo "🔄 Cron job'ları kaldırmak için: crontab -e"
+

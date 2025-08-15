@@ -45,6 +45,9 @@ const POS = () => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
 
+  // Ödeme yöntemi seçimi
+  const [paymentMethod, setPaymentMethod] = useState('cash'); // 'cash' veya 'credit'
+
   // Direct quantity input values per cart item (temporary while typing)
   const [quantityInputs, setQuantityInputs] = useState({});
 
@@ -433,7 +436,7 @@ const POS = () => {
   };
 
   const cartSubtotal = cart.reduce((total, item) => {
-    const price = item.hasDiscount ? item.discountPrice : item.retailPrice;
+    const price = item.hasDiscount ? item.discountPrice : (paymentMethod === 'cash' ? item.cashPrice : item.creditPrice);
     return total + price * item.quantity;
   }, 0);
 
@@ -457,8 +460,8 @@ const POS = () => {
         <td class="cell text-center">${item.barcode || ''}</td>
         <td class="cell">${item.name}</td>
         <td class="cell text-center">${item.quantity}</td>
-        <td class="cell text-right">${(item.hasDiscount ? item.discountPrice : item.retailPrice).toFixed(2)} ₺</td>
-        <td class="cell text-right">${(item.quantity * (item.hasDiscount ? item.discountPrice : item.retailPrice)).toFixed(2)} ₺</td>
+        <td class="cell text-right">${(item.hasDiscount ? item.discountPrice : (paymentMethod === 'cash' ? item.cashPrice : item.creditPrice)).toFixed(2)} ₺</td>
+        <td class="cell text-right">${(item.quantity * (item.hasDiscount ? item.discountPrice : (paymentMethod === 'cash' ? item.cashPrice : item.creditPrice))).toFixed(2)} ₺</td>
       </tr>
     `).join('');
 
@@ -592,7 +595,7 @@ const POS = () => {
     try {
       const saleData = {
         customerId: selectedCustomer.id,
-        paymentMethod: 'Veresiye',
+        paymentMethod: paymentMethod, // Ödeme yöntemini kullan
         items: cart.map(item => ({
           productId: item.id,
           quantity: item.quantity,
@@ -671,6 +674,30 @@ const POS = () => {
               )}
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
+              {/* Ödeme yöntemi seçimi */}
+              <div className="flex items-center gap-2 bg-white rounded-lg border border-gray-200 p-1">
+                <button
+                  onClick={() => setPaymentMethod('cash')}
+                  className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                    paymentMethod === 'cash'
+                      ? 'bg-green-100 text-green-700 border border-green-200'
+                      : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                  }`}
+                >
+                  Peşin
+                </button>
+                <button
+                  onClick={() => setPaymentMethod('credit')}
+                  className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                    paymentMethod === 'credit'
+                      ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                      : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                  }`}
+                >
+                  Vadeli
+                </button>
+              </div>
+              
               {/* Customer search inside hero header */}
               {!selectedCustomer && (
               <div className="relative block">
@@ -761,7 +788,7 @@ const POS = () => {
                             {item.name}
                           </p>
                           <div className="mt-0.5 text-xs text-gray-500">
-                            Birim: {Number(item.hasDiscount ? item.discountPrice : item.retailPrice).toFixed(2)} ₺ • Stok: {item.currentStock}
+                            Birim: {Number(item.hasDiscount ? item.discountPrice : (paymentMethod === 'cash' ? item.cashPrice : item.creditPrice)).toFixed(2)} ₺ • Stok: {item.currentStock}
                           </div>
                         </div>
 
@@ -800,10 +827,10 @@ const POS = () => {
                         {/* Prices */}
                         <div className="text-right">
                           <div className="font-semibold text-gray-900">
-                            {(item.quantity * Number(item.hasDiscount ? item.discountPrice : item.retailPrice)).toFixed(2)} ₺
+                            {(item.quantity * Number(item.hasDiscount ? item.discountPrice : (paymentMethod === 'cash' ? item.cashPrice : item.creditPrice))).toFixed(2)} ₺
                           </div>
                           <div className="text-xs text-gray-500">
-                            {item.quantity} × {Number(item.hasDiscount ? item.discountPrice : item.retailPrice).toFixed(2)} ₺
+                            {item.quantity} × {Number(item.hasDiscount ? item.discountPrice : (paymentMethod === 'cash' ? item.cashPrice : item.creditPrice)).toFixed(2)} ₺
                           </div>
                         </div>
                       </div>
@@ -892,14 +919,17 @@ const POS = () => {
                             </div>
                             <div className="text-right ml-4">
                               <div className="font-bold text-lg text-gray-900">
-                                {product.hasDiscount ? product.discountPrice : product.retailPrice} ₺
+                                {product.hasDiscount ? product.discountPrice : (paymentMethod === 'cash' ? product.cashPrice : product.creditPrice)} ₺
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {paymentMethod === 'cash' ? 'Peşin' : 'Vadeli'}
                               </div>
                               <div className={`text-sm font-medium ${product.currentStock > 0 ? 'text-green-600' : 'text-red-600'}`}>
                                 Stok: {product.currentStock}
                               </div>
                               {product.hasDiscount && (
                                 <div className="text-sm text-red-500 line-through">
-                                  {product.retailPrice} ₺
+                                  {paymentMethod === 'cash' ? product.cashPrice : product.creditPrice} ₺
                                 </div>
                               )}
                             </div>
@@ -984,7 +1014,7 @@ const POS = () => {
               <div className="mb-4">
                 <h3 className="font-semibold text-gray-900 mb-2">{selectedProductForQuantity.name}</h3>
                 <p className="text-sm text-gray-600 mb-1">
-                  Fiyat: {selectedProductForQuantity.hasDiscount ? selectedProductForQuantity.discountPrice : selectedProductForQuantity.retailPrice} ₺
+                  Fiyat: {selectedProductForQuantity.hasDiscount ? selectedProductForQuantity.discountPrice : (paymentMethod === 'cash' ? selectedProductForQuantity.cashPrice : selectedProductForQuantity.creditPrice)} ₺
                 </p>
                 <p className="text-sm text-gray-600">
                   Mevcut Stok: {selectedProductForQuantity.currentStock} adet
@@ -1016,7 +1046,7 @@ const POS = () => {
                   <span className="text-lg font-bold text-blue-700">
                     {(
                       (quantityInput || 0) * 
-                      (selectedProductForQuantity.hasDiscount ? selectedProductForQuantity.discountPrice : selectedProductForQuantity.retailPrice)
+                      (selectedProductForQuantity.hasDiscount ? selectedProductForQuantity.discountPrice : (paymentMethod === 'cash' ? selectedProductForQuantity.cashPrice : selectedProductForQuantity.creditPrice))
                     ).toFixed(2)} ₺
                   </span>
                 </div>

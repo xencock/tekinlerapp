@@ -270,7 +270,7 @@ router.post('/', authenticateToken, async (req, res) => {
   try {
     const {
       name, barcode, category, subCategory, brand, material,
-      color, size, season, costPrice, retailPrice,
+      color, size, season, costPrice, cashPrice, creditPrice,
       currentStock
     } = req.body;
 
@@ -288,7 +288,7 @@ router.post('/', authenticateToken, async (req, res) => {
     // Create new product
     const product = await Product.create({
       name, barcode, category, subCategory, brand, material,
-      color, size, season, costPrice, retailPrice,
+      color, size, season, costPrice, cashPrice, creditPrice,
       currentStock
     });
 
@@ -345,7 +345,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 
     const {
       name, barcode, category, subCategory, brand, material,
-      color, size, season, costPrice, retailPrice,
+      color, size, season, costPrice, cashPrice, creditPrice,
       currentStock
     } = req.body;
 
@@ -368,7 +368,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
     // Update product
     await product.update({
       name, barcode, category, subCategory, brand, material,
-      color, size, season, costPrice, retailPrice,
+      color, size, season, costPrice, cashPrice, creditPrice,
       currentStock
     });
 

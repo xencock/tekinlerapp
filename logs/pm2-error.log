@@ -5061,3 +5061,309 @@ Get customer sales summary error: Error
   sql: "SELECT `id`, `totalAmount`, `paymentMethod`, `createdAt`, `notes` FROM `sales` AS `Sale` WHERE `Sale`.`customerId` = '1' AND `Sale`.`isActive` = 1 ORDER BY `Sale`.`createdAt` DESC;",
   parameters: {}
 }
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'
+Get products error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Product.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/products.js:87:22 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  original: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;',
+  parameters: {}
+}
+Get products error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Product.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/products.js:87:22 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  original: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;',
+  parameters: {}
+}
+Get products error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Product.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/products.js:87:22 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  original: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;',
+  parameters: {}
+}
+Get products error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Product.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/products.js:87:22 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  original: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;',
+  parameters: {}
+}
+Get products error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Product.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/products.js:87:22 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  original: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;',
+  parameters: {}
+}
+Get products error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Product.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/products.js:87:22 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  original: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;',
+  parameters: {}
+}
+Get products error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Product.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/products.js:87:22 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  original: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;',
+  parameters: {}
+}
+Get products error: Error
+    at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:185:27)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:50
+    at new Promise (<anonymous>)
+    at Query.run (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:183:12)
+    at /Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SQLiteQueryInterface.select (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async Product.findAll (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1140:21)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/products.js:87:22 {
+  name: 'SequelizeDatabaseError',
+  parent: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  original: Error: SQLITE_ERROR: no such column: retailPrice
+  --> in Database#all('SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;', [], [Function: afterExecute])
+      at executeSql (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:211:21)
+      at Database.<anonymous> (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/dialects/sqlite/query.js:238:14) {
+    errno: 1,
+    code: 'SQLITE_ERROR',
+    __augmented: true,
+    sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;'
+  },
+  sql: 'SELECT `id`, `name`, `barcode`, `category`, `brand`, `season`, `costPrice`, `retailPrice`, `currentStock`, `isActive`, `createdAt`, `updatedAt` FROM `Products` AS `Product` WHERE `Product`.`isActive` = 1 ORDER BY `Product`.`name` ASC LIMIT 0, 10;',
+  parameters: {}
+}
+Create sale error: ValidationError [SequelizeValidationError]: notNull Violation: SaleItem.unitPrice cannot be null
+    at InstanceValidator._validate (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/instance-validator.js:50:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InstanceValidator._validateAndRunHooks (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/instance-validator.js:60:7)
+    at async InstanceValidator.validate (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/instance-validator.js:54:12)
+    at async SaleItem.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2426:7)
+    at async SaleItem.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:58:7 {
+  errors: [
+    ValidationErrorItem {
+      message: 'SaleItem.unitPrice cannot be null',
+      type: 'notNull Violation',
+      path: 'unitPrice',
+      value: null,
+      origin: 'CORE',
+      instance: [SaleItem],
+      validatorKey: 'is_null',
+      validatorName: null,
+      validatorArgs: []
+    }
+  ]
+}
+Create sale error: ValidationError [SequelizeValidationError]: notNull Violation: SaleItem.unitPrice cannot be null
+    at InstanceValidator._validate (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/instance-validator.js:50:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InstanceValidator._validateAndRunHooks (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/instance-validator.js:60:7)
+    at async InstanceValidator.validate (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/instance-validator.js:54:12)
+    at async SaleItem.save (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:2426:7)
+    at async SaleItem.create (/Users/mertcolak/Desktop/tekinlerapp/node_modules/sequelize/lib/model.js:1362:12)
+    at async /Users/mertcolak/Desktop/tekinlerapp/routes/sales.js:58:7 {
+  errors: [
+    ValidationErrorItem {
+      message: 'SaleItem.unitPrice cannot be null',
+      type: 'notNull Violation',
+      path: 'unitPrice',
+      value: null,
+      origin: 'CORE',
+      instance: [SaleItem],
+      validatorKey: 'is_null',
+      validatorName: null,
+      validatorArgs: []
+    }
+  ]
+}
+Error: ENOENT: no such file or directory, stat '/Users/mertcolak/Desktop/tekinlerapp/frontend/build/index.html'

@@ -703,12 +703,9 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
       where: { isActive: true }
     });
 
-    // Toplam borç (negatif bakiye)
+    // Toplam bakiye (tüm müşterilerin bakiyelerinin toplamı)
     const totalOutstandingDebt = await Customer.sum('balance', {
-      where: {
-        isActive: true,
-        balance: { [Op.lt]: 0 }
-      }
+      where: { isActive: true }
     });
 
     // Toplam alacak (pozitif bakiye)
@@ -786,7 +783,7 @@ router.get('/stats/overview', authenticateToken, async (req, res) => {
 
     res.json({
       totalCustomers: totalCustomers || 0,
-      totalOutstandingDebt: Math.abs(totalOutstandingDebt || 0),
+      totalOutstandingDebt: totalOutstandingDebt || 0,
       totalCredit: totalCredit || 0,
       totalRevenue: totalRevenue || 0,
       totalOrders: totalOrders || 0,
@@ -819,8 +816,7 @@ router.get('/:id/sales-summary', authenticateToken, async (req, res) => {
     }
 
     let whereClause = {
-      customerId: customerId,
-      isActive: true
+      customerId: customerId
     };
 
     // Aylık satışlar için tarih filtresi
@@ -863,7 +859,7 @@ router.get('/:id/sales-summary', authenticateToken, async (req, res) => {
       return acc;
     }, {});
 
-    res.json({
+    const responseData = {
       customer: {
         id: customer.id,
         firstName: customer.firstName,
@@ -884,7 +880,9 @@ router.get('/:id/sales-summary', authenticateToken, async (req, res) => {
         date: sale.createdAt,
         notes: sale.notes
       }))
-    });
+    };
+
+    res.json(responseData);
 
   } catch (error) {
     console.error('Get customer sales summary error:', error);

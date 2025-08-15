@@ -29,7 +29,10 @@ const Sale = sequelize.define('Sale', {
   },
   paymentMethod: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isIn: [['cash', 'credit', 'Veresiye', 'Nakit']]
+    }
   },
   notes: {
     type: DataTypes.TEXT,

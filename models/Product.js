@@ -334,7 +334,18 @@ const Product = sequelize.define('Product', {
     }
   },
 
-  retailPrice: {
+  // Peşin fiyat (anında ödeme)
+  cashPrice: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: true,
+    defaultValue: 0.00,
+    validate: {
+      min: 0
+    }
+  },
+
+  // Vadeli fiyat (taksitli/gecikmeli ödeme)
+  creditPrice: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: true,
     defaultValue: 0.00,
@@ -395,7 +406,7 @@ Product.prototype.isLowStock = function() {
 
 Product.prototype.profitMargin = function() {
   if (this.costPrice === 0) return 0;
-  return ((this.retailPrice - this.costPrice) / this.costPrice * 100).toFixed(2);
+  return ((this.cashPrice - this.costPrice) / this.costPrice * 100).toFixed(2);
 };
 
 Product.prototype.stockValue = function() {

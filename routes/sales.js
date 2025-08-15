@@ -19,6 +19,11 @@ router.post('/', authenticateToken, async (req, res) => {
   try {
     const { customerId, paymentMethod, items, notes } = req.body;
     
+    console.log('=== SATIŞ OLUŞTURMA ===');
+    console.log('Payment Method:', paymentMethod);
+    console.log('Customer ID:', customerId);
+    console.log('Items count:', items.length);
+    
     // Veresiye satış için müşteri kontrolü
     if (paymentMethod === 'Veresiye' && !customerId) {
       throw new Error('Veresiye satış için müşteri seçimi zorunludur');
@@ -49,7 +54,22 @@ router.post('/', authenticateToken, async (req, res) => {
         throw new Error(`Yetersiz stok: ${product.name} (Mevcut: ${product.currentStock}, İstenen: ${item.quantity})`);
       }
 
-      const price = product.hasDiscount ? product.discountPrice : product.retailPrice;
+      // Ödeme yöntemine göre fiyat seç
+      let price;
+      if (paymentMethod === 'cash') {
+        price = product.hasDiscount ? product.discountPrice : product.cashPrice;
+        console.log(`Ürün: ${product.name}, Peşin fiyat: ${price}`);
+      } else if (paymentMethod === 'credit') {
+        price = product.hasDiscount ? product.discountPrice : product.creditPrice;
+        console.log(`Ürün: ${product.name}, Vadeli fiyat: ${price}`);
+      } else {
+        // Eski sistem uyumluluğu için
+        price = product.hasDiscount ? product.discountPrice : product.cashPrice;
+        console.log(`Ürün: ${product.name}, Varsayılan fiyat: ${price}`);
+      }
+      
+      console.log(`Ürün: ${product.name}, Seçilen fiyat: ${price}, Miktar: ${item.quantity}, Toplam: ${price * item.quantity}`);
+      
       const itemTotal = price * item.quantity;
 
       totalAmount += itemTotal;
@@ -343,26 +363,48 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     }
 
     // Satış kalemlerini sil ve stokları geri al
+    console.log('=== SATIŞ SİLME İŞLEMİ BAŞLADI ===');
+    console.log('Satış ID:', sale.id);
+    console.log('Satış kalemleri sayısı:', sale.items.length);
+    
     for (const item of sale.items) {
+      console.log('Ürün ID:', item.productId, 'Miktar:', item.quantity);
+      
       const product = await Product.findByPk(item.productId, { transaction });
       if (product) {
+        console.log('Ürün bulundu:', product.name, 'Mevcut stok:', product.currentStock);
+        
+        // Eski stok miktarını kaydet
+        const oldStock = product.currentStock;
+        const newStock = oldStock + item.quantity;
+        
+        console.log('Stok güncelleniyor:', oldStock, '->', newStock);
+        
         // Stok miktarını geri al
         await product.update({
-          currentStock: product.currentStock + item.quantity
+          currentStock: newStock
         }, { transaction });
+        
+        console.log('Stok güncellendi!');
 
         // Stok hareketi kaydet
         await StockMovement.create({
           productId: product.id,
           type: 'sale_cancellation',
           quantity: item.quantity,
-          stockBefore: product.currentStock - item.quantity,
-          stockAfter: product.currentStock,
-          referenceId: `Satış İptali`,
+          stockBefore: oldStock,
+          stockAfter: newStock,
+          referenceId: `Satış İptali #${sale.id}`,
           userId: req.user.id
         }, { transaction });
+        
+        console.log('Stok hareketi kaydedildi');
+      } else {
+        console.log('ÜRÜN BULUNAMADI:', item.productId);
       }
     }
+    
+    console.log('=== SATIŞ SİLME İŞLEMİ TAMAMLANDI ===');
 
     // Satış kalemlerini sil
     await SaleItem.destroy({

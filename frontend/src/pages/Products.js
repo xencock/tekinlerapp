@@ -52,7 +52,8 @@ const Products = () => {
     brand: '',
     season: '',
     costPrice: '',
-    retailPrice: '',
+    cashPrice: '',
+    creditPrice: '',
     currentStock: ''
   });
 
@@ -65,7 +66,8 @@ const Products = () => {
       brand: '',
       season: '',
       costPrice: '',
-      retailPrice: '',
+      cashPrice: '',
+      creditPrice: '',
       currentStock: ''
     });
     setShowAddModal(false);
@@ -255,7 +257,8 @@ const Products = () => {
         brand: product.brand || '',
         season: product.season || '',
         costPrice: product.costPrice || '',
-        retailPrice: product.retailPrice || '',
+        cashPrice: product.cashPrice || '',
+        creditPrice: product.creditPrice || '',
         currentStock: product.currentStock || ''
       });
 
@@ -578,11 +581,14 @@ const Products = () => {
                           <span className="font-medium">Alış:</span> {(parseFloat(product.costPrice) || 0).toFixed(2)} ₺
                         </div>
                         <div className="text-sm text-gray-900">
-                          <span className="font-medium">Satış:</span> {(parseFloat(product.retailPrice) || 0).toFixed(2)} ₺
+                          <span className="font-medium">Peşin:</span> {(parseFloat(product.cashPrice) || 0).toFixed(2)} ₺
                         </div>
-                        {product.costPrice && product.retailPrice && parseFloat(product.costPrice) > 0 && (
+                        <div className="text-sm text-gray-900">
+                          <span className="font-medium">Vadeli:</span> {(parseFloat(product.creditPrice) || 0).toFixed(2)} ₺
+                        </div>
+                        {product.costPrice && product.cashPrice && parseFloat(product.costPrice) > 0 && (
                           <div className="text-xs text-gray-500">
-                            Kar: {((parseFloat(product.retailPrice) - parseFloat(product.costPrice)) / parseFloat(product.costPrice) * 100).toFixed(1)}%
+                            Kar: {((parseFloat(product.cashPrice) - parseFloat(product.costPrice)) / parseFloat(product.costPrice) * 100).toFixed(1)}%
                           </div>
                         )}
                       </td>
@@ -872,13 +878,28 @@ const Products = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Satış Fiyatı (₺)
+                      Peşin Fiyat (₺)
                     </label>
                     <input
                       type="number"
                       step="0.01"
-                      name="retailPrice"
-                      value={formData.retailPrice}
+                      name="cashPrice"
+                      value={formData.cashPrice}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="0.00"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Vadeli Fiyat (₺)
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      name="creditPrice"
+                      value={formData.creditPrice}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="0.00"
