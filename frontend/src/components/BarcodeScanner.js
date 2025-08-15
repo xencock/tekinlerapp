@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Camera, X, RefreshCw, Settings } from 'lucide-react';
+import { Camera, X, Settings } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import * as ZXing from '@zxing/library';
 import { useCameraPermission } from '../hooks/useCameraPermission';
@@ -546,64 +546,6 @@ const BarcodeScanner = ({ onScan, onClose }) => {
     stopScanning();
   };
 
-  // Barkod tarama test fonksiyonu
-  const testBarcodeScanning = () => {
-    console.log('=== BARKOD TARAMA TEST EDİLİYOR ===');
-    
-    if (!codeReaderRef.current) {
-      console.error('❌ Code reader hazır değil');
-      toast.error('❌ Barkod tarama sistemi hazır değil', { duration: 3000 });
-      return;
-    }
-    
-    console.log('✅ Code reader hazır');
-    console.log('🔍 Code reader detayları:', codeReaderRef.current);
-    
-    // Test barkod (örnek)
-    const testBarcode = '1234567890123';
-    console.log('🧪 Test barkod:', testBarcode);
-    
-    // Manuel olarak test barkodu işle
-    try {
-      handleBarcodeDetected(testBarcode);
-      console.log('✅ Test barkod başarıyla işlendi');
-    } catch (error) {
-      console.error('❌ Test barkod işleme hatası:', error);
-      toast.error(`❌ Test hatası: ${error.message}`, { duration: 3000 });
-    }
-  };
-
-  // ZXing kütüphanesi test fonksiyonu
-  const testZXingLibrary = () => {
-    console.log('=== ZXING KÜTÜPHANESİ TEST EDİLİYOR ===');
-    
-    console.log('📚 ZXing.BrowserMultiFormatReader:', typeof ZXing.BrowserMultiFormatReader);
-    console.log('📚 ZXing import durumu:', {
-      'BrowserMultiFormatReader': typeof ZXing.BrowserMultiFormatReader,
-      window: typeof window !== 'undefined',
-      navigator: typeof navigator !== 'undefined'
-    });
-    
-    if (typeof ZXing.BrowserMultiFormatReader !== 'undefined') {
-      try {
-        const testReader = new ZXing.BrowserMultiFormatReader();
-        console.log('✅ Test reader oluşturuldu:', testReader);
-        
-        // Test reader'ı temizle
-        testReader.reset();
-        console.log('✅ Test reader temizlendi');
-        
-        toast.success('✅ ZXing kütüphanesi çalışıyor', { duration: 2000 });
-      } catch (error) {
-        console.error('❌ Test reader oluşturma hatası:', error);
-        toast.error(`❌ ZXing test hatası: ${error.message}`, { duration: 3000 });
-      }
-    } else {
-      console.error('❌ ZXing.BrowserMultiFormatReader bulunamadı');
-      toast.error('❌ ZXing kütüphanesi yüklenemedi', { duration: 3000 });
-    }
-  };
-
   // Debug bilgileri
   const debugInfo = {
     isSupported,
@@ -669,20 +611,6 @@ const BarcodeScanner = ({ onScan, onClose }) => {
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold">Barkod Tarama</h3>
             <div className="flex items-center space-x-2">
-              <button
-                onClick={testBarcodeScanning}
-                className="text-blue-500 hover:text-blue-700 p-1"
-                title="Barkod Test"
-              >
-                🔍
-              </button>
-              <button
-                onClick={testZXingLibrary}
-                className="text-purple-500 hover:text-purple-700 p-1"
-                title="ZXing Kütüphanesi Test"
-              >
-                <RefreshCw size={18} />
-              </button>
               <button
                 onClick={() => setShowCameraTest(true)}
                 className="text-gray-500 hover:text-gray-700 p-1"
