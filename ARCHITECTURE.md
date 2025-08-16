@@ -19,7 +19,7 @@ tekinlerapp/
 │   ├── Product.js
 │   ├── Customer.js
 │   └── ...
-├── routes/                 # API route tanımları
+├── routes/                 # API route tanımları.
 │   ├── auth.js
 │   ├── products.js
 │   └── ...
